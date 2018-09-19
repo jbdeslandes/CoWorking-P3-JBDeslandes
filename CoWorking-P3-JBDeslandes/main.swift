@@ -8,5 +8,6 @@
 
 import Foundation
 
-print("Hello, World!")
+print("Bienvenue dans l'arène !")
+print()
 

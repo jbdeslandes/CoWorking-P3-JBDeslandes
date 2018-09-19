@@ -18,4 +18,25 @@ class Game {
     var character2: Character? = nil
     var character3: Character? = nil
 
+    func createTeams() {
+        
+        //      Noms des joueurs :
+        
+        
+        print("Joueur 1 - Quel est ton nom ?")
+        
+        if let player1 = readLine() {
+            team1 = Team(name: "\(player1)")
+            print("Force & Honneur, \(player1) !")
+            print()
+        }
+        
+        print("Joueur 2 - Quel est ton nom ?")
+        
+        if let player2 = readLine() {
+            team2 = Team(name: "\(player2)")
+            print("Esprit & Robustesse sur toi, \(player2) !")
+            print()
+        }
+    }
 }

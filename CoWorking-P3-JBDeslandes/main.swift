@@ -11,3 +11,6 @@ import Foundation
 print("Bienvenue dans l'arène !")
 print()
 
+let game = Game()
+
+game.createTeams()

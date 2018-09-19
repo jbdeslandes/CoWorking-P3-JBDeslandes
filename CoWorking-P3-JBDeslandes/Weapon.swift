@@ -7,3 +7,37 @@
 //
 
 import Foundation
+
+class Weapon {
+    
+    var damage: Int
+    
+    init(damage: Int) {
+        self.damage = damage
+    }
+    
+}
+
+class Sword: Weapon {
+    init() {
+        super.init(damage: 10)
+    }
+}
+
+class Stick: Weapon {
+    init() {
+        super.init(damage: 5)
+    }
+}
+
+class Fists: Weapon {
+    init() {
+        super.init(damage: 8)
+    }
+}
+
+class Axe: Weapon {
+    init() {
+        super.init(damage: 12)
+    }
+}

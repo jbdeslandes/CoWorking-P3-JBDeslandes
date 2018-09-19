@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		B3116E5121527B6D00728516 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3116E5021527B6D00728516 /* main.swift */; };
+		B3116E5821527FE600728516 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3116E5721527FE600728516 /* Game.swift */; };
+		B3116E5A21527FF100728516 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3116E5921527FF100728516 /* Team.swift */; };
+		B3116E5C2152800000728516 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3116E5B2152800000728516 /* Character.swift */; };
+		B3116E5E2152800C00728516 /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3116E5D2152800C00728516 /* Weapon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +29,10 @@
 /* Begin PBXFileReference section */
 		B3116E4D21527B6D00728516 /* CoWorking-P3-JBDeslandes */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CoWorking-P3-JBDeslandes"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3116E5021527B6D00728516 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		B3116E5721527FE600728516 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		B3116E5921527FF100728516 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		B3116E5B2152800000728516 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		B3116E5D2152800C00728516 /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +66,10 @@
 			isa = PBXGroup;
 			children = (
 				B3116E5021527B6D00728516 /* main.swift */,
+				B3116E5721527FE600728516 /* Game.swift */,
+				B3116E5921527FF100728516 /* Team.swift */,
+				B3116E5B2152800000728516 /* Character.swift */,
+				B3116E5D2152800C00728516 /* Weapon.swift */,
 			);
 			path = "CoWorking-P3-JBDeslandes";
 			sourceTree = "<group>";
@@ -119,7 +131,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3116E5E2152800C00728516 /* Weapon.swift in Sources */,
+				B3116E5A21527FF100728516 /* Team.swift in Sources */,
 				B3116E5121527B6D00728516 /* main.swift in Sources */,
+				B3116E5821527FE600728516 /* Game.swift in Sources */,
+				B3116E5C2152800000728516 /* Character.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

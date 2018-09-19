@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+class Game {
+    
+    var team1 = Team(name: "")
+    var team2 = Team(name: "")
+    
+    
+    var character1: Character? = nil
+    var character2: Character? = nil
+    var character3: Character? = nil
+
+}

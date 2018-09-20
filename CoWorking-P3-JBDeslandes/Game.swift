@@ -30,93 +30,92 @@ class Game {
         
     } // End of createPlayer()
 
-    func createTeam() {
+    func createHero(currentTeam: Team, characterNum: Int) -> Character {
         
-        print("Quel est le nom de ton premier 1er champion ?")
+        print("Quel est le nom de ton champion numéro \(characterNum) ?")
         
-        if let hero1 = readLine() {
-            team1.character1 = Character(name: "\(hero1)", role: .fighter)
+        if let hero = readLine() {
+            currentCharacter = Character(name: "\(hero)", role: .fighter)
             print()
-            print("Quelle sera la classe de \(hero1) ?"
+            print("Quelle sera la classe de \(hero) ?"
                 + "\n1. Combattant."
                 + "\n2. Magicien."
                 + "\n3. Colosse."
                 + "\n4. Nain.")
         }
         
-        var inputrole1: String = ""
+        var inputrole: String = ""
         
         repeat {
             
-            if let role1 = readLine() {
-                switch role1 {
+            if let role = readLine() {
+                switch role {
                 case "1":
-                    inputrole1 = "ok"
-                    team1.character1!.role = .fighter
-                    print("La classe de \(team1.character1!.name) sera Combattant.")
+                    inputrole = "ok"
+                    currentCharacter.role = .fighter
+                    print("La classe de \(currentCharacter.name) sera Combattant.")
                 case "2":
-                    inputrole1 = "ok"
-                    team1.character1!.role = .wizard
-                    print("La classe de \(team1.character1!.name) sera Magicien.")
+                    inputrole = "ok"
+                    currentCharacter.role = .wizard
+                    print("La classe de \(currentCharacter.name) sera Magicien.")
                 case "3":
-                    inputrole1 = "ok"
-                    team1.character1!.role = .colossus
-                    print("La classe de \(team1.character1!.name) sera Colosse.")
+                    inputrole = "ok"
+                    currentCharacter.role = .colossus
+                    print("La classe de \(currentCharacter.name) sera Colosse.")
                 case "4":
-                    inputrole1 = "ok"
-                    team1.character1!.role = .dwarf
-                    print("La classe de \(team1.character1!.name) sera Nain.")
+                    inputrole = "ok"
+                    currentCharacter.role = .dwarf
+                    print("La classe de \(currentCharacter.name) sera Nain.")
                 default:
-                    inputrole1 = "ko"
+                    inputrole = "ko"
                     print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
                 }
                 print()
             }
             
-        } while inputrole1 == "ko"
+        } while inputrole == "ko"
         
-        print("Quelle arme brandira \(team1.character1!.name) le \(team1.character1!.roleName) ?"
+        print("Quelle arme brandira \(currentCharacter.name) le \(currentCharacter.roleName) ?"
             + "\n1. Epée."
             + "\n2. Bâton."
             + "\n3. Poings."
             + "\n4. Hache.")
         
-        var inputweapon1: String = ""
+        var inputweapon: String = ""
         
         repeat {
             
-            if let weapon1 = readLine() {
-                switch weapon1 {
+            if let weapon = readLine() {
+                switch weapon {
                 case "1":
-                    inputweapon1 = "ok"
-                    team1.character1!.weapon = Sword()
-                    print("\(team1.character1!.name) le \(team1.character1!.roleName) se saisit d'une épée et rentre dans l'arène !")
+                    inputweapon = "ok"
+                    currentCharacter.weapon = Sword()
+                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit d'une épée tranchante!")
                 case "2":
-                    inputweapon1 = "ok"
-                    team1.character1!.weapon = Stick()
-                    print("\(team1.character1!.name) le \(team1.character1!.roleName) se saisit de son bâton et rentre dans l'arène !")
+                    inputweapon = "ok"
+                    currentCharacter.weapon = Stick()
+                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit de son bâton !")
                 case "3":
-                    inputweapon1 = "ok"
-                    team1.character1!.weapon = Fists()
-                    print("\(team1.character1!.name) le \(team1.character1!.roleName) n'a besoin d'aucune arme pour écraser ses adversaires, et se rue dans l'arène !")
+                    inputweapon = "ok"
+                    currentCharacter.weapon = Fists()
+                    print("\(currentCharacter.name) le \(currentCharacter.roleName) n'a besoin d'aucune arme pour écraser ses adversaires !")
                 case "4":
-                    inputweapon1 = "ok"
-                    team1.character1!.weapon = Axe()
-                    print("\(team1.character1!.name) le \(team1.character1!.roleName) se saisit de la hache et rentre dans l'arène !")
+                    inputweapon = "ok"
+                    currentCharacter.weapon = Axe()
+                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit de la hache !")
                 default:
-                    inputweapon1 = "ko"
+                    inputweapon = "ko"
                     print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir l'arme correspondante.")
                 }
                 
             }
             
-        } while inputweapon1 == "ko"
+        } while inputweapon == "ko"
+        
+        return currentCharacter
         
     } // End of createTeam()
 }
-
-
-// Factoriser le code.
 
 // Corriger le problème de blocage sur "Combattant" dans role.
 

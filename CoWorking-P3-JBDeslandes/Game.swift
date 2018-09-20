@@ -93,5 +93,36 @@ class Game {
             + "\n3. Poings."
             + "\n4. Hache.")
         
+        var inputweapon1: String = ""
+        
+        repeat {
+            
+            if let weapon1 = readLine() {
+                switch weapon1 {
+                case "1":
+                    inputweapon1 = "ok"
+                    team1.character1!.weapon = Sword()
+                    print("\(team1.character1!.name) le \(team1.character1!.roleName) se saisit d'une épée et rentre dans l'arène !")
+                case "2":
+                    inputweapon1 = "ok"
+                    team1.character1!.weapon = Stick()
+                    print("\(team1.character1!.name) le \(team1.character1!.roleName) se saisit de son bâton et rentre dans l'arène !")
+                case "3":
+                    inputweapon1 = "ok"
+                    team1.character1!.weapon = Fists()
+                    print("\(team1.character1!.name) le \(team1.character1!.roleName) n'a besoin d'aucune arme pour écraser ses adversaires, et se rue dans l'arène !")
+                case "4":
+                    inputweapon1 = "ok"
+                    team1.character1!.weapon = Axe()
+                    print("\(team1.character1!.name) le \(team1.character1!.roleName) se saisit de la hache et rentre dans l'arène !")
+                default:
+                    inputweapon1 = "ko"
+                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir l'arme correspondante.")
+                }
+                
+            }
+            
+        } while inputweapon1 == "ko"
+        
     }
 }

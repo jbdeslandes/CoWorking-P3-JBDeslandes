@@ -38,5 +38,23 @@ class Game {
             print("Esprit & Robustesse sur toi, \(player2) !")
             print()
         }
+        
+        //        Team 1 : Création du 1er personnage :
+        
+        
+        print("\(team1.name) - Choisis le nom des héros qui composeront ton équipe !")
+        print()
+        print("Quel est le nom de ton premier 1er champion ?")
+        
+        if let hero1 = readLine() {
+            team1.character1 = Character(name: "\(hero1)", role: .fighter)
+            print()
+            print("Quelle sera la classe de \(hero1) ?"
+                + "\n1. Combattant."
+                + "\n2. Magicien."
+                + "\n3. Colosse."
+                + "\n4. Nain.")
+        }
+        
     }
 }

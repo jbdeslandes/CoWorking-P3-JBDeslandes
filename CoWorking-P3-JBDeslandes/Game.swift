@@ -56,5 +56,42 @@ class Game {
                 + "\n4. Nain.")
         }
         
+        var inputrole1: String = ""
+        
+        repeat {
+            
+            if let role1 = readLine() {
+                switch role1 {
+                case "1":
+                    inputrole1 = "ok"
+                    team1.character1!.role = .fighter
+                    print("La classe de \(team1.character1!.name) sera Combattant.")
+                case "2":
+                    inputrole1 = "ok"
+                    team1.character1!.role = .wizard
+                    print("La classe de \(team1.character1!.name) sera Magicien.")
+                case "3":
+                    inputrole1 = "ok"
+                    team1.character1!.role = .colossus
+                    print("La classe de \(team1.character1!.name) sera Colosse.")
+                case "4":
+                    inputrole1 = "ok"
+                    team1.character1!.role = .dwarf
+                    print("La classe de \(team1.character1!.name) sera Nain.")
+                default:
+                    inputrole1 = "ko"
+                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
+                }
+                print()
+            }
+            
+        } while inputrole1 == "ko"
+        
+        print("Quelle arme brandira \(team1.character1!.name) le \(team1.character1!.roleName) ?"
+            + "\n1. Epée."
+            + "\n2. Bâton."
+            + "\n3. Poings."
+            + "\n4. Hache.")
+        
     }
 }

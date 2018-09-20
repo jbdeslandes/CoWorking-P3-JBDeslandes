@@ -10,18 +10,7 @@ import Foundation
 
 class Game {
     
-    var team1 = Team(name: "")
-    var team2 = Team(name: "")
-    
-    
-    var character1: Character? = nil
-    var character2: Character? = nil
-    var character3: Character? = nil
-
-    func createTeams() {
-        
-        //      Noms des joueurs :
-        
+    func createPlayers() {
         
         print("Joueur 1 - Quel est ton nom ?")
         
@@ -39,11 +28,10 @@ class Game {
             print()
         }
         
-        //        Team 1 : Création du 1er personnage :
+    } // End of createPlayer()
+
+    func createTeam() {
         
-        
-        print("\(team1.name) - Choisis le nom des héros qui composeront ton équipe !")
-        print()
         print("Quel est le nom de ton premier 1er champion ?")
         
         if let hero1 = readLine() {
@@ -124,5 +112,12 @@ class Game {
             
         } while inputweapon1 == "ko"
         
-    }
+    } // End of createTeam()
 }
+
+
+// Factoriser le code.
+
+// Corriger le problème de blocage sur "Combattant" dans role.
+
+// Ajouter une phrase qui confirme les trois membres de l'équipe 1, et passer à l'équipe 2.

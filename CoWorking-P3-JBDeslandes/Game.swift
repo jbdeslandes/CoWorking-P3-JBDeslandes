@@ -31,50 +31,54 @@ class Game {
     } // End of createPlayer()
 
     func createHero(currentTeam: Team, characterNum: Int) -> Character {
-        
+
         print("Quel est le nom de ton champion numéro \(characterNum) ?")
         
         if let hero = readLine() {
-            currentCharacter = Character(name: "\(hero)", role: .fighter)
+            
             print()
+            
             print("Quelle sera la classe de \(hero) ?"
                 + "\n1. Combattant."
                 + "\n2. Magicien."
                 + "\n3. Colosse."
                 + "\n4. Nain.")
-        }
-        
-        var inputrole: String = ""
-        
-        repeat {
             
-            if let role = readLine() {
-                switch role {
-                case "1":
-                    inputrole = "ok"
-                    currentCharacter.role = .fighter
-                    print("La classe de \(currentCharacter.name) sera Combattant.")
-                case "2":
-                    inputrole = "ok"
-                    currentCharacter.role = .wizard
-                    print("La classe de \(currentCharacter.name) sera Magicien.")
-                case "3":
-                    inputrole = "ok"
-                    currentCharacter.role = .colossus
-                    print("La classe de \(currentCharacter.name) sera Colosse.")
-                case "4":
-                    inputrole = "ok"
-                    currentCharacter.role = .dwarf
-                    print("La classe de \(currentCharacter.name) sera Nain.")
-                default:
-                    inputrole = "ko"
-                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
+            var inputrole: String = ""
+            
+            repeat {
+                
+                if let role = readLine() {
+                    switch role {
+                    case "1":
+                        inputrole = "ok"
+                        currentCharacter = Character(name: "\(hero)", role: .fighter)
+                        print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
+                    case "2":
+                        inputrole = "ok"
+                        currentCharacter = Character(name: "\(hero)", role: .wizard)
+                        print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
+                    case "3":
+                        inputrole = "ok"
+                        currentCharacter = Character(name: "\(hero)", role: .colossus)
+                        print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
+                    case "4":
+                        inputrole = "ok"
+                        currentCharacter = Character(name: "\(hero)", role: .dwarf)
+                        print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
+                    default:
+                        inputrole = "ko"
+                        print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
+                    }
+                    
+                    print()
+                    
                 }
-                print()
-            }
+                
+            } while inputrole == "ko"
             
-        } while inputrole == "ko"
-        
+        }
+    
         print("Quelle arme brandira \(currentCharacter.name) le \(currentCharacter.roleName) ?"
             + "\n1. Epée."
             + "\n2. Bâton."
@@ -116,7 +120,3 @@ class Game {
         
     } // End of createTeam()
 }
-
-// Corriger le problème de blocage sur "Combattant" dans role.
-
-// Ajouter une phrase qui confirme les trois membres de l'équipe 1, et passer à l'équipe 2.

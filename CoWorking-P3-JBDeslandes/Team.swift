@@ -23,6 +23,5 @@ class Team {
         self.character2 = nil
         self.character3 = nil
     }
-    
 }
 

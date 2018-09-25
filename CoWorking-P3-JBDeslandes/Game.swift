@@ -120,34 +120,44 @@ class Game {
         
     } // End of createTeam()
     
-    func play(currentTeam: Team) {
+    func play(playingTeam: Team, waitingTeam: Team) {
         
-        print("\(currentTeam.name) - Quel champion souhaites-tu jouer ?"
+        attackTeam = playingTeam
+        defenseTeam = waitingTeam
+
+        print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?"
             + "\n"
-            + "\n1. \(currentTeam.character1!.name) - \(currentTeam.character1!.roleName) - Vie: \(currentTeam.character1!.life)"
-            + "\n2. \(currentTeam.character2!.name) - \(currentTeam.character2!.roleName) - Vie: \(currentTeam.character2!.life)"
-            + "\n3. \(currentTeam.character3!.name) - \(currentTeam.character3!.roleName) - Vie: \(currentTeam.character3!.life)")
+            + "\n1. \(attackTeam.character1!.name) - \(attackTeam.character1!.roleName) - Vie: \(attackTeam.character1!.life)"
+            + "\n2. \(attackTeam.character2!.name) - \(attackTeam.character2!.roleName) - Vie: \(attackTeam.character2!.life)"
+            + "\n3. \(attackTeam.character3!.name) - \(attackTeam.character3!.roleName) - Vie: \(attackTeam.character3!.life)")
         
-        var inputChoice: String = ""
+        var inputChoice: Bool = false
         
         repeat {
         
             if let choice = readLine() {
                 switch choice {
                 case "1":
-                    inputChoice = "ok"
-                    
+                    inputChoice = true
+                    currentCharacter = attackTeam.character1!
+                    attack()
                 case "2":
-                    inputChoice = "ok"
+                    inputChoice = true
+                    currentCharacter = attackTeam.character2!
+                    attack()
                 case "3":
-                    inputChoice = "ok"
+                    inputChoice = true
+                    currentCharacter = attackTeam.character3!
+                    attack()
                 default:
-                    inputChoice = "ko"
+                    inputChoice = false
+                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
                 }
                 
             }
         
-        } while inputChoice == "ko"
+        } while inputChoice == false
+        
     } // End of play()
     
     func takeDamage(attackedTeam: Team) {

@@ -12,8 +12,11 @@ var character1: Character? = nil
 var character2: Character? = nil
 var character3: Character? = nil
 
-var currentTeam: Team
+var attackTeam: Team
+var defenseTeam: Team
+
 var currentCharacter: Character
+
 
 print("Bienvenue dans l'arène !")
 print()
@@ -34,17 +37,14 @@ print()
 
 currentCharacter = game.createHero(currentTeam: team1, characterNum: 1)
 team1.character1 = currentCharacter
-print()
 
 currentCharacter = game.createHero(currentTeam: team1, characterNum: 2)
 team1.character2 = currentCharacter
-print()
 
 currentCharacter = game.createHero(currentTeam: team1, characterNum: 3)
 team1.character3 = currentCharacter
-print()
 
-print("\(team1.name) - Tes champions \(team1.character1!.name), \(team1.character2!.name) et \(team1.character3!.name) rentrent dans l'arène et attendent leurs adversaires de pied ferme..")
+print("\(team1.name) - Tes champions \(team1.character1!.name), \(team1.character2!.name) et \(team1.character3!.name) atteignent l'arène et attendent leurs adversaires de pied ferme..")
 print()
 
 print("\(team2.name) - A toi maintenant de choisir le nom des héros qui composeront ton équipe !")
@@ -52,16 +52,21 @@ print()
 
 currentCharacter = game.createHero(currentTeam: team2, characterNum: 1)
 team2.character1 = currentCharacter
-print()
 
 currentCharacter = game.createHero(currentTeam: team2, characterNum: 2)
 team2.character2 = currentCharacter
-print()
 
 currentCharacter = game.createHero(currentTeam: team2, characterNum: 3)
 team2.character3 = currentCharacter
+
+print("\(team2.name) - Tes champions \(team2.character1!.name), \(team2.character2!.name) et \(team2.character3!.name) rejoignent l'enceinte et font face à leurs rivaux..")
 print()
 
-print("\(team2.name) - Tes champions \(team2.character1!.name), \(team2.character2!.name) et \(team2.character3!.name) rentrent dans l'arène et attendent leurs adversaires de pied ferme..")
+// BATTLE MODE
+
+print("QUE LE COMBAT COMMENCE !")
 print()
+
+game.play(playingTeam: team1, waitingTeam: team2)
+game.play(playingTeam: team2, waitingTeam: team1)
 

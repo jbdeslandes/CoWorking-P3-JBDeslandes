@@ -44,30 +44,30 @@ class Game {
                 + "\n3. Colosse."
                 + "\n4. Nain.")
             
-            var inputrole: String = ""
+            var inputrole: Bool = false
             
             repeat {
                 
                 if let role = readLine() {
                     switch role {
                     case "1":
-                        inputrole = "ok"
+                        inputrole = true
                         currentCharacter = Character(name: "\(hero)", role: .fighter)
                         print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
                     case "2":
-                        inputrole = "ok"
+                        inputrole = true
                         currentCharacter = Character(name: "\(hero)", role: .wizard)
                         print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
                     case "3":
-                        inputrole = "ok"
+                        inputrole = true
                         currentCharacter = Character(name: "\(hero)", role: .colossus)
                         print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
                     case "4":
-                        inputrole = "ok"
+                        inputrole = true
                         currentCharacter = Character(name: "\(hero)", role: .dwarf)
                         print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
                     default:
-                        inputrole = "ko"
+                        inputrole = false
                         print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
                     }
                     
@@ -75,7 +75,7 @@ class Game {
                     
                 }
                 
-            } while inputrole == "ko"
+            } while inputrole == false
             
         }
     
@@ -85,40 +85,42 @@ class Game {
             + "\n3. Poings."
             + "\n4. Hache.")
         
-        var inputweapon: String = ""
+        var inputweapon: Bool = false
         
         repeat {
             
             if let weapon = readLine() {
                 switch weapon {
                 case "1":
-                    inputweapon = "ok"
+                    inputweapon = true
                     currentCharacter.weapon = Sword()
                     print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit d'une épée tranchante!")
                 case "2":
-                    inputweapon = "ok"
+                    inputweapon = true
                     currentCharacter.weapon = Stick()
                     print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit de son bâton !")
                 case "3":
-                    inputweapon = "ok"
+                    inputweapon = true
                     currentCharacter.weapon = Fists()
                     print("\(currentCharacter.name) le \(currentCharacter.roleName) n'a besoin d'aucune arme pour écraser ses adversaires !")
                 case "4":
-                    inputweapon = "ok"
+                    inputweapon = true
                     currentCharacter.weapon = Axe()
                     print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit de la hache !")
                 default:
-                    inputweapon = "ko"
+                    inputweapon = false
                     print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir l'arme correspondante.")
                 }
                 
+                print()
+                
             }
             
-        } while inputweapon == "ko"
+        } while inputweapon == false
         
         return currentCharacter
         
-    } // End of createTeam()
+    } // End of createHero()
     
     func play(playingTeam: Team, waitingTeam: Team) {
         
@@ -160,34 +162,46 @@ class Game {
         
     } // End of play()
     
-    func takeDamage(attackedTeam: Team) {
+    func attack() {
         
-        print("\(currentTeam.name) - Quel adversaire souhaites-tu attaquer ?"
+        print("\(attackTeam.name) - Quel adversaire \(currentCharacter.name) doit-il attaquer ?"
             + "\n"
-            + "\n1. \(attackedTeam.character1!.name) - \(attackedTeam.character1!.roleName) - Vie: \(attackedTeam.character1!.life)"
-            + "\n2. \(attackedTeam.character2!.name) - \(attackedTeam.character2!.roleName) - Vie: \(attackedTeam.character2!.life)"
-            + "\n3. \(attackedTeam.character3!.name) - \(attackedTeam.character3!.roleName) - Vie: \(attackedTeam.character3!.life)")
+            + "\n1. \(defenseTeam.character1!.name) - \(defenseTeam.character1!.roleName) - Vie: \(defenseTeam.character1!.life)"
+            + "\n2. \(defenseTeam.character2!.name) - \(defenseTeam.character2!.roleName) - Vie: \(defenseTeam.character2!.life)"
+            + "\n3. \(defenseTeam.character3!.name) - \(defenseTeam.character3!.roleName) - Vie: \(defenseTeam.character3!.life)")
         
-        var inputChoice: String = ""
+        var inputChoice: Bool = false
         
         repeat {
         
             if let choice = readLine() {
                 switch choice {
                 case "1":
-                    inputChoice = "ok"
+                    inputChoice = true
+                    defenseTeam.character1!.life = defenseTeam.character1!.life - currentCharacter.weapon!.damage
+                    print("\(currentCharacter.name) inflige \(currentCharacter.weapon!.damage) dégats à \(defenseTeam.character1!.name) !")
                 case "2":
-                    inputChoice = "ok"
+                    inputChoice = true
+                    defenseTeam.character2!.life = defenseTeam.character2!.life - currentCharacter.weapon!.damage
+                    print("\(currentCharacter.name) inflige \(currentCharacter.weapon!.damage) dégats à \(defenseTeam.character2!.name) !")
                 case "3":
-                    inputChoice = "ok"
+                    inputChoice = true
+                    defenseTeam.character3!.life = defenseTeam.character3!.life - currentCharacter.weapon!.damage
+                    print("\(currentCharacter.name) inflige \(currentCharacter.weapon!.damage) dégats à \(defenseTeam.character3!.name) !")
                 default:
-                    inputChoice = "ko"
+                    inputChoice = false
+                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
                 }
+                print()
             }
             
-        } while inputChoice == "ko"
+        } while inputChoice == false
+        
     } // End of attackedTeam()
     
 } // End of Game class
 
-// Définir func play() dans laquelle on choisit le personnage ? et définir à l'intérieur la func attack()
+/* - Détecter quand un personnage est mort. Afficher un message d'erreur et revenir au choix des cibles à attaquer.
+   - Détecter lorsque tous les personnages d'une équipe sont morts et afficher le message de fin de partie.
+   - Organiser play() autour d'un paramètre "tour", pour que la fonction switch les équipes en postion d'attaque / défense, et passe automatiquement au tour suivant jusqu'au message de victoire. */
+

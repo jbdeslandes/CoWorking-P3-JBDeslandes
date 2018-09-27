@@ -7,7 +7,7 @@
 // MARK: - Weapons
 //=================
 
-// Valeurs utilisées pour l'équilibrage:
+// Balancing values:
 
 //let SWORD_DAMAGE = 10
 //let STICK_DAMAGE = 5

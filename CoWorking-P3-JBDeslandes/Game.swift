@@ -10,6 +10,9 @@ import Foundation
 
 class Game {
     
+    private var memNames: [String] = []
+//    To not duplicate champion's names
+    
     func createPlayers() {
         
         print("Joueur 1 - Quel est ton nom ?")
@@ -31,11 +34,35 @@ class Game {
     } // End of createPlayer()
 
     func createHero(currentTeam: Team, characterNum: Int) -> Character {
+        
+        var hero: String = ""
+        
+        var duplicate: Bool = false
 
         print("Quel est le nom de ton champion numéro \(characterNum) ?")
         
-        if let hero = readLine() {
+        repeat {
+        
+            hero = readLine()!
             
+            duplicate = false
+                
+                for i in 0..<memNames.count {
+                    if hero == memNames[i] {
+                        duplicate = true
+                    }
+                }
+            
+                if duplicate == true {
+                    print()
+                    print("Ce nom est déjà pris, veuillez recommencer.")
+                }
+            
+        } while duplicate == true
+        
+        memNames.append(hero)
+//        Hero's name added
+        
             print()
             
             print("Quelle sera la classe de \(hero) ?"
@@ -77,7 +104,7 @@ class Game {
                 
             } while inputrole == false
             
-        }
+        
     
         print("Quelle arme brandira \(currentCharacter.name) le \(currentCharacter.roleName) ?"
             + "\n1. Epée."
@@ -133,36 +160,31 @@ class Game {
             + "\n2. \(attackTeam.character2!.name) - \(attackTeam.character2!.roleName) - Vie: \(attackTeam.character2!.life)"
             + "\n3. \(attackTeam.character3!.name) - \(attackTeam.character3!.roleName) - Vie: \(attackTeam.character3!.life)")
         
-        var inputChoice: Bool = false
+//        Incorporer la cible
+        
+        var inputChoice1: Bool = false
         
         repeat {
         
             if let choice = readLine() {
                 switch choice {
                 case "1":
-                    inputChoice = true
+                    inputChoice1 = true
                     currentCharacter = attackTeam.character1!
-                    attack()
                 case "2":
-                    inputChoice = true
+                    inputChoice1 = true
                     currentCharacter = attackTeam.character2!
-                    attack()
                 case "3":
-                    inputChoice = true
+                    inputChoice1 = true
                     currentCharacter = attackTeam.character3!
-                    attack()
                 default:
-                    inputChoice = false
+                    inputChoice1 = false
                     print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
                 }
                 
             }
         
-        } while inputChoice == false
-        
-    } // End of play()
-    
-    func attack() {
+        } while inputChoice1 == false
         
         print("\(attackTeam.name) - Quel adversaire \(currentCharacter.name) doit-il attaquer ?"
             + "\n"
@@ -170,38 +192,46 @@ class Game {
             + "\n2. \(defenseTeam.character2!.name) - \(defenseTeam.character2!.roleName) - Vie: \(defenseTeam.character2!.life)"
             + "\n3. \(defenseTeam.character3!.name) - \(defenseTeam.character3!.roleName) - Vie: \(defenseTeam.character3!.life)")
         
-        var inputChoice: Bool = false
+        var inputChoice2: Bool = false
         
         repeat {
-        
+            
             if let choice = readLine() {
                 switch choice {
                 case "1":
-                    inputChoice = true
-                    defenseTeam.character1!.life = defenseTeam.character1!.life - currentCharacter.weapon!.damage
-                    print("\(currentCharacter.name) inflige \(currentCharacter.weapon!.damage) dégats à \(defenseTeam.character1!.name) !")
+                    inputChoice2 = true
+                    defenseCharacter = defenseTeam.character1!
+                    attack()
                 case "2":
-                    inputChoice = true
-                    defenseTeam.character2!.life = defenseTeam.character2!.life - currentCharacter.weapon!.damage
-                    print("\(currentCharacter.name) inflige \(currentCharacter.weapon!.damage) dégats à \(defenseTeam.character2!.name) !")
+                    inputChoice2 = true
+                    defenseCharacter = defenseTeam.character2!
+                    attack()
                 case "3":
-                    inputChoice = true
-                    defenseTeam.character3!.life = defenseTeam.character3!.life - currentCharacter.weapon!.damage
-                    print("\(currentCharacter.name) inflige \(currentCharacter.weapon!.damage) dégats à \(defenseTeam.character3!.name) !")
+                    inputChoice2 = true
+                    defenseCharacter = defenseTeam.character3!
+                    attack()
                 default:
-                    inputChoice = false
+                    inputChoice2 = false
                     print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
                 }
                 print()
             }
             
-        } while inputChoice == false
+        } while inputChoice2 == false
         
-    } // End of attackedTeam()
+    } // End of play()
+    
+    func attack() {
+        
+        defenseCharacter.life = defenseCharacter.life - currentCharacter.weapon!.damage
+        print("\(currentCharacter.name) inflige \(currentCharacter.weapon!.damage) dégats à \(defenseCharacter.name) !")
+        
+//        Incorporer if character is dead
+        
+    } // End of attack()
     
 } // End of Game class
 
 /* - Détecter quand un personnage est mort. Afficher un message d'erreur et revenir au choix des cibles à attaquer.
    - Détecter lorsque tous les personnages d'une équipe sont morts et afficher le message de fin de partie.
    - Organiser play() autour d'un paramètre "tour", pour que la fonction switch les équipes en postion d'attaque / défense, et passe automatiquement au tour suivant jusqu'au message de victoire. */
-

@@ -8,14 +8,11 @@
 
 import Foundation
 
-var character1: Character? = nil
-var character2: Character? = nil
-var character3: Character? = nil
-
 var attackTeam: Team
 var defenseTeam: Team
 
 var currentCharacter: Character
+var defenseCharacter: Character
 
 
 print("Bienvenue dans l'arène !")
@@ -69,4 +66,5 @@ print()
 
 game.play(playingTeam: team1, waitingTeam: team2)
 game.play(playingTeam: team2, waitingTeam: team1)
-
+game.play(playingTeam: team1, waitingTeam: team2)
+game.play(playingTeam: team2, waitingTeam: team1)

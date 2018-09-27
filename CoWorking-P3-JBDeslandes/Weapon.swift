@@ -20,24 +20,24 @@ class Weapon {
 
 class Sword: Weapon {
     init() {
-        super.init(damage: 10)
+        super.init(damage: SWORD_DAMAGE)
     }
 }
 
 class Stick: Weapon {
     init() {
-        super.init(damage: 5)
+        super.init(damage: STICK_DAMAGE)
     }
 }
 
 class Fists: Weapon {
     init() {
-        super.init(damage: 8)
+        super.init(damage: FISTS_DAMAGE)
     }
 }
 
 class Axe: Weapon {
     init() {
-        super.init(damage: 12)
+        super.init(damage: AXE_DAMAGE)
     }
 }

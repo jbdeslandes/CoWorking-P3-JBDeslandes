@@ -12,6 +12,7 @@
 		B3116E5A21527FF100728516 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3116E5921527FF100728516 /* Team.swift */; };
 		B3116E5C2152800000728516 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3116E5B2152800000728516 /* Character.swift */; };
 		B3116E5E2152800C00728516 /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3116E5D2152800C00728516 /* Weapon.swift */; };
+		B31A872F215D271C0052ECEC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A872E215D271C0052ECEC /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,7 @@
 		B3116E5921527FF100728516 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		B3116E5B2152800000728516 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		B3116E5D2152800C00728516 /* Weapon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
+		B31A872E215D271C0052ECEC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				B3116E5921527FF100728516 /* Team.swift */,
 				B3116E5B2152800000728516 /* Character.swift */,
 				B3116E5D2152800C00728516 /* Weapon.swift */,
+				B31A872E215D271C0052ECEC /* Constants.swift */,
 			);
 			path = "CoWorking-P3-JBDeslandes";
 			sourceTree = "<group>";
@@ -136,6 +139,7 @@
 				B3116E5121527B6D00728516 /* main.swift in Sources */,
 				B3116E5821527FE600728516 /* Game.swift in Sources */,
 				B3116E5C2152800000728516 /* Character.swift in Sources */,
+				B31A872F215D271C0052ECEC /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,19 +23,19 @@ class Character {
         switch role {
         case .fighter:
             roleName = "Combattant"
-            life = 100
+            life = FIGHTER_LIFE
             weapon = nil
         case .wizard:
             roleName = "Magicien"
-            life = 100
+            life = WIZARD_LIFE
             weapon = nil
         case .colossus:
             roleName = "Colosse"
-            life = 120
+            life = COLOSSUS_LIFE
             weapon = nil
         case .dwarf:
             roleName = "Nain"
-            life = 80
+            life = DWARF_LIFE
             weapon = nil
         }
     }

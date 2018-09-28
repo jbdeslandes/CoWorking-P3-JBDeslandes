@@ -223,8 +223,16 @@ class Game {
     
     func attack() {
         
+        let minimumLife = 0
+        
         defenseCharacter.life = defenseCharacter.life - currentCharacter.weapon!.damage
         print("\(currentCharacter.name) inflige \(currentCharacter.weapon!.damage) dégats à \(defenseCharacter.name) !")
+        
+        
+        if defenseCharacter.life <= minimumLife {
+            defenseCharacter.life = minimumLife
+            print("\(defenseCharacter.name) est mort !")
+        }
         
 //        Incorporer if character is dead
         
@@ -232,6 +240,6 @@ class Game {
     
 } // End of Game class
 
-/* - Détecter quand un personnage est mort. Afficher un message d'erreur et revenir au choix des cibles à attaquer.
+/* - Afficher un message d'erreur et revenir au choix des cibles à attaquer lorsqu'un personnage est mort.
    - Détecter lorsque tous les personnages d'une équipe sont morts et afficher le message de fin de partie.
    - Organiser play() autour d'un paramètre "tour", pour que la fonction switch les équipes en postion d'attaque / défense, et passe automatiquement au tour suivant jusqu'au message de victoire. */

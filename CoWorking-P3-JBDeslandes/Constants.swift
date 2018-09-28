@@ -15,6 +15,8 @@ let WIZARD_LIFE = 100
 let COLOSSUS_LIFE = 120
 let DWARF_LIFE = 80
 
+let DEAD = 0
+
 //=================
 // MARK: - Weapons
 //=================

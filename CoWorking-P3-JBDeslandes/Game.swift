@@ -226,14 +226,12 @@ class Game {
     
     func attack() {
         
-        let minimumLife = 0
-        
         defenseCharacter.life = defenseCharacter.life - currentCharacter.weapon!.damage
         print("\(currentCharacter.name) inflige \(currentCharacter.weapon!.damage) points de dégats à \(defenseCharacter.name) !")
         print()
         
-        if defenseCharacter.life <= minimumLife {
-            defenseCharacter.life = minimumLife
+        if defenseCharacter.life <= DEAD {
+            defenseCharacter.life = DEAD
             print("\(defenseCharacter.name) est mort !")
             print()
         }
@@ -242,7 +240,7 @@ class Game {
     
     func deadCurrentCharacter() {
         
-        if currentCharacter.life == 0 {
+        if currentCharacter.life == DEAD {
             
             isCharacterDead = true
             print("\(currentCharacter.name) est mort. Veuillez sélectionner un autre champion !")
@@ -257,7 +255,7 @@ class Game {
     
     func deadDefenseCharacter() {
         
-        if defenseCharacter.life == 0 {
+        if defenseCharacter.life == DEAD {
             
                 isCharacterDead = true
                 print("\(defenseCharacter.name) est mort. Veuillez sélectionner un autre champion !")

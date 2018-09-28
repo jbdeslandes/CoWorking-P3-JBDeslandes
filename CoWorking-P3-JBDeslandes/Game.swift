@@ -10,6 +10,9 @@ import Foundation
 
 class Game {
     
+    private var isCharacterDead = false
+//    To control if a character is playable
+    
     private var memNames: [String] = []
 //    To not duplicate champion's names
     
@@ -61,51 +64,50 @@ class Game {
         } while duplicate == true
         
         memNames.append(hero)
-//        Hero's name added
+//        Hero's name added to memory
         
-            print()
+        print()
             
-            print("Quelle sera la classe de \(hero) ?"
-                + "\n1. Combattant."
-                + "\n2. Magicien."
-                + "\n3. Colosse."
-                + "\n4. Nain.")
+        print("Quelle sera la classe de \(hero) ?"
+            + "\n1. Combattant."
+            + "\n2. Magicien."
+            + "\n3. Colosse."
+            + "\n4. Nain.")
             
-            var inputrole: Bool = false
+        var inputrole: Bool = false
             
-            repeat {
+        repeat {
                 
-                if let role = readLine() {
-                    switch role {
-                    case "1":
-                        inputrole = true
-                        currentCharacter = Character(name: "\(hero)", role: .fighter)
-                        print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
-                    case "2":
-                        inputrole = true
-                        currentCharacter = Character(name: "\(hero)", role: .wizard)
-                        print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
-                    case "3":
-                        inputrole = true
-                        currentCharacter = Character(name: "\(hero)", role: .colossus)
-                        print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
-                    case "4":
-                        inputrole = true
-                        currentCharacter = Character(name: "\(hero)", role: .dwarf)
-                        print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
-                    default:
-                        inputrole = false
-                        print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
-                    }
-                    
-                    print()
-                    
+            if let role = readLine() {
+                switch role {
+                case "1":
+                    inputrole = true
+                    currentCharacter = Character(name: "\(hero)", role: .fighter)
+                    print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
+                case "2":
+                    inputrole = true
+                    currentCharacter = Character(name: "\(hero)", role: .wizard)
+                    print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
+                case "3":
+                    inputrole = true
+                    currentCharacter = Character(name: "\(hero)", role: .colossus)
+                    print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
+                case "4":
+                    inputrole = true
+                    currentCharacter = Character(name: "\(hero)", role: .dwarf)
+                    print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
+                default:
+                    inputrole = false
+                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
                 }
+                    
+                print()
+                    
+            }
                 
-            } while inputrole == false
-            
+        } while inputrole == false
         
-    
+        
         print("Quelle arme brandira \(currentCharacter.name) le \(currentCharacter.roleName) ?"
             + "\n1. Epée."
             + "\n2. Bâton."
@@ -160,8 +162,6 @@ class Game {
             + "\n2. \(attackTeam.character2!.name) - \(attackTeam.character2!.roleName) - Vie: \(attackTeam.character2!.life)"
             + "\n3. \(attackTeam.character3!.name) - \(attackTeam.character3!.roleName) - Vie: \(attackTeam.character3!.life)")
         
-//        Incorporer la cible
-        
         var inputChoice1: Bool = false
         
         repeat {
@@ -182,9 +182,11 @@ class Game {
                     print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
                 }
                 
+                deadCurrentCharacter()
+                
             }
         
-        } while inputChoice1 == false
+        } while inputChoice1 == false || isCharacterDead == true
         
         print("\(attackTeam.name) - Quel adversaire \(currentCharacter.name) doit-il attaquer ?"
             + "\n"
@@ -201,23 +203,24 @@ class Game {
                 case "1":
                     inputChoice2 = true
                     defenseCharacter = defenseTeam.character1!
-                    attack()
                 case "2":
                     inputChoice2 = true
                     defenseCharacter = defenseTeam.character2!
-                    attack()
                 case "3":
                     inputChoice2 = true
                     defenseCharacter = defenseTeam.character3!
-                    attack()
                 default:
                     inputChoice2 = false
                     print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
                 }
-                print()
+                
+                deadDefenseCharacter()
+                
             }
             
-        } while inputChoice2 == false
+        } while inputChoice2 == false || isCharacterDead == true
+        
+        attack()
         
     } // End of play()
     
@@ -226,20 +229,49 @@ class Game {
         let minimumLife = 0
         
         defenseCharacter.life = defenseCharacter.life - currentCharacter.weapon!.damage
-        print("\(currentCharacter.name) inflige \(currentCharacter.weapon!.damage) dégats à \(defenseCharacter.name) !")
-        
+        print("\(currentCharacter.name) inflige \(currentCharacter.weapon!.damage) points de dégats à \(defenseCharacter.name) !")
+        print()
         
         if defenseCharacter.life <= minimumLife {
             defenseCharacter.life = minimumLife
             print("\(defenseCharacter.name) est mort !")
+            print()
         }
-        
-//        Incorporer if character is dead
         
     } // End of attack()
     
+    func deadCurrentCharacter() {
+        
+        if currentCharacter.life == 0 {
+            
+            isCharacterDead = true
+            print("\(currentCharacter.name) est mort. Veuillez sélectionner un autre champion !")
+            
+        } else {
+            
+            isCharacterDead = false
+            
+        }
+
+    } // End of deadCurrentCharacter()
+    
+    func deadDefenseCharacter() {
+        
+        if defenseCharacter.life == 0 {
+            
+                isCharacterDead = true
+                print("\(defenseCharacter.name) est mort. Veuillez sélectionner un autre champion !")
+        
+        } else {
+            
+            isCharacterDead = false
+            
+        }
+        
+    } // End of deadDefenseCharacter()
+    
 } // End of Game class
 
-/* - Afficher un message d'erreur et revenir au choix des cibles à attaquer lorsqu'un personnage est mort.
-   - Détecter lorsque tous les personnages d'une équipe sont morts et afficher le message de fin de partie.
-   - Organiser play() autour d'un paramètre "tour", pour que la fonction switch les équipes en postion d'attaque / défense, et passe automatiquement au tour suivant jusqu'au message de victoire. */
+/*  - Détecter lorsque tous les personnages d'une équipe sont morts et afficher le message de fin de partie.
+    - Organiser play() autour d'un paramètre "tour", pour que la fonction switch les équipes en postion d'attaque / défense, et passe automatiquement au tour suivant jusqu'au message de victoire. */
+ 

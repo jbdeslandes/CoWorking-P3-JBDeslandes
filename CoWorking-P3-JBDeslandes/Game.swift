@@ -48,6 +48,8 @@ class Game {
         
             hero = readLine()!
             
+//          hero = lowerCase(hero) (convertir la saisie en minuscule)
+            
             duplicate = false
                 
                 for i in 0..<memNames.count {
@@ -60,6 +62,8 @@ class Game {
                     print()
                     print("Ce nom est déjà pris, veuillez recommencer.")
                 }
+       
+            //            hero = Passer la premièere lettre en majuscule) :Uppercase first
             
         } while duplicate == true
         
@@ -151,83 +155,52 @@ class Game {
         
     } // End of createHero()
     
-    func play(playingTeam: Team, waitingTeam: Team) {
+    func randomTeamChoice() {
         
-        attackTeam = playingTeam
-        defenseTeam = waitingTeam
+       let Choice = Bool.random()
+        
+        if Choice == true {
+            
+            attackTeam = team1
+            defenseTeam = team2
+            
+        } else {
+            
+            attackTeam = team2
+            defenseTeam = team1
+            
+        }
+        
+        print("Le peuple a parlé ! L'équipe de \(attackTeam.name) donnera le premier assaut !")
+        print()
+    
+    } // End of randomTeamChoice
+    
+    func play() {
+        
+        var turn: Int = 1
 
-        print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?"
-            + "\n"
-            + "\n1. \(attackTeam.character1!.name) - \(attackTeam.character1!.roleName) - Vie: \(attackTeam.character1!.life)"
-            + "\n2. \(attackTeam.character2!.name) - \(attackTeam.character2!.roleName) - Vie: \(attackTeam.character2!.life)"
-            + "\n3. \(attackTeam.character3!.name) - \(attackTeam.character3!.roleName) - Vie: \(attackTeam.character3!.life)")
+        print("TOUR \(turn)")
+        print()
         
-        var inputChoice1: Bool = false
+        print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
         
-        repeat {
+        attackCharacter = characterChoice(currentTeam: attackTeam)
         
-            if let choice = readLine() {
-                switch choice {
-                case "1":
-                    inputChoice1 = true
-                    currentCharacter = attackTeam.character1!
-                case "2":
-                    inputChoice1 = true
-                    currentCharacter = attackTeam.character2!
-                case "3":
-                    inputChoice1 = true
-                    currentCharacter = attackTeam.character3!
-                default:
-                    inputChoice1 = false
-                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
-                }
-                
-                deadCurrentCharacter()
-                
-            }
-        
-        } while inputChoice1 == false || isCharacterDead == true
-        
-        print("\(attackTeam.name) - Quel adversaire \(currentCharacter.name) doit-il attaquer ?"
-            + "\n"
-            + "\n1. \(defenseTeam.character1!.name) - \(defenseTeam.character1!.roleName) - Vie: \(defenseTeam.character1!.life)"
-            + "\n2. \(defenseTeam.character2!.name) - \(defenseTeam.character2!.roleName) - Vie: \(defenseTeam.character2!.life)"
-            + "\n3. \(defenseTeam.character3!.name) - \(defenseTeam.character3!.roleName) - Vie: \(defenseTeam.character3!.life)")
-        
-        var inputChoice2: Bool = false
-        
-        repeat {
+        print("\(attackTeam.name) - Quel adversaire \(currentCharacter.name) doit-il attaquer ?")
             
-            if let choice = readLine() {
-                switch choice {
-                case "1":
-                    inputChoice2 = true
-                    defenseCharacter = defenseTeam.character1!
-                case "2":
-                    inputChoice2 = true
-                    defenseCharacter = defenseTeam.character2!
-                case "3":
-                    inputChoice2 = true
-                    defenseCharacter = defenseTeam.character3!
-                default:
-                    inputChoice2 = false
-                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
-                }
-                
-                deadDefenseCharacter()
-                
-            }
-            
-        } while inputChoice2 == false || isCharacterDead == true
-        
+        defenseCharacter = characterChoice(currentTeam: defenseTeam)
+
         attack()
+        
+        turn += 1
         
     } // End of play()
     
     func attack() {
         
-        defenseCharacter.life = defenseCharacter.life - currentCharacter.weapon!.damage
-        print("\(currentCharacter.name) inflige \(currentCharacter.weapon!.damage) points de dégats à \(defenseCharacter.name) !")
+        defenseCharacter.life = defenseCharacter.life - attackCharacter.weapon!.damage
+        print("\(attackCharacter.name) inflige \(attackCharacter.weapon!.damage) points de dégats à \(defenseCharacter.name) !")
         print()
         
         if defenseCharacter.life <= DEAD {
@@ -238,7 +211,7 @@ class Game {
         
     } // End of attack()
     
-    func deadCurrentCharacter() {
+    func deadCharacter() {
         
         if currentCharacter.life == DEAD {
             
@@ -253,23 +226,45 @@ class Game {
 
     } // End of deadCurrentCharacter()
     
-    func deadDefenseCharacter() {
+    func characterChoice(currentTeam: Team) -> Character {
         
-        if defenseCharacter.life == DEAD {
-            
-                isCharacterDead = true
-                print("\(defenseCharacter.name) est mort. Veuillez sélectionner un autre champion !")
+        print("\n1. \(currentTeam.character1!.name) - \(currentTeam.character1!.roleName) - Vie: \(currentTeam.character1!.life)"
+            + "\n2. \(currentTeam.character2!.name) - \(currentTeam.character2!.roleName) - Vie: \(currentTeam.character2!.life)"
+            + "\n3. \(currentTeam.character3!.name) - \(currentTeam.character3!.roleName) - Vie: \(currentTeam.character3!.life)")
         
-        } else {
-            
-            isCharacterDead = false
-            
-        }
+        var inputChoice1: Bool = false
         
-    } // End of deadDefenseCharacter()
+        repeat {
+            
+            if let choice = readLine() {
+                switch choice {
+                case "1":
+                    inputChoice1 = true
+                    currentCharacter = currentTeam.character1!
+                case "2":
+                    inputChoice1 = true
+                    currentCharacter = currentTeam.character2!
+                case "3":
+                    inputChoice1 = true
+                    currentCharacter = currentTeam.character3!
+                default:
+                    inputChoice1 = false
+                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
+                }
+                
+                deadCharacter()
+                
+            }
+            
+        } while inputChoice1 == false || isCharacterDead == true
+        
+        return currentCharacter
+        
+    } // End of characterChoice()
     
 } // End of Game class
 
 /*  - Détecter lorsque tous les personnages d'une équipe sont morts et afficher le message de fin de partie.
-    - Organiser play() autour d'un paramètre "tour", pour que la fonction switch les équipes en postion d'attaque / défense, et passe automatiquement au tour suivant jusqu'au message de victoire. */
+    - Organiser play() autour d'un paramètre "tour", pour que la fonction switch les équipes en postion d'attaque / défense, et passe automatiquement au tour suivant jusqu'au message de victoire.
+    - Supprimer paramètres playingteam / waitingteam au profit d'une boucle while répétant la fonction jusqu'à ce qu'une équipe soit morte */
  

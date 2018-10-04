@@ -8,12 +8,13 @@
 
 import Foundation
 
-var attackTeam: Team
-var defenseTeam: Team
-
 var currentCharacter: Character
+var attackCharacter : Character
 var defenseCharacter: Character
 
+var currentTeam: Team
+var attackTeam: Team
+var defenseTeam: Team
 
 print("Bienvenue dans l'arène !")
 print()
@@ -59,12 +60,16 @@ team2.character3 = currentCharacter
 print("\(team2.name) - Tes champions \(team2.character1!.name), \(team2.character2!.name) et \(team2.character3!.name) rejoignent l'enceinte et font face à leurs rivaux..")
 print()
 
+// FIRST PLAYER RANDOM SELECTION
+
+game.randomTeamChoice()
+
 // BATTLE MODE
 
 print("QUE LE COMBAT COMMENCE !")
 print()
 
-game.play(playingTeam: team1, waitingTeam: team2)
-game.play(playingTeam: team2, waitingTeam: team1)
-game.play(playingTeam: team1, waitingTeam: team2)
-game.play(playingTeam: team2, waitingTeam: team1)
+game.play()
+game.play()
+
+// Voir la doc print("separator, terminator")

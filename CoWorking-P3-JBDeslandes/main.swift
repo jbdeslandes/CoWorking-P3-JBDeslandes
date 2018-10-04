@@ -70,6 +70,5 @@ print("QUE LE COMBAT COMMENCE !")
 print()
 
 game.play()
-game.play()
 
 // Voir la doc print("separator, terminator")

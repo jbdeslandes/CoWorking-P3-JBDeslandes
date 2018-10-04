@@ -10,8 +10,11 @@ import Foundation
 
 class Game {
     
-    private var isCharacterDead = false
+    private var isCharacterDead: Bool = false
 //    To control if a character is playable
+    
+    private var isTeamDead: Bool = false
+//    To control how to end game
     
     private var memNames: [String] = []
 //    To not duplicate champion's names
@@ -174,26 +177,34 @@ class Game {
         print("Le peuple a parlé ! L'équipe de \(attackTeam.name) donnera le premier assaut !")
         print()
     
-    } // End of randomTeamChoice
+    } // End of randomTeamChoice()
     
     func play() {
         
         var turn: Int = 1
-
-        print("TOUR \(turn)")
-        print()
         
-        print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
+        repeat {
         
-        attackCharacter = characterChoice(currentTeam: attackTeam)
-        
-        print("\(attackTeam.name) - Quel adversaire \(currentCharacter.name) doit-il attaquer ?")
+            print("TOUR \(turn)")
+            print()
             
-        defenseCharacter = characterChoice(currentTeam: defenseTeam)
+            print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
+            
+            attackCharacter = characterChoice(currentTeam: attackTeam)
+            
+            print("\(attackTeam.name) - Quel adversaire \(currentCharacter.name) doit-il attaquer ?")
+            
+            defenseCharacter = characterChoice(currentTeam: defenseTeam)
 
-        attack()
-        
-        turn += 1
+            attack()
+            
+            deadTeam()
+            
+            turn += 1
+            
+        } while isTeamDead == false
+      
+        print("FIN DU COMBAT")
         
     } // End of play()
     
@@ -224,7 +235,23 @@ class Game {
             
         }
 
-    } // End of deadCurrentCharacter()
+    } // End of deadCharacter()
+    
+    func deadTeam() {
+        
+        if defenseTeam.character1!.life == DEAD && defenseTeam.character2!.life == DEAD && defenseTeam.character3!.life == DEAD {
+            
+            isTeamDead = true
+            print("Tous les champions de \(defenseTeam.name) sont morts !")
+            print()
+            
+        } else {
+         
+            isTeamDead = false
+            
+        }
+        
+    } // End of deadTeam
     
     func characterChoice(currentTeam: Team) -> Character {
         
@@ -264,7 +291,6 @@ class Game {
     
 } // End of Game class
 
-/*  - Détecter lorsque tous les personnages d'une équipe sont morts et afficher le message de fin de partie.
-    - Organiser play() autour d'un paramètre "tour", pour que la fonction switch les équipes en postion d'attaque / défense, et passe automatiquement au tour suivant jusqu'au message de victoire.
-    - Supprimer paramètres playingteam / waitingteam au profit d'une boucle while répétant la fonction jusqu'à ce qu'une équipe soit morte */
- 
+
+// - Fonction switch les équipes en postion d'attaque / défense jusqu'au message de victoire.
+

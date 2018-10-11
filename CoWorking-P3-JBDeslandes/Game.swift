@@ -66,7 +66,7 @@ class Game {
                     print("Ce nom est déjà pris, veuillez recommencer.")
                 }
        
-            //            hero = Passer la premièere lettre en majuscule) :Uppercase first
+            //            hero = Passer la première lettre en majuscule) :Uppercase first
             
         } while duplicate == true
         
@@ -181,9 +181,11 @@ class Game {
     
     func play() {
         
-        var turn: Int = 1
+        var turn: Int = 0
         
         repeat {
+            
+            turn += 1
         
             print("TOUR \(turn)")
             print()
@@ -200,7 +202,11 @@ class Game {
             
             deadTeam()
             
-            turn += 1
+            if !isTeamDead {
+                
+                swap(&attackTeam, &defenseTeam)
+                
+            }
             
         } while isTeamDead == false
       

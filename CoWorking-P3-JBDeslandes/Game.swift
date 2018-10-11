@@ -21,7 +21,7 @@ class Game {
     
     func createPlayers() {
         
-        print("Joueur 1 - Quel est ton nom ?")
+        print("Joueur 1 - Quel est ton nom ?", terminator: "")
         
         if let player1 = readLine() {
             team1 = Team(name: "\(player1)")
@@ -29,7 +29,7 @@ class Game {
             print()
         }
         
-        print("Joueur 2 - Quel est ton nom ?")
+        print("Joueur 2 - Quel est ton nom ?", terminator: "")
         
         if let player2 = readLine() {
             team2 = Team(name: "\(player2)")
@@ -51,12 +51,10 @@ class Game {
         
             hero = readLine()!
             
-//          hero = lowerCase(hero) (convertir la saisie en minuscule)
-            
             duplicate = false
                 
                 for i in 0..<memNames.count {
-                    if hero == memNames[i] {
+                    if hero.lowercased() == memNames[i] {
                         duplicate = true
                     }
                 }
@@ -66,11 +64,11 @@ class Game {
                     print("Ce nom est déjà pris, veuillez recommencer.")
                 }
        
-            //            hero = Passer la première lettre en majuscule) :Uppercase first
+            //            hero = Passer la première lettre en majuscule) :Uppercase first ?
             
         } while duplicate == true
         
-        memNames.append(hero)
+        memNames.append(hero.lowercased())
 //        Hero's name added to memory
         
         print()

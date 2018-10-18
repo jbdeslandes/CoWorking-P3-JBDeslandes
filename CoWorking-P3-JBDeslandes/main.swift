@@ -16,6 +16,13 @@ var currentTeam: Team
 var attackTeam: Team
 var defenseTeam: Team
 
+func next() {
+    
+    print("Appuyer sur Entrer pour continuer..")
+    _ = readLine()
+    
+} // End of func next()
+
 print("Bienvenue dans l'arène !")
 print()
 
@@ -45,6 +52,8 @@ team1.character3 = currentCharacter
 print("\(team1.name) - Tes champions \(team1.character1!.name), \(team1.character2!.name) et \(team1.character3!.name) atteignent l'arène et attendent leurs adversaires de pied ferme..")
 print()
 
+next()
+
 print("\(team2.name) - A toi maintenant de choisir le nom des héros qui composeront ton équipe !")
 print()
 
@@ -60,9 +69,13 @@ team2.character3 = currentCharacter
 print("\(team2.name) - Tes champions \(team2.character1!.name), \(team2.character2!.name) et \(team2.character3!.name) rejoignent l'enceinte et font face à leurs rivaux..")
 print()
 
+next()
+
 // FIRST PLAYER RANDOM SELECTION
 
 game.randomTeamChoice()
+
+next()
 
 // BATTLE MODE
 

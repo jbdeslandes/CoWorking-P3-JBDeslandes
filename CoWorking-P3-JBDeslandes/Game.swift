@@ -27,64 +27,34 @@ class Game {
         var player1: String = ""
         var player2: String = ""
         
-        var duplicate: Bool = false
-        
         print("Joueur 1 - Quel est ton nom ?", terminator: " ")
-        
-        repeat {
             
-            player1 = readLine()!
-            
-            duplicate = false
-            
-            for i in 0..<memePlayersName.count {
-                if player1.lowercased() == memePlayersName[i] {
-                    duplicate = true
-                }
-            }
-            
-            if duplicate == true {
-                print()
-                print("Ce nom est déjà pris, veuillez recommencer.")
-            }
-            
-        } while duplicate == true
-        
-        memePlayersName.append(player1.lowercased())
-        //        Player's name added to memory
+        player1 = readLine()!
         
         team1 = Team(name: "\(player1)")
         print("Force & Honneur, \(player1) !")
         print()
         
-        print("Joueur 2 - Quel est ton nom ?", terminator: " ")
-        
         repeat {
-        
-        player2 = readLine()!
-        
-        duplicate = false
             
-            for i in 0..<memePlayersName.count {
-                if player2.lowercased() == memePlayersName[i] {
-                    duplicate = true
-                }
-            }
+            print("Joueur 2 - Quel est ton nom ?", terminator: " ")
             
-            if duplicate == true {
+            player2 = readLine()!
+        
+            if player2 == player1 {
+            
+                print("Ce nom est déjà pris, veuillez recommencer.")
                 print()
-                print("Ce nom est déjà pris, veuillez recommencer :", terminator: " ")
+                
             }
-        
-        } while duplicate == true
-        
-        memePlayersName.append(player2.lowercased())
-        //        Player's name added to memory
-        
+            
+        } while player1.lowercased() == player2.lowercased()
+    
         team2 = Team(name: "\(player2)")
         print("Esprit & Robustesse sur toi, \(player2) !")
         print()
         
+        next()
         
     } // End of createPlayer()
 
@@ -247,6 +217,8 @@ class Game {
             
             deadTeam()
             
+            next()
+            
             if !isTeamDead {
                 
                 swap(&attackTeam, &defenseTeam)
@@ -260,6 +232,16 @@ class Game {
     } // End of play()
     
     func attack() {
+        
+            //        if randomdodge {
+            //
+            //            esquive zéro dégats
+            //
+            //        } else {
+            //
+            //            defenseCharacter.life = defenseCharacter.life - attackCharacter.weapon!.damage
+            //        }
+            
         
         defenseCharacter.life = defenseCharacter.life - attackCharacter.weapon!.damage
         print("\(attackCharacter.name) inflige \(attackCharacter.weapon!.damage) points de dégats à \(defenseCharacter.name) !")
@@ -345,14 +327,18 @@ class Game {
 
 /*
  
+ I - COMPLETER :
+ 
  - Incorporer des ajouts comme esquives & coups critiques
  - Incorporer la func heal() du magicien et ôter sa capacité d'attaque
  - Incorporer le coffre des armes (début de combat ou un round ?)
  - Incorporer un ajout arme poison (dégats minimes sur trois tours) ?
  
- _ = readline pour appuyer sur entrer pour continuer & maitriser la progression
+ II - AFFINER :
  
   - faire disparaitre les optionnels à terme pour if let / guard (sous réserve qu’il existe, le reste s’exécute)
+ 
+ - TEAMS CREATION (plus tard Tableau d'objets pour éviter les répétitions)
  
  */
 

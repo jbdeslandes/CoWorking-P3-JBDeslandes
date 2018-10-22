@@ -12,6 +12,7 @@ class Character {
     
     var name: String
     var life: Int
+    var maxLife: Int
     var role: Role
     var roleName: String
     var weapon: Weapon?
@@ -24,18 +25,22 @@ class Character {
         case .fighter:
             roleName = "Combattant"
             life = FIGHTER_LIFE
+            maxLife = FIGHTER_LIFE
             weapon = nil
         case .wizard:
             roleName = "Magicien"
             life = WIZARD_LIFE
+            maxLife = WIZARD_LIFE
             weapon = nil
         case .colossus:
             roleName = "Colosse"
             life = COLOSSUS_LIFE
+            maxLife = COLOSSUS_LIFE
             weapon = nil
         case .dwarf:
             roleName = "Nain"
             life = DWARF_LIFE
+            maxLife = DWARF_LIFE
             weapon = nil
         }
     }

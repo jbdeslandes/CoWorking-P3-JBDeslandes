@@ -11,6 +11,7 @@ import Foundation
 var currentCharacter: Character
 var attackCharacter : Character
 var defenseCharacter: Character
+var healedCharacter: Character
 
 var currentTeam: Team
 var attackTeam: Team

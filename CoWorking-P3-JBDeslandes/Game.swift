@@ -13,6 +13,9 @@ class Game {
     private var isCharacterDead: Bool = false
 //    To control if a character is playable
     
+    private var characterPlayed: Bool = false
+//    To control if a character can be heal
+    
     private var isTeamDead: Bool = false
 //    To control how to end game
     
@@ -162,22 +165,55 @@ class Game {
         
         var turn: Int = 0
         
+        characterPlayed = false
+        
         repeat {
             
             turn += 1
         
-            print("TOUR \(turn)")
+            print("--- TOUR \(turn) ---")
             print()
-            
-            print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
-            
-            attackCharacter = characterChoice(currentTeam: attackTeam)
-            
-            print("\(defenseTeam.name) - Quel champion envoies-tu contrer ton adversaire ?")
-            
-            defenseCharacter = characterChoice(currentTeam: defenseTeam)
 
-            attack()
+            repeat {
+            
+                print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
+                
+                attackCharacter = characterChoice(currentTeam: attackTeam)
+                
+                if attackCharacter.role == .wizard {
+                    
+                    characterPlayed = false
+                    
+                    if attackTeam.character1!.life == attackTeam.character1!.maxLife && attackTeam.character2!.life == attackTeam.character2!.maxLife && attackTeam.character3!.life == attackTeam.character3!.maxLife {
+                        
+                        print("Tous tes champions possèdent déjà leur santé au maximum !")
+                        print()
+                        
+                    } else {
+                    
+                        print("\(attackTeam.name) - Quel compagnon souhaites-tu soigner ?")
+                        
+                        healedCharacter = characterChoice(currentTeam: attackTeam)
+                    
+                        heal()
+                        
+                        characterPlayed = true
+                        
+                    }
+                    
+                } else {
+                    
+                    print("\(attackTeam.name) - Quel adversaire souhaites-tu attaquer ?")
+                    
+                    defenseCharacter = characterChoice(currentTeam: defenseTeam)
+                    
+                    attack()
+                    
+                    characterPlayed = true
+                
+                }
+                
+            } while characterPlayed == false
             
             deadTeam()
             
@@ -212,12 +248,43 @@ class Game {
         print()
         
         if defenseCharacter.life <= DEAD {
+            
             defenseCharacter.life = DEAD
             print("\(defenseCharacter.name) est mort !")
             print()
+            
         }
         
     } // End of attack()
+    
+    func heal() {
+        
+        if healedCharacter.life <= DEAD {
+            
+            print("\(healedCharacter.name) est mort. Veuillez choisir une autre cible !")
+            
+        } else if healedCharacter.life > DEAD && healedCharacter.life != healedCharacter.maxLife {
+                
+                 healedCharacter.life = healedCharacter.life + attackCharacter.weapon!.damage
+            
+                print("\(healedCharacter.name) reçoit un soin de \(attackCharacter.name). Il possède maintenant \(healedCharacter.life) points de vie !")
+                
+                if healedCharacter.life > healedCharacter.maxLife {
+                    
+                    healedCharacter.life = healedCharacter.maxLife
+                    print("\(healedCharacter.name) est au sommet de sa forme !")
+                    print()
+                    
+                }
+
+        } else if healedCharacter.life == healedCharacter.maxLife {
+            
+            print("La santé de \(healedCharacter.name) est déjà au maximum !")
+            print()
+            
+        }
+        
+    } // End of func heal()
     
     func deadCharacter() {
         
@@ -339,7 +406,6 @@ class Game {
  I - COMPLETER :
  
  - Incorporer des ajouts comme esquives & coups critiques
- - Incorporer la func heal() du magicien et ôter sa capacité d'attaque
  - Incorporer le coffre des armes (début de combat ou un round ?)
  - Incorporer un ajout arme poison (dégats minimes sur trois tours) ?
  

@@ -176,48 +176,11 @@ class Game {
 
             repeat {
             
-                print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
-                
-                attackCharacter = characterChoice(currentTeam: attackTeam)
-                
-                if attackCharacter.role == .wizard {
-                    
-                    characterPlayed = false
-                    
-                    if attackTeam.character1!.life == attackTeam.character1!.maxLife && attackTeam.character2!.life == attackTeam.character2!.maxLife && attackTeam.character3!.life == attackTeam.character3!.maxLife {
-                        
-                        print("Tous tes champions possèdent déjà leur santé au maximum !")
-                        print()
-                        
-                    } else {
-                    
-                        print("\(attackTeam.name) - Quel compagnon souhaites-tu soigner ?")
-                        
-                        healedCharacter = characterChoice(currentTeam: attackTeam)
-                    
-                        heal()
-                        
-                        characterPlayed = true
-                        
-                    }
-                    
-                } else {
-                    
-                    print("\(attackTeam.name) - Quel adversaire souhaites-tu attaquer ?")
-                    
-                    defenseCharacter = characterChoice(currentTeam: defenseTeam)
-                    
-                    attack()
-                    
-                    characterPlayed = true
-                
-                }
+                makeDecision()
                 
             } while characterPlayed == false
             
             deadTeam()
-            
-            next()
             
             if !isTeamDead {
                 
@@ -286,6 +249,49 @@ class Game {
         
     } // End of func heal()
     
+    func makeDecision() {
+        
+        print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
+        
+        attackCharacter = characterChoice(currentTeam: attackTeam)
+        
+        if attackCharacter.role == .wizard {
+            
+            characterPlayed = false
+            
+            if attackTeam.character1!.life == attackTeam.character1!.maxLife && attackTeam.character2!.life == attackTeam.character2!.maxLife && attackTeam.character3!.life == attackTeam.character3!.maxLife {
+                
+                print("Tous tes champions possèdent déjà leur santé au maximum !")
+                print()
+                
+                next()
+                
+            } else {
+                
+                print("\(attackTeam.name) - Quel compagnon souhaites-tu soigner ?")
+                
+                healedCharacter = characterChoice(currentTeam: attackTeam)
+                
+                heal()
+                
+                characterPlayed = true
+                
+            }
+            
+        } else {
+            
+            print("\(attackTeam.name) - Quel adversaire souhaites-tu attaquer ?")
+            
+            defenseCharacter = characterChoice(currentTeam: defenseTeam)
+            
+            attack()
+            
+            characterPlayed = true
+            
+        }
+        
+    } // End of makeDecision()
+    
     func deadCharacter() {
         
         if currentCharacter.life == DEAD {
@@ -314,6 +320,8 @@ class Game {
             isTeamDead = false
             
         }
+        
+        next()
         
     } // End of deadTeam
     

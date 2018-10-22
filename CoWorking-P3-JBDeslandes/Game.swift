@@ -105,19 +105,23 @@ class Game {
                 case "1":
                     inputrole = true
                     currentCharacter = Character(name: "\(hero)", role: .fighter)
-                    print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
+                    currentCharacter.weapon = Sword()
+                    print("\(currentCharacter.name) le \(currentCharacter.roleName) attrape une épée tranchante dans le râtelier d'arme le plus proche !")
                 case "2":
                     inputrole = true
                     currentCharacter = Character(name: "\(hero)", role: .wizard)
-                    print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
+                    currentCharacter.weapon = Stick()
+                    print("\(currentCharacter.name) le \(currentCharacter.roleName) invoque son septre magique !")
                 case "3":
                     inputrole = true
                     currentCharacter = Character(name: "\(hero)", role: .colossus)
-                    print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
+                    currentCharacter.weapon = Fists()
+                    print("\(currentCharacter.name) le \(currentCharacter.roleName) n'a besoin d'aucune arme pour écraser ses adversaires !")
                 case "4":
                     inputrole = true
                     currentCharacter = Character(name: "\(hero)", role: .dwarf)
-                    print("La classe de \(currentCharacter.name) sera \(currentCharacter.roleName).")
+                    currentCharacter.weapon = Axe()
+                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit de sa hache préférée !")
                 default:
                     inputrole = false
                     print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
@@ -128,46 +132,6 @@ class Game {
             }
                 
         } while inputrole == false
-        
-        
-        print("Quelle arme brandira \(currentCharacter.name) le \(currentCharacter.roleName) ?"
-            + "\n1. Epée."
-            + "\n2. Bâton."
-            + "\n3. Poings."
-            + "\n4. Hache.")
-        
-        var inputweapon: Bool = false
-        
-        repeat {
-            
-            if let weapon = readLine() {
-                switch weapon {
-                case "1":
-                    inputweapon = true
-                    currentCharacter.weapon = Sword()
-                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit d'une épée tranchante!")
-                case "2":
-                    inputweapon = true
-                    currentCharacter.weapon = Stick()
-                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit de son bâton !")
-                case "3":
-                    inputweapon = true
-                    currentCharacter.weapon = Fists()
-                    print("\(currentCharacter.name) le \(currentCharacter.roleName) n'a besoin d'aucune arme pour écraser ses adversaires !")
-                case "4":
-                    inputweapon = true
-                    currentCharacter.weapon = Axe()
-                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit de la hache !")
-                default:
-                    inputweapon = false
-                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir l'arme correspondante.")
-                }
-                
-                print()
-                
-            }
-            
-        } while inputweapon == false
         
         return currentCharacter
         
@@ -321,6 +285,51 @@ class Game {
         return currentCharacter
         
     } // End of characterChoice()
+    
+    func randomTreasure() {
+        
+        
+        
+//        print("Quelle arme brandira \(currentCharacter.name) le \(currentCharacter.roleName) ?"
+//            + "\n1. Epée."
+//            + "\n2. Bâton."
+//            + "\n3. Poings."
+//            + "\n4. Hache.")
+//
+//        var inputweapon: Bool = false
+//
+//        repeat {
+//
+//            if let weapon = readLine() {
+//                switch weapon {
+//                case "1":
+//                    inputweapon = true
+//                    currentCharacter.weapon = Sword()
+//                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit d'une épée tranchante!")
+//                case "2":
+//                    inputweapon = true
+//                    currentCharacter.weapon = Stick()
+//                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit de son bâton !")
+//                case "3":
+//                    inputweapon = true
+//                    currentCharacter.weapon = Fists()
+//                    print("\(currentCharacter.name) le \(currentCharacter.roleName) n'a besoin d'aucune arme pour écraser ses adversaires !")
+//                case "4":
+//                    inputweapon = true
+//                    currentCharacter.weapon = Axe()
+//                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit de la hache !")
+//                default:
+//                    inputweapon = false
+//                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir l'arme correspondante.")
+//                }
+//
+//                print()
+//
+//            }
+//
+//        } while inputweapon == false
+        
+    } // End of randomTreasure()
     
 } // End of Game class
 

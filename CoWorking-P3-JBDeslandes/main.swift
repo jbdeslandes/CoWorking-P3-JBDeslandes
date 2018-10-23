@@ -85,4 +85,3 @@ print()
 
 game.play()
 
-// Voir la doc print("separator, terminator")

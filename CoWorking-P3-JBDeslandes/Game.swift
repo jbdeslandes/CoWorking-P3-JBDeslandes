@@ -186,7 +186,21 @@ class Game {
                 
                 swap(&attackTeam, &defenseTeam)
                 
-            }
+            } // First player's move
+            
+            repeat {
+                
+                makeDecision()
+                
+            } while characterPlayed == false
+            
+            deadTeam()
+            
+            if !isTeamDead {
+                
+                swap(&attackTeam, &defenseTeam)
+                
+            } // Second player's move
             
         } while isTeamDead == false
       
@@ -362,8 +376,6 @@ class Game {
     } // End of characterChoice()
     
     func randomTreasure() {
-        
-        
         
 //        print("Quelle arme brandira \(currentCharacter.name) le \(currentCharacter.roleName) ?"
 //            + "\n1. Epée."

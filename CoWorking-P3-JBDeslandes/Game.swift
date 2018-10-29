@@ -210,19 +210,40 @@ class Game {
     
     func attack() {
         
-            //        if randomdodge {
-            //
-            //            esquive zéro dégats
-            //
-            //        } else {
-            //
-            //            defenseCharacter.life = defenseCharacter.life - attackCharacter.weapon!.damage
-            //        }
-            
+        let randomNumber = Int.random(in: 1...100)
         
-        defenseCharacter.life = defenseCharacter.life - attackCharacter.weapon!.damage
-        print("\(attackCharacter.name) inflige \(attackCharacter.weapon!.damage) points de dégats à \(defenseCharacter.name) !")
-        print()
+        if randomNumber > 0 && randomNumber <= 10 {
+            
+            print("\(defenseCharacter.name) esquive l'assaut !")
+            print()
+            
+            // Dodge
+            
+        } else if randomNumber > 10 && randomNumber <= 15 {
+            
+            attackCharacter.life = attackCharacter.life - defenseCharacter.weapon!.damage
+            print("\(defenseCharacter.name) effectue une parade et contre-attaque !")
+            print()
+            
+            // Counter attack
+            
+        } else if randomNumber > 15 && randomNumber <= 20 {
+            
+            defenseCharacter.life = defenseCharacter.life - (attackCharacter.weapon!.damage * 2)
+            print("\(attackCharacter.name) trouve une faille dans la défense de \(defenseCharacter.name) et lui assène un coup critique !!")
+            print()
+            
+            // Critical strike
+            
+        } else if randomNumber > 20 && randomNumber <= 100 {
+        
+            defenseCharacter.life = defenseCharacter.life - attackCharacter.weapon!.damage
+            print("\(attackCharacter.name) inflige \(attackCharacter.weapon!.damage) points de dégats à \(defenseCharacter.name) !")
+            print()
+            
+            // To attack
+        
+        }
         
         if defenseCharacter.life <= DEAD {
             
@@ -425,8 +446,8 @@ class Game {
  
  I - COMPLETER :
  
- - Incorporer des ajouts comme esquives & coups critiques
  - Incorporer le coffre des armes (début de combat ou un round ?)
+ - Incorporer des ajouts comme esquives & coups critiques
  - Incorporer un ajout arme poison (dégats minimes sur trois tours) ?
  
  II - AFFINER :

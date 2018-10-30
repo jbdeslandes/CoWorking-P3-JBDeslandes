@@ -248,6 +248,12 @@ class Game {
             print("\(defenseCharacter.name) est mort !")
             print()
             
+        } else if attackCharacter.life <= DEAD {
+            
+            attackCharacter.life = DEAD
+            print("\(attackCharacter.name) est mort !")
+            print()
+            
         }
         
     } // End of attack()

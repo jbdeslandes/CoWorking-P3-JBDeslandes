@@ -170,39 +170,36 @@ class Game {
         repeat {
             
             turn += 1
-        
+            
             print("--- TOUR \(turn) ---")
             print()
-
-            repeat {
             
-                makeDecision()
-                
-            } while characterPlayed == false
             
-            deadTeam()
+            for _ in 1...2 {
+                
+                repeat {
+                    
+                    makeDecision()
+                    
+                } while characterPlayed == false
+                
+                deadTeam()
+                
+                if !isTeamDead {
+                    
+                    swap(&attackTeam, &defenseTeam)
+                    
+                } else {
+                    
+                    print ("L'équipe de \(defenseTeam.name) est morte !")
+                    print()
+                    break
+                    
+                }
+                
+            }
             
-            if !isTeamDead {
-                
-                swap(&attackTeam, &defenseTeam)
-                
-            } // First player's move
-            
-            repeat {
-                
-                makeDecision()
-                
-            } while characterPlayed == false
-            
-            deadTeam()
-            
-            if !isTeamDead {
-                
-                swap(&attackTeam, &defenseTeam)
-                
-            } // Second player's move
-            
-        } while isTeamDead == false
+         } while isTeamDead == false
       
         print("FIN DU COMBAT")
         
@@ -241,7 +238,7 @@ class Game {
             print("\(attackCharacter.name) inflige \(attackCharacter.weapon!.damage) points de dégats à \(defenseCharacter.name) !")
             print()
             
-            // To attack
+            // Attack
         
         }
         
@@ -447,7 +444,6 @@ class Game {
  I - COMPLETER :
  
  - Incorporer le coffre des armes (début de combat ou un round ?)
- - Incorporer des ajouts comme esquives & coups critiques
  - Incorporer un ajout arme poison (dégats minimes sur trois tours) ?
  
  II - AFFINER :

@@ -10,22 +10,33 @@ import Foundation
 
 class Game {
     
-    private var isCharacterDead: Bool = false
 //    To control if a character is playable
-    
-    private var characterPlayed: Bool = false
+    private var isCharacterDead: Bool = false
+
 //    To control if a character can be heal
-    
+    private var characterPlayed: Bool = false
+
+//    To control if a random chest have to appear
+    private var randomTreasureAppears: Bool = false
+
+//    To control when to end game
     private var isTeamDead: Bool = false
-//    To control how to end game
-    
-    private var memePlayersName: [String] = []
+
 //    To not duplicate player's names
-    
-    private var memNames: [String] = []
+    private var memePlayersName: [String] = []
+
 //    To not duplicate champion's names
+    private var memNames: [String] = []
     
+} // End of Game class
+
+// MARK: - Teams creation
+extension Game {
+
     func createPlayers() {
+        
+        print("Bienvenue dans l'arène !")
+        print()
 
         var player1: String = ""
         var player2: String = ""
@@ -88,8 +99,9 @@ class Game {
             
         } while duplicate == true
         
+        //        Hero's name added to memory
         memNames.append(hero.lowercased())
-//        Hero's name added to memory
+
         
         print()
             
@@ -140,31 +152,18 @@ class Game {
         
     } // End of createHero()
     
-    func randomTeamChoice() {
-        
-       let Choice = Bool.random()
-        
-        if Choice == true {
-            
-            attackTeam = team1
-            defenseTeam = team2
-            
-        } else {
-            
-            attackTeam = team2
-            defenseTeam = team1
-            
-        }
-        
-        print("Le peuple a parlé ! L'équipe de \(attackTeam.name) donnera le premier assaut !")
-        print()
-    
-    } // End of randomTeamChoice()
+} // End of Teams Creation
+
+// MARK: - Battle mode
+extension Game {
     
     func play() {
         
+        randomTeamChoice()
+        
         var turn: Int = 0
         
+        // Reset value
         characterPlayed = false
         
         repeat {
@@ -199,15 +198,109 @@ class Game {
                 
             }
             
-         } while isTeamDead == false
-      
+        } while isTeamDead == false
+        
         print("FIN DU COMBAT")
         
     } // End of play()
     
+} // End of Battle Mode
+
+// MARK: - Interractions
+extension Game {
+    
+    func characterChoice(currentTeam: Team) -> Character {
+        
+        print("\n1. \(currentTeam.character1!.name) - \(currentTeam.character1!.roleName) - Vie: \(currentTeam.character1!.life)"
+            + "\n2. \(currentTeam.character2!.name) - \(currentTeam.character2!.roleName) - Vie: \(currentTeam.character2!.life)"
+            + "\n3. \(currentTeam.character3!.name) - \(currentTeam.character3!.roleName) - Vie: \(currentTeam.character3!.life)")
+        
+        var inputChoice1: Bool = false
+        
+        repeat {
+            
+            if let choice = readLine() {
+                switch choice {
+                case "1":
+                    inputChoice1 = true
+                    currentCharacter = currentTeam.character1!
+                case "2":
+                    inputChoice1 = true
+                    currentCharacter = currentTeam.character2!
+                case "3":
+                    inputChoice1 = true
+                    currentCharacter = currentTeam.character3!
+                default:
+                    inputChoice1 = false
+                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
+                }
+                
+                deadCharacter()
+                
+            }
+            
+        } while inputChoice1 == false || isCharacterDead == true
+        
+        return currentCharacter
+        
+    } // End of characterChoice()
+    
+    func makeDecision() {
+        
+        repeat {
+            
+            // Reset value
+            characterPlayed = false
+            
+            print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
+            
+            attackCharacter = characterChoice(currentTeam: attackTeam)
+            
+            if attackCharacter.role == .wizard {
+                
+                if attackTeam.character1!.life == attackTeam.character1!.maxLife && attackTeam.character2!.life == attackTeam.character2!.maxLife && attackTeam.character3!.life == attackTeam.character3!.maxLife {
+                    
+                    print("Tous tes champions possèdent déjà leur santé au maximum !")
+                    print()
+                    
+                    characterPlayed = false
+                    
+                    next()
+                    
+                } else {
+                    
+                    print("\(attackTeam.name) - Quel compagnon souhaites-tu soigner ?")
+                    
+                    healedCharacter = characterChoice(currentTeam: attackTeam)
+                    
+                    heal()
+                    
+                    characterPlayed = true
+                    
+                }
+                
+            } else {
+                
+                randomTreasure()
+                
+                print("\(attackTeam.name) - Quel adversaire souhaites-tu attaquer ?")
+                
+                defenseCharacter = characterChoice(currentTeam: defenseTeam)
+                
+                attack()
+                
+                characterPlayed = true
+                
+            }
+            
+        } while characterPlayed == false
+        
+    } // End of makeDecision()
+    
     func attack() {
         
         let randomNumber = Int.random(in: 1...100)
+        // Generating random number
         
         if randomNumber > 0 && randomNumber <= 10 {
             
@@ -287,48 +380,109 @@ class Game {
         
     } // End of func heal()
     
-    func makeDecision() {
+    func next() {
         
-        print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
+        print("Appuyer sur Entrer pour continuer..")
+        _ = readLine()
         
-        attackCharacter = characterChoice(currentTeam: attackTeam)
+    } // End of func next()
+    
+} // End of Interractions
+
+// MARK: - Random features
+extension Game {
+    
+    func randomTeamChoice() {
         
-        if attackCharacter.role == .wizard {
+        let Choice = Bool.random()
+        
+        if Choice == true {
             
-            characterPlayed = false
-            
-            if attackTeam.character1!.life == attackTeam.character1!.maxLife && attackTeam.character2!.life == attackTeam.character2!.maxLife && attackTeam.character3!.life == attackTeam.character3!.maxLife {
-                
-                print("Tous tes champions possèdent déjà leur santé au maximum !")
-                print()
-                
-                next()
-                
-            } else {
-                
-                print("\(attackTeam.name) - Quel compagnon souhaites-tu soigner ?")
-                
-                healedCharacter = characterChoice(currentTeam: attackTeam)
-                
-                heal()
-                
-                characterPlayed = true
-                
-            }
+            attackTeam = team1
+            defenseTeam = team2
             
         } else {
             
-            print("\(attackTeam.name) - Quel adversaire souhaites-tu attaquer ?")
-            
-            defenseCharacter = characterChoice(currentTeam: defenseTeam)
-            
-            attack()
-            
-            characterPlayed = true
+            attackTeam = team2
+            defenseTeam = team1
             
         }
         
-    } // End of makeDecision()
+        print("Le peuple a parlé ! L'équipe de \(attackTeam.name) donnera le premier assaut !")
+        print()
+        print("QUE LE COMBAT COMMENCE !")
+        print()
+        
+        next()
+        
+    } // End of randomTeamChoice()
+    
+    func randomTreasure() {
+        
+        // Reset value
+        randomTreasureAppears = false
+        
+        let randomNumber = Int.random(in: 1...100)
+        
+        if randomNumber > 0 && randomNumber <= 10 {
+            
+            randomTreasureAppears = true
+            
+            print("UN COFFRE MAGIQUE APPARAIT !")
+            print()
+            
+            print("Quelle nouvelle arme choisira \(attackCharacter.name) le \(attackCharacter.roleName) ?"
+                + "\n1. Epée."
+                + "\n2. Bâton."
+                + "\n3. Poings."
+                + "\n4. Hache.")
+            
+            var inputweapon: Bool = false
+            
+            repeat {
+                
+                if let weapon = readLine() {
+                    switch weapon {
+                    case "1":
+                        inputweapon = true
+                        attackCharacter.weapon = Sword()
+                        print("\(attackCharacter.name) le \(attackCharacter.roleName) se saisit d'une épée tranchante!")
+                    case "2":
+                        inputweapon = true
+                        attackCharacter.weapon = Stick()
+                        print("\(attackCharacter.name) le \(attackCharacter.roleName) se saisit du bâton !")
+                    case "3":
+                        inputweapon = true
+                        attackCharacter.weapon = Fists()
+                        print("\(attackCharacter.name) le \(attackCharacter.roleName) n'a besoin d'aucune arme pour écraser ses adversaires !")
+                    case "4":
+                        inputweapon = true
+                        attackCharacter.weapon = Axe()
+                        print("\(attackCharacter.name) le \(attackCharacter.roleName) se saisit de la hache !")
+                    default:
+                        inputweapon = false
+                        print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir l'arme correspondante.")
+                    }
+                    
+                    print()
+                    
+                }
+                
+            } while inputweapon == false
+            
+        } else {
+            
+            randomTreasureAppears = false
+            
+        }
+        
+    } // End of randomTreasure()
+    
+} // End of Random features
+
+// MARK: - End game control
+extension Game {
+    
     
     func deadCharacter() {
         
@@ -363,94 +517,18 @@ class Game {
         
     } // End of deadTeam
     
-    func characterChoice(currentTeam: Team) -> Character {
-        
-        print("\n1. \(currentTeam.character1!.name) - \(currentTeam.character1!.roleName) - Vie: \(currentTeam.character1!.life)"
-            + "\n2. \(currentTeam.character2!.name) - \(currentTeam.character2!.roleName) - Vie: \(currentTeam.character2!.life)"
-            + "\n3. \(currentTeam.character3!.name) - \(currentTeam.character3!.roleName) - Vie: \(currentTeam.character3!.life)")
-        
-        var inputChoice1: Bool = false
-        
-        repeat {
-            
-            if let choice = readLine() {
-                switch choice {
-                case "1":
-                    inputChoice1 = true
-                    currentCharacter = currentTeam.character1!
-                case "2":
-                    inputChoice1 = true
-                    currentCharacter = currentTeam.character2!
-                case "3":
-                    inputChoice1 = true
-                    currentCharacter = currentTeam.character3!
-                default:
-                    inputChoice1 = false
-                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir la classe correspondante.")
-                }
-                
-                deadCharacter()
-                
-            }
-            
-        } while inputChoice1 == false || isCharacterDead == true
-        
-        return currentCharacter
-        
-    } // End of characterChoice()
-    
-    func randomTreasure() {
-        
-//        print("Quelle arme brandira \(currentCharacter.name) le \(currentCharacter.roleName) ?"
-//            + "\n1. Epée."
-//            + "\n2. Bâton."
-//            + "\n3. Poings."
-//            + "\n4. Hache.")
-//
-//        var inputweapon: Bool = false
-//
-//        repeat {
-//
-//            if let weapon = readLine() {
-//                switch weapon {
-//                case "1":
-//                    inputweapon = true
-//                    currentCharacter.weapon = Sword()
-//                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit d'une épée tranchante!")
-//                case "2":
-//                    inputweapon = true
-//                    currentCharacter.weapon = Stick()
-//                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit de son bâton !")
-//                case "3":
-//                    inputweapon = true
-//                    currentCharacter.weapon = Fists()
-//                    print("\(currentCharacter.name) le \(currentCharacter.roleName) n'a besoin d'aucune arme pour écraser ses adversaires !")
-//                case "4":
-//                    inputweapon = true
-//                    currentCharacter.weapon = Axe()
-//                    print("\(currentCharacter.name) le \(currentCharacter.roleName) se saisit de la hache !")
-//                default:
-//                    inputweapon = false
-//                    print("Je n'ai pas compris votre choix. Veuillez rentrer un numéro pour choisir l'arme correspondante.")
-//                }
-//
-//                print()
-//
-//            }
-//
-//        } while inputweapon == false
-        
-    } // End of randomTreasure()
-    
-} // End of Game class
+} // End of End game control
 
 
 /*
  
  I - COMPLETER :
  
- - Incorporer le coffre des armes (début de combat ou un round ?)
+ - Problème apperçu dans heal un personnage / vie max
+ - Incorporer abandon si le mage est le seul survivant.
  - Incorporer un ajout arme poison (dégats minimes sur trois tours) ?
+ - Répartir dans les extension & MARK pour structurer.
+ - Incorporer la bonne convention au code (voir cours sur le débeugage).
  
  II - AFFINER :
  

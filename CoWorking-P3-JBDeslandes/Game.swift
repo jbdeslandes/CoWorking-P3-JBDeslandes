@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - GAME
 class Game {
 
 //    To control if a character is playable

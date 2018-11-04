@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - CHARACTER
 class Character {
 
     var name: String
@@ -46,6 +47,7 @@ class Character {
     }
 }
 
+// MARK: - ROLE
 enum Role {
     case fighter, wizard, colossus, dwarf
 }

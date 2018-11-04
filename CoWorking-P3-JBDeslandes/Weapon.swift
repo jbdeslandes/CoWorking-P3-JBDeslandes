@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - WEAPON
 class Weapon {
 
     var damage: Int
@@ -18,6 +19,7 @@ class Weapon {
 
 }
 
+// MARK: - Different weapons
 class Sword: Weapon {
     init() {
         super.init(damage: SWORDDAMAGE)

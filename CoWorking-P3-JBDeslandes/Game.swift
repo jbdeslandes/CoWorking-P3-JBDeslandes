@@ -11,10 +11,16 @@ import Foundation
 // MARK: - GAME
 class Game {
 
+//    To name Characters
+    private var hero: String = ""
+
+//    To not duplicate champion's names
+    private var memNames: [String] = []
+
 //    To control if a character is playable
     private var isCharacterDead: Bool = false
 
-//    To control if a character can be heal
+//    To control if a character played
     private var characterPlayed: Bool = false
 
 //    To control if a random chest have to appear
@@ -22,15 +28,6 @@ class Game {
 
 //    To control when to end game
     private var isTeamDead: Bool = false
-
-//    To not duplicate player's names
-    private var memePlayersName: [String] = []
-
-//    To name Characters
-    private var hero: String = ""
-
-//    To not duplicate champion's names
-    private var memNames: [String] = []
 
 } // End of Game class
 
@@ -267,10 +264,10 @@ extension Game {
 
     func makeDecision() {
 
-        repeat {
+        // Reset value
+        characterPlayed = false
 
-            // Reset value
-            characterPlayed = false
+        repeat {
 
             print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
 
@@ -278,28 +275,7 @@ extension Game {
 
             if attackCharacter.role == .wizard {
 
-                if attackTeam.character1!.life == attackTeam.character1!.maxLife
-                    && attackTeam.character2!.life == attackTeam.character2!.maxLife
-                    && attackTeam.character3!.life == attackTeam.character3!.maxLife {
-
-                    print("Tous tes champions possèdent déjà leur santé au maximum !")
-                    print()
-
-                    characterPlayed = false
-
-                    next()
-
-                } else {
-
-                    print("\(attackTeam.name) - Quel compagnon souhaites-tu soigner ?")
-
-                    healedCharacter = characterChoice(currentTeam: attackTeam)
-
-                    heal()
-
-                    characterPlayed = true
-
-                }
+                heal()
 
             } else {
 
@@ -342,7 +318,8 @@ extension Game {
             // Critical strike
             defenseCharacter.life -= (attackCharacter.weapon!.damage * 2)
             print("\(attackCharacter.name) trouve une faille dans la défense de"
-                + " \(defenseCharacter.name) et lui assène un coup critique !!")
+                + " \(defenseCharacter.name) et lui assène un coup critique"
+                + " qui inflige \(attackCharacter.weapon!.damage * 2) points de dégats !!")
             print()
 
         } else if randomNumber > 20 && randomNumber <= 100 {
@@ -373,33 +350,129 @@ extension Game {
 
     func heal() {
 
-        if healedCharacter.life <= DEAD {
+        if attackTeam.character1!.life == attackTeam.character1!.maxLife
+            && attackTeam.character2!.life == attackTeam.character2!.maxLife
+            && attackTeam.character3!.life == attackTeam.character3!.maxLife {
 
-            print("\(healedCharacter.name) est mort. Veuillez choisir une autre cible !")
+            //      Cannot heal - All team is full life
+            print("Tous tes champions possèdent déjà leur santé au maximum !")
+            print()
 
-        } else if healedCharacter.life > DEAD && healedCharacter.life != healedCharacter.maxLife {
+            characterPlayed = false
 
-                 healedCharacter.life += attackCharacter.weapon!.damage
+            next()
 
-                print("\(attackCharacter.name) soigne"
-                    + " \(healedCharacter.name). Il possède maintenant \(healedCharacter.life) points de vie !")
+        } else if attackTeam.character1!.life == DEAD
+            && attackTeam.character2!.life == attackTeam.character2!.maxLife
+            && attackTeam.character3!.life == attackTeam.character3!.maxLife
+            || attackTeam.character1!.life == attackTeam.character1!.maxLife
+            && attackTeam.character2!.life == DEAD
+            && attackTeam.character3!.life == attackTeam.character3!.maxLife
+            || attackTeam.character1!.life == attackTeam.character1!.maxLife
+            && attackTeam.character2!.life == attackTeam.character2!.maxLife
+            && attackTeam.character3!.life == DEAD {
 
-                if healedCharacter.life > healedCharacter.maxLife {
+            // Cannot heal - All characters are full life or dead
+            print("Tes différents champions sont soit morts, soit possèdent déjà leur santé au maximum !")
+            print()
 
-                    healedCharacter.life = healedCharacter.maxLife
-                    print("\(healedCharacter.name) est au sommet de sa forme !")
-                    print()
+            characterPlayed = false
+
+            next()
+
+        } else {
+
+            print("\(attackTeam.name) - Quel compagnon souhaites-tu soigner ?")
+
+            healedCharacter = characterChoice(currentTeam: attackTeam)
+
+            if healedCharacter.life == healedCharacter.maxLife {
+
+                print("\(healedCharacter.name) possède déjà tous ses points de vie !")
+                print()
+
+                characterPlayed = false
+
+                next()
+
+            } else {
+
+                if healedCharacter.life <= DEAD {
+
+                    print("\(healedCharacter.name) est mort. Veuillez choisir une autre cible !")
+
+                } else if healedCharacter.life > DEAD
+                    && healedCharacter.life != healedCharacter.maxLife {
+
+                    healedCharacter.life += attackCharacter.weapon!.damage
+
+                    print("\(attackCharacter.name) soigne"
+                        + " \(healedCharacter.name). Il possède maintenant \(healedCharacter.life) points de vie !")
+
+                    if healedCharacter.life > healedCharacter.maxLife {
+
+                        healedCharacter.life = healedCharacter.maxLife
+                        print("\(healedCharacter.name) est au sommet de sa forme !")
+
+                    }
 
                 }
 
-        } else if healedCharacter.life == healedCharacter.maxLife {
+                characterPlayed = true
 
-            print("La santé de \(healedCharacter.name) est déjà au maximum !")
-            print()
+            }
 
         }
 
     } // End of func heal()
+
+    func changeWeapon() {
+
+        print("Quelle nouvelle arme choisira \(attackCharacter.name) le \(attackCharacter.roleName) ?"
+            + "\n1. Epée."
+            + "\n2. Bâton."
+            + "\n3. Poings."
+            + "\n4. Hache.")
+
+        var inputweapon: Bool = false
+
+        repeat {
+
+            if let weapon = readLine() {
+                switch weapon {
+                case "1":
+                    inputweapon = true
+                    attackCharacter.weapon = Sword()
+                    print("\(attackCharacter.name) le \(attackCharacter.roleName)"
+                        + " se saisit d'une épée tranchante!")
+                case "2":
+                    inputweapon = true
+                    attackCharacter.weapon = Stick()
+                    print("\(attackCharacter.name) le \(attackCharacter.roleName)"
+                        + " se saisit du bâton !")
+                case "3":
+                    inputweapon = true
+                    attackCharacter.weapon = Fists()
+                    print("\(attackCharacter.name) le \(attackCharacter.roleName)"
+                        + " n'a besoin d'aucune arme pour écraser ses adversaires !")
+                case "4":
+                    inputweapon = true
+                    attackCharacter.weapon = Axe()
+                    print("\(attackCharacter.name) le \(attackCharacter.roleName)"
+                        + " se saisit de la hache !")
+                default:
+                    inputweapon = false
+                    print("Je n'ai pas compris votre choix."
+                        + " Veuillez rentrer un numéro pour choisir l'arme correspondante.")
+                }
+
+                print()
+
+            }
+
+        } while inputweapon == false
+
+    } // End of func chooseWeapon()
 
     func next() {
 
@@ -452,7 +525,7 @@ extension Game {
             print("UN COFFRE MAGIQUE APPARAIT !")
             print()
 
-            chooseWeapon()
+            changeWeapon()
 
         } else {
 
@@ -461,54 +534,6 @@ extension Game {
         }
 
     } // End of randomTreasure()
-
-    func chooseWeapon() {
-
-        print("Quelle nouvelle arme choisira \(attackCharacter.name) le \(attackCharacter.roleName) ?"
-            + "\n1. Epée."
-            + "\n2. Bâton."
-            + "\n3. Poings."
-            + "\n4. Hache.")
-
-        var inputweapon: Bool = false
-
-        repeat {
-
-            if let weapon = readLine() {
-                switch weapon {
-                case "1":
-                    inputweapon = true
-                    attackCharacter.weapon = Sword()
-                    print("\(attackCharacter.name) le \(attackCharacter.roleName)"
-                        + " se saisit d'une épée tranchante!")
-                case "2":
-                    inputweapon = true
-                    attackCharacter.weapon = Stick()
-                    print("\(attackCharacter.name) le \(attackCharacter.roleName)"
-                        + " se saisit du bâton !")
-                case "3":
-                    inputweapon = true
-                    attackCharacter.weapon = Fists()
-                    print("\(attackCharacter.name) le \(attackCharacter.roleName)"
-                        + " n'a besoin d'aucune arme pour écraser ses adversaires !")
-                case "4":
-                    inputweapon = true
-                    attackCharacter.weapon = Axe()
-                    print("\(attackCharacter.name) le \(attackCharacter.roleName)"
-                        + " se saisit de la hache !")
-                default:
-                    inputweapon = false
-                    print("Je n'ai pas compris votre choix."
-                        + " Veuillez rentrer un numéro pour choisir l'arme correspondante.")
-                }
-
-                print()
-
-            }
-
-        } while inputweapon == false
-
-    } // End of func chooseWeapon()
 
 } // End of Random features
 
@@ -540,8 +565,17 @@ extension Game {
             print("Tous les champions de \(defenseTeam.name) sont morts !")
             print()
 
+        } else if attackTeam.character1!.life == DEAD
+            && attackTeam.character2!.life == DEAD
+            && attackTeam.character3!.life == DEAD {
+
+            isTeamDead = true
+            print("Tous les champions de \(attackTeam.name) sont morts !")
+            print()
+
         } else {
 
+            // Begin of another turn
             isTeamDead = false
 
         }
@@ -555,7 +589,6 @@ extension Game {
 /*
  I - COMPLETER :
  - Simplifer createHero -> Main via for 3
- - Problème apperçu dans heal un personnage / vie max
  - Incorporer abandon si le mage est le seul survivant.
  - Incorporer un ajout arme poison (dégats minimes sur trois tours) ?
  

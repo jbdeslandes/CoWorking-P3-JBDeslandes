@@ -9,19 +9,18 @@
 import Foundation
 
 class Team {
-    
+
     var name: String
-    
+
     var character1: Character?
     var character2: Character?
     var character3: Character?
-    
+
     init(name: String) {
         self.name = name
-        
+
         self.character1 = nil
         self.character2 = nil
         self.character3 = nil
     }
 }
-

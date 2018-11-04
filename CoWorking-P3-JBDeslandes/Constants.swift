@@ -1,19 +1,18 @@
-
 //====================
 // MARK: - Characters
 //====================
 
 // Balancing values:
 
-//let FIGHTER_LIFE = 100
-//let WIZARD_LIFE = 100
-//let COLOSSUS_LIFE = 120
-//let DWARF_LIFE = 80
+//let FIGHTERLIFE = 100
+//let WIZARDLIFE = 100
+//let COLOSSUSLIFE = 120
+//let DWARFLIFE = 80
 
-let FIGHTER_LIFE = 100
-let WIZARD_LIFE = 100
-let COLOSSUS_LIFE = 120
-let DWARF_LIFE = 80
+let FIGHTERLIFE = 100
+let WIZARDLIFE = 100
+let COLOSSUSLIFE = 120
+let DWARFLIFE = 80
 
 let DEAD = 0
 
@@ -23,12 +22,12 @@ let DEAD = 0
 
 // Balancing values:
 
-//let SWORD_DAMAGE = 10
-//let STICK_DAMAGE = 0
-//let FISTS_DAMAGE = 8
-//let AXE_DAMAGE = 12
+//let SWORDDAMAGE = 10
+//let STICKDAMAGE = 0
+//let FISTSDAMAGE = 8
+//let AXEDAMAGE = 12
 
-let SWORD_DAMAGE = 50
-let STICK_DAMAGE = 50
-let FISTS_DAMAGE = 50
-let AXE_DAMAGE = 50
+let SWORDDAMAGE = 50
+let STICKDAMAGE = 50
+let FISTSDAMAGE = 50
+let AXEDAMAGE = 50

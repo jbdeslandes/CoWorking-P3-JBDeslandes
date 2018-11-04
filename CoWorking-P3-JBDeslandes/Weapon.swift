@@ -9,35 +9,35 @@
 import Foundation
 
 class Weapon {
-    
+
     var damage: Int
-    
+
     init(damage: Int) {
         self.damage = damage
     }
-    
+
 }
 
 class Sword: Weapon {
     init() {
-        super.init(damage: SWORD_DAMAGE)
+        super.init(damage: SWORDDAMAGE)
     }
 }
 
 class Stick: Weapon {
     init() {
-        super.init(damage: STICK_DAMAGE)
+        super.init(damage: STICKDAMAGE)
     }
 }
 
 class Fists: Weapon {
     init() {
-        super.init(damage: FISTS_DAMAGE)
+        super.init(damage: FISTSDAMAGE)
     }
 }
 
 class Axe: Weapon {
     init() {
-        super.init(damage: AXE_DAMAGE)
+        super.init(damage: AXEDAMAGE)
     }
 }

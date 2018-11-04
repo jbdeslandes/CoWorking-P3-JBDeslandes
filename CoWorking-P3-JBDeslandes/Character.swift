@@ -9,38 +9,38 @@
 import Foundation
 
 class Character {
-    
+
     var name: String
     var life: Int
     var maxLife: Int
     var role: Role
     var roleName: String
     var weapon: Weapon?
-    
+
     init(name: String, role: Role) {
         self.name = name
         self.role = role
-        
+
         switch role {
         case .fighter:
             roleName = "Combattant"
-            life = FIGHTER_LIFE
-            maxLife = FIGHTER_LIFE
+            life = FIGHTERLIFE
+            maxLife = FIGHTERLIFE
             weapon = nil
         case .wizard:
             roleName = "Magicien"
-            life = WIZARD_LIFE
-            maxLife = WIZARD_LIFE
+            life = WIZARDLIFE
+            maxLife = WIZARDLIFE
             weapon = nil
         case .colossus:
             roleName = "Colosse"
-            life = COLOSSUS_LIFE
-            maxLife = COLOSSUS_LIFE
+            life = COLOSSUSLIFE
+            maxLife = COLOSSUSLIFE
             weapon = nil
         case .dwarf:
             roleName = "Nain"
-            life = DWARF_LIFE
-            maxLife = DWARF_LIFE
+            life = DWARFLIFE
+            maxLife = DWARFLIFE
             weapon = nil
         }
     }

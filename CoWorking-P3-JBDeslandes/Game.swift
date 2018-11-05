@@ -104,10 +104,10 @@ extension Game {
         print()
 
         print("Quelle sera la classe de \(hero) ?"
-            + "\n1. Combattant."
-            + "\n2. Magicien."
-            + "\n3. Colosse."
-            + "\n4. Nain.")
+            + "\n1. Combattant." + " - ATQ: \(SWORDDAMAGE) / PV: \(FIGHTERLIFE)" + " - Guerrier équilibré"
+            + "\n2. Magicien." + " - ATQ: \(STICKDAMAGE) / PV: \(WIZARDLIFE)" + " - Soigneur efficace / Ne combat pas"
+            + "\n3. Colosse." + " - ATQ: \(FISTSDAMAGE) / PV: \(COLOSSUSLIFE)" + " - Très résistant / Faible puissance"
+            + "\n4. Nain." + " - ATQ: \(AXEDAMAGE) / PV: \(DWARFLIFE)" + " - Peu résistant / Grande puissance")
 
         selectRole()
 
@@ -198,8 +198,6 @@ extension Game {
 
                 } else {
 
-                    print ("L'équipe de \(defenseTeam.name) est morte !")
-                    print()
                     break
 
                 }
@@ -561,36 +559,84 @@ extension Game {
             && defenseTeam.character2!.life == DEAD
             && defenseTeam.character3!.life == DEAD {
 
-            isTeamDead = true
             print("Tous les champions de \(defenseTeam.name) sont morts !")
             print()
+            print("\(attackTeam.name) remporte la victoire !!")
+            print()
+
+            isTeamDead = true
 
         } else if attackTeam.character1!.life == DEAD
             && attackTeam.character2!.life == DEAD
             && attackTeam.character3!.life == DEAD {
 
-            isTeamDead = true
             print("Tous les champions de \(attackTeam.name) sont morts !")
             print()
+            print("\(defenseTeam.name) remporte la victoire !!")
+            print()
+
+            isTeamDead = true
 
         } else {
 
             // Begin of another turn
             isTeamDead = false
 
+            // End the game if the wizard is the only survivor
+            giveUp()
+
         }
 
-        next()
-
     } // End of deadTeam
+
+    func giveUp() {
+
+        if defenseTeam.character1!.role == .wizard
+            && defenseTeam.character2!.life == DEAD
+            && defenseTeam.character3!.life == DEAD
+            || defenseTeam.character1!.life == DEAD
+            && defenseTeam.character2!.role == .wizard
+            && defenseTeam.character3!.life == DEAD
+            || defenseTeam.character1!.life == DEAD
+            && defenseTeam.character2!.life == DEAD
+            && defenseTeam.character3!.role == .wizard {
+
+            print("Voyant qu'il est le seul encore debout, le magicien de \(defenseTeam.name) abandonne !")
+            print()
+            print("\(attackTeam.name) remporte la victoire !!")
+            print()
+
+            isTeamDead = true
+
+        } else if attackTeam.character1!.role == .wizard
+            && attackTeam.character2!.life == DEAD
+            && attackTeam.character3!.life == DEAD
+            || attackTeam.character1!.life == DEAD
+            && attackTeam.character2!.role == .wizard
+            && attackTeam.character3!.life == DEAD
+            || attackTeam.character1!.life == DEAD
+            && attackTeam.character2!.life == DEAD
+            && attackTeam.character3!.role == .wizard {
+
+            print("Voyant qu'il est le seul encore debout, le magicien de \(attackTeam.name) abandonne !")
+            print()
+            print("\(defenseTeam.name) remporte la victoire !!")
+            print()
+
+            isTeamDead = true
+
+        }
+
+    }
 
 } // End of End game control
 
 /*
  I - COMPLETER :
+ - Installer compteur de victoire et rematch.
+ - deadTeam si plusieurs .wizard ?
+ - Une classe ne peut être prise qu'une seule fois ?
  - Simplifer createHero -> Main via for 3
- - Incorporer abandon si le mage est le seul survivant.
- - Incorporer un ajout arme poison (dégats minimes sur trois tours) ?
  
  II - AFFINER :
   - faire disparaitre les optionnels à terme pour if let / guard (sous réserve qu’il existe, le reste s’exécute)

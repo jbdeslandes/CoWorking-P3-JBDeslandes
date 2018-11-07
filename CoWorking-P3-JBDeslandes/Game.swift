@@ -188,6 +188,8 @@ extension Game {
 
                     makeDecision()
 
+                    next()
+
                 } while characterPlayed == false
 
                 deadTeam()
@@ -208,9 +210,9 @@ extension Game {
 
         print("FIN DU COMBAT EN \(turn) TOURS !")
         print()
-        print("\(attackTeam.name): \(attackTeam.victory) victoires")
+        print("\(attackTeam.name): \(attackTeam.victory) victoires"
+            + "- \(defenseTeam.name): \(defenseTeam.victory) victoires")
         print()
-        print("\(defenseTeam.name): \(defenseTeam.victory) victoires")
 
     } // End of play()
 
@@ -431,10 +433,10 @@ extension Game {
     func changeWeapon() {
 
         print("Quelle nouvelle arme choisira \(attackCharacter.name) le \(attackCharacter.roleName) ?"
-            + "\n1. Epée."
-            + "\n2. Bâton."
-            + "\n3. Poings."
-            + "\n4. Hache.")
+            + "\n1. Masse - ATQ: 8 à 12 de dégats"
+            + "\n2. Dague - ATQ: 1 à 25 dégats"
+            + "\n3. Lance - ATQ: 5 à 15 dégats"
+            + "\n4. Refuser de changer d'arme")
 
         var inputweapon: Bool = false
 
@@ -444,24 +446,23 @@ extension Game {
                 switch weapon {
                 case "1":
                     inputweapon = true
-                    attackCharacter.weapon = Sword()
+                    attackCharacter.weapon = Mace()
                     print("\(attackCharacter.name) le \(attackCharacter.roleName)"
-                        + " se saisit d'une épée tranchante!")
+                        + " se saisit d'une imposante masse !")
                 case "2":
                     inputweapon = true
-                    attackCharacter.weapon = Stick()
+                    attackCharacter.weapon = Dagger()
                     print("\(attackCharacter.name) le \(attackCharacter.roleName)"
-                        + " se saisit du bâton !")
+                        + " se saisit d'une dague mortelle !")
                 case "3":
                     inputweapon = true
                     attackCharacter.weapon = Fists()
                     print("\(attackCharacter.name) le \(attackCharacter.roleName)"
-                        + " n'a besoin d'aucune arme pour écraser ses adversaires !")
+                        + " se saisit de la lance maniable et rapide !")
                 case "4":
                     inputweapon = true
-                    attackCharacter.weapon = Axe()
                     print("\(attackCharacter.name) le \(attackCharacter.roleName)"
-                        + " se saisit de la hache !")
+                        + " refuse de changer d'arme et poursuit le combat !")
                 default:
                     inputweapon = false
                     print("Je n'ai pas compris votre choix."
@@ -527,6 +528,8 @@ extension Game {
             print("UN COFFRE MAGIQUE APPARAIT !")
             print()
 
+            next()
+
             changeWeapon()
 
         } else {
@@ -565,7 +568,7 @@ extension Game {
 
             print("Tous les champions de \(defenseTeam.name) sont morts !")
             print()
-            print("\(attackTeam.name) remporte la victoire !!")
+            print("\(attackTeam.name) REMPORTE LA VICTOIRE !!")
             print()
 
             attackTeam.victory += 1
@@ -578,7 +581,7 @@ extension Game {
 
             print("Tous les champions de \(attackTeam.name) sont morts !")
             print()
-            print("\(defenseTeam.name) remporte la victoire !!")
+            print("\(defenseTeam.name) REMPORTE LA VICTOIRE !!")
             print()
 
             defenseTeam.victory += 1
@@ -609,14 +612,16 @@ extension Game {
             && defenseTeam.character2!.life == DEAD
             && defenseTeam.character3!.role == .wizard {
 
-            print("Voyant qu'il est le seul encore debout, le magicien de \(defenseTeam.name) abandonne !")
+            print("Voyant qu'il est le dernier survivant, le magicien de \(defenseTeam.name) abandonne !")
             print()
-            print("\(attackTeam.name) remporte la victoire !!")
+            print("\(attackTeam.name) REMPORTE LA VICTOIRE !!")
             print()
 
             attackTeam.victory += 1
 
             isTeamDead = true
+
+            next()
 
         } else if attackTeam.character1!.role == .wizard
             && attackTeam.character2!.life == DEAD
@@ -628,14 +633,16 @@ extension Game {
             && attackTeam.character2!.life == DEAD
             && attackTeam.character3!.role == .wizard {
 
-            print("Voyant qu'il est le seul encore debout, le magicien de \(attackTeam.name) abandonne !")
+            print("Voyant qu'il est le dernier survivant, le magicien de \(attackTeam.name) abandonne !")
             print()
-            print("\(defenseTeam.name) remporte la victoire !!")
+            print("\(defenseTeam.name) REMPORTE LA VICTOIRE !!")
             print()
 
             defenseTeam.victory += 1
 
             isTeamDead = true
+
+            next()
 
         }
 
@@ -645,9 +652,7 @@ extension Game {
 
 /*
  I - COMPLETER :
- - Installer compteur de victoire et rematch.
- - deadTeam si plusieurs .wizard ?
- - Une classe ne peut être prise qu'une seule fois ?
+ - deadTeam si plusieurs .wizard ou une classe ne peut être prise qu'une seule fois ?
  - Simplifer createHero -> Main via for 3
  
  II - AFFINER :

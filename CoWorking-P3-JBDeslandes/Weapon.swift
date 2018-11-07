@@ -19,7 +19,7 @@ class Weapon {
 
 }
 
-// MARK: - Different weapons
+// MARK: - Default weapons
 class Sword: Weapon {
     init() {
         super.init(damage: SWORDDAMAGE)
@@ -41,5 +41,25 @@ class Fists: Weapon {
 class Axe: Weapon {
     init() {
         super.init(damage: AXEDAMAGE)
+    }
+}
+
+// MARK: - Treasure weapons
+
+class Mace: Weapon {
+    init() {
+        super.init(damage: MACEDAMAGE)
+    }
+}
+
+class Dagger: Weapon {
+    init() {
+        super.init(damage: DAGGERDAMAGE)
+    }
+}
+
+class Spear: Weapon {
+    init() {
+        super.init(damage: SPEARDAMAGE)
     }
 }

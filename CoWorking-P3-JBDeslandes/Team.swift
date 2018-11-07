@@ -12,6 +12,7 @@ import Foundation
 class Team {
 
     var name: String
+    var victory: Int = 0
 
     var character1: Character?
     var character2: Character?

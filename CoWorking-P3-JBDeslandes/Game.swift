@@ -206,7 +206,11 @@ extension Game {
 
         } while isTeamDead == false
 
-        print("FIN DU COMBAT")
+        print("FIN DU COMBAT EN \(turn) TOURS !")
+        print()
+        print("\(attackTeam.name): \(attackTeam.victory) victoires")
+        print()
+        print("\(defenseTeam.name): \(defenseTeam.victory) victoires")
 
     } // End of play()
 
@@ -564,6 +568,8 @@ extension Game {
             print("\(attackTeam.name) remporte la victoire !!")
             print()
 
+            attackTeam.victory += 1
+
             isTeamDead = true
 
         } else if attackTeam.character1!.life == DEAD
@@ -574,6 +580,8 @@ extension Game {
             print()
             print("\(defenseTeam.name) remporte la victoire !!")
             print()
+
+            defenseTeam.victory += 1
 
             isTeamDead = true
 
@@ -606,6 +614,8 @@ extension Game {
             print("\(attackTeam.name) remporte la victoire !!")
             print()
 
+            attackTeam.victory += 1
+
             isTeamDead = true
 
         } else if attackTeam.character1!.role == .wizard
@@ -622,6 +632,8 @@ extension Game {
             print()
             print("\(defenseTeam.name) remporte la victoire !!")
             print()
+
+            defenseTeam.victory += 1
 
             isTeamDead = true
 

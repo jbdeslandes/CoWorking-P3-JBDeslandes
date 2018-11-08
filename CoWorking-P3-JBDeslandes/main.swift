@@ -24,42 +24,6 @@ let game = Game()
 var team1 = Team(name: "")
 var team2 = Team(name: "")
 
-game.createPlayers()
+game.mainGame()
 
 // TEAMS CREATION
-
-print("\(team1.name) - Choisis le nom des héros qui composeront ton équipe !")
-print()
-
-currentCharacter = game.createHero(team: team1, num: 1)
-team1.character1 = currentCharacter
-
-currentCharacter = game.createHero(team: team1, num: 2)
-team1.character2 = currentCharacter
-
-currentCharacter = game.createHero(team: team1, num: 3)
-team1.character3 = currentCharacter
-
-print("\(team1.name) - Tes champions \(team1.character1!.name), \(team1.character2!.name) et \(team1.character3!.name)"
-    + " atteignent l'arène et attendent leurs adversaires de pied ferme..")
-print()
-
-print("\(team2.name) - A toi maintenant de choisir le nom des héros qui composeront ton équipe !")
-print()
-
-currentCharacter = game.createHero(team: team2, num: 1)
-team2.character1 = currentCharacter
-
-currentCharacter = game.createHero(team: team2, num: 2)
-team2.character2 = currentCharacter
-
-currentCharacter = game.createHero(team: team2, num: 3)
-team2.character3 = currentCharacter
-
-print("\(team2.name) - Tes champions \(team2.character1!.name), \(team2.character2!.name) et \(team2.character3!.name)"
-    + " rejoignent l'enceinte et font face à leurs rivaux..")
-print()
-
-// BATTLE MODE
-
-game.play()

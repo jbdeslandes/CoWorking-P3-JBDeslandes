@@ -29,6 +29,12 @@ class Game {
 //    To control when to end game
     private var isTeamDead: Bool = false
 
+//    To replay with same teams
+    private var replay: Bool = false
+
+//    To replay from the beginning
+    private var replayAll: Bool = false
+
 } // End of Game class
 
 // MARK: - Teams creation
@@ -72,6 +78,23 @@ extension Game {
         next()
 
     } // End of createPlayer()
+
+    func createTeam(team: Team, num: Int) {
+
+        currentCharacter = createHero(team: team, num: num)
+
+        switch num {
+        case 1:
+            team.character1 = currentCharacter
+        case 2:
+            team.character2 = currentCharacter
+        case 3:
+            team.character3 = currentCharacter
+        default:
+            print("Error: func createTeam()")
+        }
+
+    }
 
     func createHero(team: Team, num: Int) -> Character {
 
@@ -166,6 +189,75 @@ extension Game {
 // MARK: - Battle mode
 extension Game {
 
+    func mainGame() {
+
+        // To create 2 teams
+        createPlayers()
+
+        repeat {
+
+            // Reset value
+            replayAll = false
+
+            // To create 3 characters for 2 teams
+            print("\(team1.name) - Choisis le nom des héros qui composeront ton équipe !")
+            print()
+
+            for add in 1...CHARACTERNUMBER {
+                game.createTeam(team: team1, num: add)
+            }
+
+            print("\(team1.name) - Tes champions"
+                + " \(team1.character1!.name), \(team1.character2!.name) et \(team1.character3!.name)"
+                + " atteignent l'arène et attendent leurs adversaires de pied ferme..")
+            print()
+
+            game.next()
+
+            print("\(team2.name) - A toi maintenant de choisir le nom des héros qui composeront ton équipe !")
+            print()
+
+            for add in 1...CHARACTERNUMBER {
+                game.createTeam(team: team2, num: add)
+            }
+
+            print("\(team2.name) - Tes champions"
+                + " \(team2.character1!.name), \(team2.character2!.name) et \(team2.character3!.name)"
+                + " rejoignent l'enceinte et font face à leurs rivaux..")
+            print()
+
+            game.next()
+
+            repeat {
+
+                // Reset value
+                replay = false
+
+                // Engage teams in battle
+                game.play()
+
+                print("Que souhaitez-vous faire ?"
+                    + "\n1. Rejouer avec les mêmes équipes"
+                    + "\n2. Rejouer avec des équipes différentes"
+                    + "\n3. Quitter le jeu")
+
+                if let choice = readLine() {
+                    switch choice {
+                    case "1":
+                        replay = true
+                    case "2":
+                        replayAll = true
+                    default:
+                        print("Error : func mainGame()")
+                    }
+                }
+
+            } while replay == true
+
+        } while replayAll == true
+
+    }
+
     func play() {
 
         randomTeamChoice()
@@ -210,8 +302,7 @@ extension Game {
 
         print("FIN DU COMBAT EN \(turn) TOURS !")
         print()
-        print("\(attackTeam.name): \(attackTeam.victory) victoires"
-            + "- \(defenseTeam.name): \(defenseTeam.victory) victoires")
+        print("VICTOIRES : \(team1.name): \(team1.victory) / \(team2.name): \(team2.victory)")
         print()
 
     } // End of play()
@@ -404,6 +495,7 @@ extension Game {
                 if healedCharacter.life <= DEAD {
 
                     print("\(healedCharacter.name) est mort. Veuillez choisir une autre cible !")
+                    print()
 
                 } else if healedCharacter.life > DEAD
                     && healedCharacter.life != healedCharacter.maxLife {
@@ -412,11 +504,13 @@ extension Game {
 
                     print("\(attackCharacter.name) soigne"
                         + " \(healedCharacter.name). Il possède maintenant \(healedCharacter.life) points de vie !")
+                    print()
 
-                    if healedCharacter.life > healedCharacter.maxLife {
+                    if healedCharacter.life >= healedCharacter.maxLife {
 
                         healedCharacter.life = healedCharacter.maxLife
                         print("\(healedCharacter.name) est au sommet de sa forme !")
+                        print()
 
                     }
 
@@ -652,9 +746,8 @@ extension Game {
 
 /*
  I - COMPLETER :
+ - Décider de rejouer ou non ? switch + while + bool
  - deadTeam si plusieurs .wizard ou une classe ne peut être prise qu'une seule fois ?
- - Simplifer createHero -> Main via for 3
- 
  II - AFFINER :
   - faire disparaitre les optionnels à terme pour if let / guard (sous réserve qu’il existe, le reste s’exécute)
  */

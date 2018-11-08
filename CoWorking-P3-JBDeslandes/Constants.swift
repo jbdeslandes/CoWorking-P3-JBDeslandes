@@ -2,6 +2,12 @@
 // MARK: - Characters
 //====================
 
+// Team:
+
+//let CHARACTERNUMBER = 3
+
+let CHARACTERNUMBER = 3
+
 // Balancing values:
 
 //let FIGHTERLIFE = 100

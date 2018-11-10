@@ -94,7 +94,7 @@ extension Game {
             print("Error: func createTeam()")
         }
 
-    }
+    } // End of createTeam
 
     func createHero(team: Team, num: Int) -> Character {
 
@@ -184,7 +184,7 @@ extension Game {
 
     } // End of selectRole()
 
-} // End of Teams Creation
+} // End of Teams creation
 
 // MARK: - Battle mode
 extension Game {
@@ -247,6 +247,8 @@ extension Game {
                         replay = true
                     case "2":
                         replayAll = true
+                    case "3":
+                        print("Merci d'avoir joué !")
                     default:
                         print("Error : func mainGame()")
                     }
@@ -256,7 +258,7 @@ extension Game {
 
         } while replayAll == true
 
-    }
+    } // End of mainGame()
 
     func play() {
 
@@ -307,7 +309,26 @@ extension Game {
 
     } // End of play()
 
-} // End of Battle Mode
+    func resetTeam(team: Team) {
+
+        if replay == true {
+
+            // Reset life and weapons
+            team.character1!.life = team.character1!.maxLife
+            team.character2!.life = team.character2!.maxLife
+            team.character3!.life = team.character3!.maxLife
+            
+            resetWeapons(team: team)
+        }
+    } // End of resetTeam()
+
+    func resetWeapons(team: Team) {
+       
+        // Waiting for character[] modification
+       
+    }
+
+} // End of Battle mode
 
 // MARK: - Interractions
 extension Game {
@@ -522,7 +543,7 @@ extension Game {
 
         }
 
-    } // End of func heal()
+    } // End of heal()
 
     func changeWeapon() {
 
@@ -569,14 +590,14 @@ extension Game {
 
         } while inputweapon == false
 
-    } // End of func chooseWeapon()
+    } // End of chooseWeapon()
 
     func next() {
 
         print("Appuyer sur Entrer pour continuer..")
         _ = readLine()
 
-    } // End of func next()
+    } // End of next()
 
 } // End of Interractions
 
@@ -740,7 +761,7 @@ extension Game {
 
         }
 
-    }
+    } // End of giveUp()
 
 } // End of End game control
 

@@ -11,18 +11,47 @@ import Foundation
 // MARK: - TEAM
 class Team {
 
+    // To name champions
     var name: String
+
+    // Victory counter
     var victory: Int = 0
 
-    var character1: Character?
-    var character2: Character?
-    var character3: Character?
+    // To store characters informations
+    var characters = [Int: Character]()
 
     init(name: String) {
         self.name = name
-
-        self.character1 = nil
-        self.character2 = nil
-        self.character3 = nil
     }
+
+    // To control number of survivors in Team
+    var alive: Bool {
+
+        // Filter count by .life
+        let numberOfTeamCharactersAlive = self.characters.filter {$1.life != 0}.count
+
+        if numberOfTeamCharactersAlive == 1 {
+
+            let teamCharacterAlive = self.characters.filter {$1.life != 0}
+
+            // To control if the last survivor is a wizard
+            if teamCharacterAlive[1]!.role == .wizard {
+
+                // The only survivor is a wizard and can't attack
+                return false
+
+            }
+
+        } else if numberOfTeamCharactersAlive == 0 {
+
+            // There are no survivors
+            return false
+
+        }
+
+        // There is at least one survivor != .wizard
+        return true
+
+    }
+
 }

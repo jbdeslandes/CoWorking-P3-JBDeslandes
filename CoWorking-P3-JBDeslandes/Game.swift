@@ -85,11 +85,11 @@ extension Game {
 
         switch num {
         case 1:
-            team.character1 = currentCharacter
+            team.characters[1] = currentCharacter
         case 2:
-            team.character2 = currentCharacter
+            team.characters[2] = currentCharacter
         case 3:
-            team.character3 = currentCharacter
+            team.characters[3] = currentCharacter
         default:
             print("Error: func createTeam()")
         }
@@ -208,7 +208,7 @@ extension Game {
             }
 
             print("\(team1.name) - Tes champions"
-                + " \(team1.character1!.name), \(team1.character2!.name) et \(team1.character3!.name)"
+                + " \(team1.characters[1]!.name), \(team1.characters[2]!.name) et \(team1.characters[3]!.name)"
                 + " atteignent l'arène et attendent leurs adversaires de pied ferme..")
             print()
 
@@ -222,7 +222,7 @@ extension Game {
             }
 
             print("\(team2.name) - Tes champions"
-                + " \(team2.character1!.name), \(team2.character2!.name) et \(team2.character3!.name)"
+                + " \(team2.characters[1]!.name), \(team2.characters[2]!.name) et \(team2.characters[3]!.name)"
                 + " rejoignent l'enceinte et font face à leurs rivaux..")
             print()
 
@@ -230,29 +230,10 @@ extension Game {
 
             repeat {
 
-                // Reset value
-                replay = false
-
                 // Engage teams in battle
                 game.play()
 
-                print("Que souhaitez-vous faire ?"
-                    + "\n1. Rejouer avec les mêmes équipes"
-                    + "\n2. Rejouer avec des équipes différentes"
-                    + "\n3. Quitter le jeu")
-
-                if let choice = readLine() {
-                    switch choice {
-                    case "1":
-                        replay = true
-                    case "2":
-                        replayAll = true
-                    case "3":
-                        print("Merci d'avoir joué !")
-                    default:
-                        print("Error : func mainGame()")
-                    }
-                }
+                resetChoices()
 
             } while replay == true
 
@@ -262,7 +243,7 @@ extension Game {
 
     func play() {
 
-        randomTeamChoice()
+        randomTeamStart()
 
         var turn: Int = 0
 
@@ -314,18 +295,18 @@ extension Game {
         if replay == true {
 
             // Reset life and weapons
-            team.character1!.life = team.character1!.maxLife
-            team.character2!.life = team.character2!.maxLife
-            team.character3!.life = team.character3!.maxLife
-            
+            team.characters[1]!.life = team.characters[1]!.maxLife
+            team.characters[2]!.life = team.characters[2]!.maxLife
+            team.characters[3]!.life = team.characters[3]!.maxLife
+
             resetWeapons(team: team)
         }
     } // End of resetTeam()
 
     func resetWeapons(team: Team) {
-       
+
         // Waiting for character[] modification
-       
+
     }
 
 } // End of Battle mode
@@ -335,17 +316,17 @@ extension Game {
 
     func characterChoice(currentTeam: Team) -> Character {
 
-        print("\n1. \(currentTeam.character1!.name)"
-            + " - \(currentTeam.character1!.roleName)"
-            + " - Vie: \(currentTeam.character1!.life)"
+        print("\n1. \(currentTeam.characters[1]!.name)"
+            + " - \(currentTeam.characters[1]!.roleName)"
+            + " - Vie: \(currentTeam.characters[1]!.life)"
 
-            + "\n2. \(currentTeam.character2!.name)"
-            + " - \(currentTeam.character2!.roleName)"
-            + " - Vie: \(currentTeam.character2!.life)"
+            + "\n2. \(currentTeam.characters[2]!.name)"
+            + " - \(currentTeam.characters[2]!.roleName)"
+            + " - Vie: \(currentTeam.characters[2]!.life)"
 
-            + "\n3. \(currentTeam.character3!.name)"
-            + " - \(currentTeam.character3!.roleName)"
-            + " - Vie: \(currentTeam.character3!.life)")
+            + "\n3. \(currentTeam.characters[3]!.name)"
+            + " - \(currentTeam.characters[3]!.roleName)"
+            + " - Vie: \(currentTeam.characters[3]!.life)")
 
         var inputChoice1: Bool = false
 
@@ -355,13 +336,13 @@ extension Game {
                 switch choice {
                 case "1":
                     inputChoice1 = true
-                    currentCharacter = currentTeam.character1!
+                    currentCharacter = currentTeam.characters[1]!
                 case "2":
                     inputChoice1 = true
-                    currentCharacter = currentTeam.character2!
+                    currentCharacter = currentTeam.characters[2]!
                 case "3":
                     inputChoice1 = true
-                    currentCharacter = currentTeam.character3!
+                    currentCharacter = currentTeam.characters[3]!
                 default:
                     inputChoice1 = false
                     print("Je n'ai pas compris votre choix."
@@ -424,25 +405,25 @@ extension Game {
 
         } else if randomNumber > 10 && randomNumber <= 15 {
 
-            // Counter attack
-            attackCharacter.life -= defenseCharacter.weapon!.damage
+            // Counterattack
+            attackCharacter.life -= defenseCharacter.weapon.damage
             print("\(defenseCharacter.name) effectue une parade et contre-attaque !")
             print()
 
         } else if randomNumber > 15 && randomNumber <= 20 {
 
             // Critical strike
-            defenseCharacter.life -= (attackCharacter.weapon!.damage * 2)
+            defenseCharacter.life -= (attackCharacter.weapon.damage * 2)
             print("\(attackCharacter.name) trouve une faille dans la défense de"
                 + " \(defenseCharacter.name) et lui assène un coup critique"
-                + " qui inflige \(attackCharacter.weapon!.damage * 2) points de dégats !!")
+                + " qui inflige \(attackCharacter.weapon.damage * 2) points de dégats !!")
             print()
 
         } else if randomNumber > 20 && randomNumber <= 100 {
 
             // Attack
-            defenseCharacter.life -= attackCharacter.weapon!.damage
-            print("\(attackCharacter.name) inflige \(attackCharacter.weapon!.damage)"
+            defenseCharacter.life -= attackCharacter.weapon.damage
+            print("\(attackCharacter.name) inflige \(attackCharacter.weapon.damage)"
                 + " points de dégats à \(defenseCharacter.name) !")
             print()
 
@@ -466,9 +447,9 @@ extension Game {
 
     func heal() {
 
-        if attackTeam.character1!.life == attackTeam.character1!.maxLife
-            && attackTeam.character2!.life == attackTeam.character2!.maxLife
-            && attackTeam.character3!.life == attackTeam.character3!.maxLife {
+        if attackTeam.characters[1]!.life == attackTeam.characters[1]!.maxLife
+            && attackTeam.characters[2]!.life == attackTeam.characters[2]!.maxLife
+            && attackTeam.characters[3]!.life == attackTeam.characters[3]!.maxLife {
 
             //      Cannot heal - All team is full life
             print("Tous tes champions possèdent déjà leur santé au maximum !")
@@ -478,15 +459,15 @@ extension Game {
 
             next()
 
-        } else if attackTeam.character1!.life == DEAD
-            && attackTeam.character2!.life == attackTeam.character2!.maxLife
-            && attackTeam.character3!.life == attackTeam.character3!.maxLife
-            || attackTeam.character1!.life == attackTeam.character1!.maxLife
-            && attackTeam.character2!.life == DEAD
-            && attackTeam.character3!.life == attackTeam.character3!.maxLife
-            || attackTeam.character1!.life == attackTeam.character1!.maxLife
-            && attackTeam.character2!.life == attackTeam.character2!.maxLife
-            && attackTeam.character3!.life == DEAD {
+        } else if attackTeam.characters[1]!.life == DEAD
+            && attackTeam.characters[2]!.life == attackTeam.characters[2]!.maxLife
+            && attackTeam.characters[3]!.life == attackTeam.characters[3]!.maxLife
+            || attackTeam.characters[1]!.life == attackTeam.characters[1]!.maxLife
+            && attackTeam.characters[2]!.life == DEAD
+            && attackTeam.characters[3]!.life == attackTeam.characters[3]!.maxLife
+            || attackTeam.characters[1]!.life == attackTeam.characters[1]!.maxLife
+            && attackTeam.characters[2]!.life == attackTeam.characters[2]!.maxLife
+            && attackTeam.characters[3]!.life == DEAD {
 
             // Cannot heal - All characters are full life or dead
             print("Tes différents champions sont soit morts, soit possèdent déjà leur santé au maximum !")
@@ -521,7 +502,7 @@ extension Game {
                 } else if healedCharacter.life > DEAD
                     && healedCharacter.life != healedCharacter.maxLife {
 
-                    healedCharacter.life += attackCharacter.weapon!.damage
+                    healedCharacter.life += attackCharacter.weapon.damage
 
                     print("\(attackCharacter.name) soigne"
                         + " \(healedCharacter.name). Il possède maintenant \(healedCharacter.life) points de vie !")
@@ -677,9 +658,9 @@ extension Game {
 
     func deadTeam() {
 
-        if defenseTeam.character1!.life == DEAD
-            && defenseTeam.character2!.life == DEAD
-            && defenseTeam.character3!.life == DEAD {
+        if defenseTeam.characters[1]!.life == DEAD
+            && defenseTeam.characters[2]!.life == DEAD
+            && defenseTeam.characters[3]!.life == DEAD {
 
             print("Tous les champions de \(defenseTeam.name) sont morts !")
             print()
@@ -690,9 +671,9 @@ extension Game {
 
             isTeamDead = true
 
-        } else if attackTeam.character1!.life == DEAD
-            && attackTeam.character2!.life == DEAD
-            && attackTeam.character3!.life == DEAD {
+        } else if attackTeam.characters[1]!.life == DEAD
+            && attackTeam.characters[2]!.life == DEAD
+            && attackTeam.characters[3]!.life == DEAD {
 
             print("Tous les champions de \(attackTeam.name) sont morts !")
             print()
@@ -717,15 +698,15 @@ extension Game {
 
     func giveUp() {
 
-        if defenseTeam.character1!.role == .wizard
-            && defenseTeam.character2!.life == DEAD
-            && defenseTeam.character3!.life == DEAD
-            || defenseTeam.character1!.life == DEAD
-            && defenseTeam.character2!.role == .wizard
-            && defenseTeam.character3!.life == DEAD
-            || defenseTeam.character1!.life == DEAD
-            && defenseTeam.character2!.life == DEAD
-            && defenseTeam.character3!.role == .wizard {
+        if defenseTeam.characters[1]!.role == .wizard
+            && defenseTeam.characters[2]!.life == DEAD
+            && defenseTeam.characters[3]!.life == DEAD
+            || defenseTeam.characters[1]!.life == DEAD
+            && defenseTeam.characters[2]!.role == .wizard
+            && defenseTeam.characters[3]!.life == DEAD
+            || defenseTeam.characters[1]!.life == DEAD
+            && defenseTeam.characters[2]!.life == DEAD
+            && defenseTeam.characters[3]!.role == .wizard {
 
             print("Voyant qu'il est le dernier survivant, le magicien de \(defenseTeam.name) abandonne !")
             print()
@@ -738,15 +719,15 @@ extension Game {
 
             next()
 
-        } else if attackTeam.character1!.role == .wizard
-            && attackTeam.character2!.life == DEAD
-            && attackTeam.character3!.life == DEAD
-            || attackTeam.character1!.life == DEAD
-            && attackTeam.character2!.role == .wizard
-            && attackTeam.character3!.life == DEAD
-            || attackTeam.character1!.life == DEAD
-            && attackTeam.character2!.life == DEAD
-            && attackTeam.character3!.role == .wizard {
+        } else if attackTeam.characters[1]!.role == .wizard
+            && attackTeam.characters[2]!.life == DEAD
+            && attackTeam.characters[3]!.life == DEAD
+            || attackTeam.characters[1]!.life == DEAD
+            && attackTeam.characters[2]!.role == .wizard
+            && attackTeam.characters[3]!.life == DEAD
+            || attackTeam.characters[1]!.life == DEAD
+            && attackTeam.characters[2]!.life == DEAD
+            && attackTeam.characters[3]!.role == .wizard {
 
             print("Voyant qu'il est le dernier survivant, le magicien de \(attackTeam.name) abandonne !")
             print()
@@ -767,7 +748,8 @@ extension Game {
 
 /*
  I - COMPLETER :
- - Décider de rejouer ou non ? switch + while + bool
+ - if reset : restaurer armes et vie / reset tableau mémoire des noms
+ - Factoriser / compléter le code depuis transformation tableau
  - deadTeam si plusieurs .wizard ou une classe ne peut être prise qu'une seule fois ?
  II - AFFINER :
   - faire disparaitre les optionnels à terme pour if let / guard (sous réserve qu’il existe, le reste s’exécute)

@@ -16,7 +16,7 @@ class Character {
     var maxLife: Int
     var role: Role
     var roleName: String
-    var weapon: Weapon?
+    var weapon: Weapon
 
     init(name: String, role: Role) {
         self.name = name
@@ -27,22 +27,22 @@ class Character {
             roleName = "Combattant"
             life = FIGHTERLIFE
             maxLife = FIGHTERLIFE
-            weapon = nil
+            weapon = Sword()
         case .wizard:
             roleName = "Magicien"
             life = WIZARDLIFE
             maxLife = WIZARDLIFE
-            weapon = nil
+            weapon = Stick()
         case .colossus:
             roleName = "Colosse"
             life = COLOSSUSLIFE
             maxLife = COLOSSUSLIFE
-            weapon = nil
+            weapon = Fists()
         case .dwarf:
             roleName = "Nain"
             life = DWARFLIFE
             maxLife = DWARFLIFE
-            weapon = nil
+            weapon = Axe()
         }
     }
 }

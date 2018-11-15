@@ -11,20 +11,42 @@ import Foundation
 // MARK: - GAME
 class Game {
 
+//    To choose a character
+    var currentCharacter: Character!
+
+//    To define which character must attack
+    var attackCharacter: Character!
+
+//    To define which character is the target
+    var defenseCharacter: Character!
+
+//    To define which character must be healed
+    var healedCharacter: Character!
+
+//    To control which team attacks
+    var attackTeam: Team!
+
+//    To control which team defends
+    var defenseTeam: Team!
+
+//    Team creation
+    var team1 = Team(name: "")
+    var team2 = Team(name: "")
+
 //    To name Characters
     private var hero: String = ""
 
 //    To not duplicate champion's names
     private var memNames: [String] = []
 
-//    To control if a character is playable
-    private var isCharacterDead: Bool = false
-
 //    To control if a character played
     private var characterPlayed: Bool = false
 
 //    To control if a random chest have to appear
     private var randomTreasureAppears: Bool = false
+
+//    To control if a character is playable
+    private var isCharacterDead: Bool = false
 
 //    To control when to end game
     private var isTeamDead: Bool = false
@@ -289,6 +311,27 @@ extension Game {
         print()
 
     } // End of play()
+
+    func resetChoices() {
+
+        print("Que souhaitez-vous faire ?"
+            + "\n1. Rejouer avec les mêmes équipes"
+            + "\n2. Rejouer avec des équipes différentes"
+            + "\n3. Quitter le jeu")
+
+        if let choice = readLine() {
+            switch choice {
+            case "1":
+                replay = true
+            case "2":
+                replayAll = true
+            case "3":
+                print("Merci d'avoir joué !")
+            default:
+                print("Error : func mainGame()")
+            }
+        }
+    }
 
     func resetTeam(team: Team) {
 
@@ -585,7 +628,7 @@ extension Game {
 // MARK: - Random features
 extension Game {
 
-    func randomTeamChoice() {
+    func randomTeamStart() {
 
         let choice = Bool.random()
 

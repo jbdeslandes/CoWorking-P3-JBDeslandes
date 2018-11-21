@@ -20,6 +20,9 @@ class Team {
     // To store characters informations
     var characters = [Int: Character]()
 
+    // To not duplicate champion's roles
+    var memRoles = [Character]()
+
     init(name: String) {
         self.name = name
     }
@@ -37,12 +40,18 @@ class Team {
             // To control if the last survivor is a wizard
             if teamCharacterAlive[1]!.role == .wizard {
 
+                print("Voyant qu'il est le dernier survivant, le magicien de \(name) abandonne !")
+                print()
+
                 // The only survivor is a wizard and can't attack
                 return false
 
             }
 
         } else if numberOfTeamCharactersAlive == 0 {
+
+            print("Tous les héros de \(name) sont morts !")
+            print()
 
             // There are no survivors
             return false

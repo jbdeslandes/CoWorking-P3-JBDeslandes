@@ -210,23 +210,6 @@ extension Game {
 
     } // End of createPlayer()
 
-//    func createTeam(team: Team, num: Int) {
-//
-//        currentCharacter = createHero(team: team, num: num)
-//
-//        switch num {
-//        case 1:
-//            team.characters[1] = currentCharacter
-//        case 2:
-//            team.characters[2] = currentCharacter
-//        case 3:
-//            team.characters[3] = currentCharacter
-//        default:
-//            print("Error: func createTeam()")
-//        }
-//
-//    } // End of createTeam
-
     func createHero(team: Team, num: Int) {
 
         var duplicate: Bool = false
@@ -259,9 +242,9 @@ extension Game {
 
         print("Quelle sera la classe de \(hero) ?"
             + "\n1. Combattant." + " - ATQ: \(SWORDDAMAGE) / PV: \(FIGHTERLIFE)" + " - Guerrier équilibré"
-            + "\n2. Magicien." + " - PV: \(WIZARDLIFE)" + " - Soigneur efficace / Ne combat pas"
-            + "\n3. Colosse." + " - ATQ: \(FISTSDAMAGE) / PV: \(COLOSSUSLIFE)" + " - Très résistant / Faible puissance"
-            + "\n4. Nain." + " - ATQ: \(AXEDAMAGE) / PV: \(DWARFLIFE)" + " - Peu résistant / Grande puissance")
+            + "\n2. Magicien." + " - ATQ: \(DEAD) / PV: \(WIZARDLIFE)" + " - Ne combat pas / Soigneur efficace"
+            + "\n3. Colosse." + " - ATQ: \(FISTSDAMAGE) / PV: \(COLOSSUSLIFE)" + " - Faible puissance / Très résistant"
+            + "\n4. Nain." + " - ATQ: \(AXEDAMAGE) / PV: \(DWARFLIFE)" + " - Grande puissance / Peu résistant")
 
         repeat {
 
@@ -309,7 +292,7 @@ extension Game {
                 default:
                     inputrole = false
                     print("Je n'ai pas compris votre choix."
-                        + "Veuillez rentrer un numéro pour choisir la classe correspondante.")
+                        + " Veuillez rentrer un numéro pour choisir la classe correspondante.")
                 }
 
                 print()
@@ -464,7 +447,6 @@ extension Game {
                 randomTreasure()
 
                 print("\(attackTeam.name) - Quel adversaire souhaites-tu attaquer ?")
-
                 defenseCharacter = characterChoice(currentTeam: defenseTeam)
 
                 attack()
@@ -476,6 +458,32 @@ extension Game {
         } while characterPlayed == false
 
     } // End of makeDecision()
+
+    func damageDone(atk: Character, def: Character, action: String) -> Int {
+
+        // Generator of a number in damage range
+        let instantDamage = Int.random(in: atk.weapon.minDamage...atk.weapon.maxDamage)
+
+        if action == "attack" {
+
+            print("\(atk.name) inflige \(instantDamage) points de dégâts à \(def.name).")
+            print()
+
+        } else if action == "heal" {
+
+            print("\(atk.name) soigne \(instantDamage) points de vie de \(def.name).")
+            print()
+
+        } else if action == "crit" {
+
+            print("\(atk.name) trouve une faille dans la défense de"
+                + " \(def.name) et assène un coup critique de \(instantDamage * 2) points de dégâts !")
+
+        }
+
+        return instantDamage
+
+    } // End of func damageDone()
 
     func attack() {
 
@@ -491,26 +499,18 @@ extension Game {
         } else if randomNumber > 10 && randomNumber <= 15 {
 
             // Counterattack
-            attackCharacter.life -= defenseCharacter.weapon.damage
             print("\(defenseCharacter.name) effectue une parade et contre-attaque !")
-            print()
+            attackCharacter.life -= damageDone(atk: defenseCharacter, def: attackCharacter, action: "attack")
 
         } else if randomNumber > 15 && randomNumber <= 20 {
 
             // Critical strike
-            defenseCharacter.life -= (attackCharacter.weapon.damage * 2)
-            print("\(attackCharacter.name) trouve une faille dans la défense de"
-                + " \(defenseCharacter.name) et lui assène un coup critique"
-                + " qui inflige \(attackCharacter.weapon.damage * 2) points de dégats !!")
-            print()
+            defenseCharacter.life -= damageDone(atk: attackCharacter, def: defenseCharacter, action: "crit") * 2
 
         } else if randomNumber > 20 && randomNumber <= 100 {
 
             // Attack
-            defenseCharacter.life -= attackCharacter.weapon.damage
-            print("\(attackCharacter.name) inflige \(attackCharacter.weapon.damage)"
-                + " points de dégats à \(defenseCharacter.name) !")
-            print()
+            defenseCharacter.life -= damageDone(atk: attackCharacter, def: defenseCharacter, action: "attack")
 
         }
 
@@ -532,37 +532,13 @@ extension Game {
 
     func heal() {
 
-        if attackTeam.characters[1]!.life == attackTeam.characters[1]!.maxLife
-            && attackTeam.characters[2]!.life == attackTeam.characters[2]!.maxLife
-            && attackTeam.characters[3]!.life == attackTeam.characters[3]!.maxLife {
-
-            //      Cannot heal - All team is full life
-            print("Tous tes champions possèdent déjà leur santé au maximum !")
-            print()
+        if !attackTeam.canHeal {
 
             characterPlayed = false
 
             next()
 
-        } else if attackTeam.characters[1]!.life == DEAD
-            && attackTeam.characters[2]!.life == attackTeam.characters[2]!.maxLife
-            && attackTeam.characters[3]!.life == attackTeam.characters[3]!.maxLife
-            || attackTeam.characters[1]!.life == attackTeam.characters[1]!.maxLife
-            && attackTeam.characters[2]!.life == DEAD
-            && attackTeam.characters[3]!.life == attackTeam.characters[3]!.maxLife
-            || attackTeam.characters[1]!.life == attackTeam.characters[1]!.maxLife
-            && attackTeam.characters[2]!.life == attackTeam.characters[2]!.maxLife
-            && attackTeam.characters[3]!.life == DEAD {
-
-            // Cannot heal - All characters are full life or dead
-            print("Tes différents champions sont soit morts, soit possèdent déjà leur santé au maximum !")
-            print()
-
-            characterPlayed = false
-
-            next()
-
-        } else {
+        } else if attackTeam.canHeal {
 
             print("\(attackTeam.name) - Quel compagnon souhaites-tu soigner ?")
 
@@ -587,19 +563,16 @@ extension Game {
                 } else if healedCharacter.life > DEAD
                     && healedCharacter.life != healedCharacter.maxLife {
 
-                    healedCharacter.life += attackCharacter.weapon.damage
-
-                    print("\(attackCharacter.name) soigne"
-                        + " \(healedCharacter.name). Il possède maintenant \(healedCharacter.life) points de vie !")
-                    print()
+                    healedCharacter.life += damageDone(atk: attackCharacter, def: healedCharacter, action: "heal")
 
                     if healedCharacter.life >= healedCharacter.maxLife {
 
                         healedCharacter.life = healedCharacter.maxLife
-                        print("\(healedCharacter.name) est au sommet de sa forme !")
-                        print()
 
                     }
+
+                    print("Il possède maintenant \(healedCharacter.life) points de vie !")
+                    print()
 
                 }
 
@@ -614,9 +587,9 @@ extension Game {
     func changeWeapon() {
 
         print("Quelle nouvelle arme choisira \(attackCharacter.name) le \(attackCharacter.roleName) ?"
-            + "\n1. Masse - ATQ: \(MACEDAMAGEMIN) à \(MACEDAMAGEMAX) de dégats"
-            + "\n2. Dague - ATQ: \(DAGGERDAMAGEMIN) à \(DAGGERDAMAGEMAX) dégats"
-            + "\n3. Lance - ATQ: \(SPEARDAMAGEMIN) à \(SPEARDAMAGEMAX) dégats"
+            + "\n1. Masse - ATQ: \(MACEDAMAGEMIN) à \(MACEDAMAGEMAX) de dégâts"
+            + "\n2. Dague - ATQ: \(DAGGERDAMAGEMIN) à \(DAGGERDAMAGEMAX) dégâts"
+            + "\n3. Lance - ATQ: \(SPEARDAMAGEMIN) à \(SPEARDAMAGEMAX) dégâts"
             + "\n4. Refuser de changer d'arme")
 
         var inputweapon: Bool = false

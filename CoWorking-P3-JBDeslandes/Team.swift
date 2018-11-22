@@ -33,12 +33,12 @@ class Team {
         // Filter count by .life
         let numberOfTeamCharactersAlive = self.characters.filter {$1.life != 0}.count
 
+        // To control if the last survivor is a wizard
         if numberOfTeamCharactersAlive == 1 {
 
-            let teamCharacterAlive = self.characters.filter {$1.life != 0}
+            let isWizardAlive = self.characters.filter {$1.role == .wizard}.count
 
-            // To control if the last survivor is a wizard
-            if teamCharacterAlive[1]!.role == .wizard {
+            if isWizardAlive == 1 {
 
                 print("Voyant qu'il est le dernier survivant, le magicien de \(name) abandonne !")
                 print()
@@ -59,6 +59,38 @@ class Team {
         }
 
         // There is at least one survivor != .wizard
+        return true
+
+    }
+
+    // To control if a team can heal
+    var canHeal: Bool {
+
+        // Filter count by .maxLife
+        let numberOfCharactersMaxLife = self.characters.filter {$1.life == $1.maxLife}.count
+
+        // Filter count by dead characters
+        let numberofCharactersDead = self.characters.filter {$1.life == DEAD}.count
+
+        if numberOfCharactersMaxLife == 3 {
+
+            // Cannot heal - All team is full life
+            print("Tous tes champions possèdent déjà leur santé au maximum !")
+            print()
+
+            return false
+
+        } else if numberOfCharactersMaxLife == 2 && numberofCharactersDead == 1 {
+
+            // Cannot heal - All characters are full life or dead
+            print("Tes différents champions sont soit morts, soit possèdent déjà leur santé au maximum !")
+            print()
+
+            return false
+
+        }
+
+        // At least one character can be healed
         return true
 
     }

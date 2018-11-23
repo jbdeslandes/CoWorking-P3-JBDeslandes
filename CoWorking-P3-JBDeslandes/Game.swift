@@ -610,7 +610,7 @@ extension Game {
                         + " se saisit d'une dague mortelle !")
                 case "3":
                     inputweapon = true
-                    attackCharacter.weapon = Fists()
+                    attackCharacter.weapon = Spear()
                     print("\(attackCharacter.name) le \(attackCharacter.roleName)"
                         + " se saisit de la lance maniable et rapide !")
                 case "4":

@@ -567,7 +567,19 @@ extension Game {
                 } else if healedCharacter.life > constants.DEAD
                     && healedCharacter.life != healedCharacter.maxLife {
 
-                    healedCharacter.life += damageDone(atk: attackCharacter, def: healedCharacter, action: "heal")
+                    let randomNumber = Int.random(in: 1...100)
+
+                    if randomNumber > 0 && randomNumber <= 20 {
+
+                        // Critical heal
+                        healedCharacter.life += damageDone(atk: attackCharacter, def: healedCharacter, action: "heal")*2
+
+                    } else {
+
+                        // Normal heal
+                        healedCharacter.life += damageDone(atk: attackCharacter, def: healedCharacter, action: "heal")
+
+                    }
 
                     if healedCharacter.life >= healedCharacter.maxLife {
 

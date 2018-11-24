@@ -31,12 +31,12 @@ class Team {
     var alive: Bool {
 
         // Filter count by .life
-        let numberOfTeamCharactersAlive = self.characters.filter {$1.life != 0}.count
+        let numberOfTeamCharactersAlive = self.characters.filter {$1.life != constants.DEAD}.count
 
         // To control if the last survivor is a wizard
         if numberOfTeamCharactersAlive == 1 {
 
-            let isWizardAlive = self.characters.filter {$1.role == .wizard}.count
+            let isWizardAlive = self.characters.filter {$1.role == .wizard && $1.life != constants.DEAD}.count
 
             if isWizardAlive == 1 {
 

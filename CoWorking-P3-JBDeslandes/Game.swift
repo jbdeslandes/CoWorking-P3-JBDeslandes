@@ -76,7 +76,7 @@ extension Game {
             print("\(team1.name) - Choisis le nom des héros qui composeront ton équipe !")
             print()
 
-            for add in 1...CHARACTERNUMBER {
+            for add in 1...constants.CHARACTERNUMBER {
                 createHero(team: team1, num: add)
             }
 
@@ -90,7 +90,7 @@ extension Game {
             print("\(team2.name) - A toi maintenant de choisir le nom des héros qui composeront ton équipe !")
             print()
 
-            for add in 1...CHARACTERNUMBER {
+            for add in 1...constants.CHARACTERNUMBER {
                 createHero(team: team2, num: add)
             }
 
@@ -241,10 +241,14 @@ extension Game {
         print()
 
         print("Quelle sera la classe de \(hero) ?"
-            + "\n1. Combattant." + " - ATQ: \(SWORDDAMAGE) / PV: \(FIGHTERLIFE)" + " - Guerrier équilibré"
-            + "\n2. Magicien." + " - ATQ: \(DEAD) / PV: \(WIZARDLIFE)" + " - Ne combat pas / Soigneur efficace"
-            + "\n3. Colosse." + " - ATQ: \(FISTSDAMAGE) / PV: \(COLOSSUSLIFE)" + " - Faible puissance / Très résistant"
-            + "\n4. Nain." + " - ATQ: \(AXEDAMAGE) / PV: \(DWARFLIFE)" + " - Grande puissance / Peu résistant")
+            + "\n1. Combattant" + " - ATQ: \(constants.SWORDDAMAGE)"
+            + " / PV: \(constants.FIGHTERLIFE)" + " - Guerrier équilibré"
+            + "\n2. Magicien" + " - ATQ: \(constants.DEAD)"
+            + " / PV: \(constants.WIZARDLIFE)" + " - Ne combat pas / Soigneur efficace"
+            + "\n3. Colosse" + " - ATQ: \(constants.FISTSDAMAGE)"
+            + " / PV: \(constants.COLOSSUSLIFE)" + " - Faible puissance / Très résistant"
+            + "\n4. Nain" + " - ATQ: \(constants.AXEDAMAGE)"
+            + " / PV: \(constants.DWARFLIFE)" + " - Grande puissance / Peu résistant")
 
         repeat {
 
@@ -505,7 +509,7 @@ extension Game {
         } else if randomNumber > 15 && randomNumber <= 20 {
 
             // Critical strike
-            defenseCharacter.life -= damageDone(atk: attackCharacter, def: defenseCharacter, action: "crit") * 2
+            defenseCharacter.life -= damageDone(atk: attackCharacter, def: defenseCharacter, action: "crit")*2
 
         } else if randomNumber > 20 && randomNumber <= 100 {
 
@@ -514,15 +518,15 @@ extension Game {
 
         }
 
-        if defenseCharacter.life <= DEAD {
+        if defenseCharacter.life <= constants.DEAD {
 
-            defenseCharacter.life = DEAD
+            defenseCharacter.life = constants.DEAD
             print("\(defenseCharacter.name) est mort !")
             print()
 
-        } else if attackCharacter.life <= DEAD {
+        } else if attackCharacter.life <= constants.DEAD {
 
-            attackCharacter.life = DEAD
+            attackCharacter.life = constants.DEAD
             print("\(attackCharacter.name) est mort !")
             print()
 
@@ -555,12 +559,12 @@ extension Game {
 
             } else {
 
-                if healedCharacter.life <= DEAD {
+                if healedCharacter.life <= constants.DEAD {
 
                     print("\(healedCharacter.name) est mort. Veuillez choisir une autre cible !")
                     print()
 
-                } else if healedCharacter.life > DEAD
+                } else if healedCharacter.life > constants.DEAD
                     && healedCharacter.life != healedCharacter.maxLife {
 
                     healedCharacter.life += damageDone(atk: attackCharacter, def: healedCharacter, action: "heal")
@@ -587,9 +591,9 @@ extension Game {
     func changeWeapon() {
 
         print("Quelle nouvelle arme choisira \(attackCharacter.name) le \(attackCharacter.roleName) ?"
-            + "\n1. Masse - ATQ: \(MACEDAMAGEMIN) à \(MACEDAMAGEMAX) de dégâts"
-            + "\n2. Dague - ATQ: \(DAGGERDAMAGEMIN) à \(DAGGERDAMAGEMAX) dégâts"
-            + "\n3. Lance - ATQ: \(SPEARDAMAGEMIN) à \(SPEARDAMAGEMAX) dégâts"
+            + "\n1. Masse - ATQ: \(constants.MACEDAMAGEMIN) à \(constants.MACEDAMAGEMAX) de dégâts"
+            + "\n2. Dague - ATQ: \(constants.DAGGERDAMAGEMIN) à \(constants.DAGGERDAMAGEMAX) dégâts"
+            + "\n3. Lance - ATQ: \(constants.SPEARDAMAGEMIN) à \(constants.SPEARDAMAGEMAX) dégâts"
             + "\n4. Refuser de changer d'arme")
 
         var inputweapon: Bool = false
@@ -645,7 +649,7 @@ extension Game {
 
     func deadCharacter() {
 
-        if currentCharacter.life == DEAD {
+        if currentCharacter.life == constants.DEAD {
 
             isCharacterDead = true
             print("\(currentCharacter.name) est mort. Veuillez sélectionner un autre champion !")
@@ -694,7 +698,7 @@ extension Game {
 
     func reset() {
 
-        for idk in 1...TEAMNUMBER {
+        for idk in 1...constants.TEAMNUMBER {
             switch idk {
             case 1:
                 resetLife(team: team1)
@@ -733,7 +737,7 @@ extension Game {
     func resetLife(team: Team) {
 
         // Reset life and weapons
-        for idk in 1...CHARACTERNUMBER {
+        for idk in 1...constants.CHARACTERNUMBER {
             team.characters[idk]!.life = team.characters[idk]!.maxLife
         }
 
@@ -742,7 +746,7 @@ extension Game {
     func resetWeapons(team: Team) {
 
         // Give default weapons to champions
-        for idk in 1...CHARACTERNUMBER {
+        for idk in 1...constants.CHARACTERNUMBER {
 
             switch team.characters[idk]!.role {
             case .fighter:

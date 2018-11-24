@@ -8,6 +8,8 @@
 
 import Foundation
 
+let constants = Constants()
+
 let game = Game()
 
 game.mainGame()

@@ -27,25 +27,25 @@ class Weapon {
 // MARK: - Default weapons
 class Sword: Weapon {
     init() {
-        super.init(minDamage: SWORDDAMAGE, maxDamage: SWORDDAMAGE)
+        super.init(minDamage: constants.SWORDDAMAGE, maxDamage: constants.SWORDDAMAGE)
     }
 }
 
 class Stick: Weapon {
     init() {
-        super.init(minDamage: STICKDAMAGEMIN, maxDamage: STICKDAMAGEMAX)
+        super.init(minDamage: constants.STICKDAMAGEMIN, maxDamage: constants.STICKDAMAGEMAX)
     }
 }
 
 class Fists: Weapon {
     init() {
-        super.init(minDamage: FISTSDAMAGE, maxDamage: FISTSDAMAGE)
+        super.init(minDamage: constants.FISTSDAMAGE, maxDamage: constants.FISTSDAMAGE)
     }
 }
 
 class Axe: Weapon {
     init() {
-        super.init(minDamage: AXEDAMAGE, maxDamage: AXEDAMAGE)
+        super.init(minDamage: constants.AXEDAMAGE, maxDamage: constants.AXEDAMAGE)
     }
 }
 
@@ -53,18 +53,18 @@ class Axe: Weapon {
 
 class Mace: Weapon {
     init() {
-        super.init(minDamage: MACEDAMAGEMIN, maxDamage: MACEDAMAGEMAX)
+        super.init(minDamage: constants.MACEDAMAGEMIN, maxDamage: constants.MACEDAMAGEMAX)
     }
 }
 
 class Dagger: Weapon {
     init() {
-        super.init(minDamage: DAGGERDAMAGEMIN, maxDamage: DAGGERDAMAGEMAX)
+        super.init(minDamage: constants.DAGGERDAMAGEMIN, maxDamage: constants.DAGGERDAMAGEMAX)
     }
 }
 
 class Spear: Weapon {
     init() {
-        super.init(minDamage: SPEARDAMAGEMIN, maxDamage: SPEARDAMAGEMAX)
+        super.init(minDamage: constants.SPEARDAMAGEMIN, maxDamage: constants.SPEARDAMAGEMAX)
     }
 }

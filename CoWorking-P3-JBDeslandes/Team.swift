@@ -70,7 +70,7 @@ class Team {
         let numberOfCharactersMaxLife = self.characters.filter {$1.life == $1.maxLife}.count
 
         // Filter count by dead characters
-        let numberofCharactersDead = self.characters.filter {$1.life == DEAD}.count
+        let numberofCharactersDead = self.characters.filter {$1.life == constants.DEAD}.count
 
         if numberOfCharactersMaxLife == 3 {
 

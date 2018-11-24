@@ -25,23 +25,23 @@ class Character {
         switch role {
         case .fighter:
             roleName = "Combattant"
-            life = FIGHTERLIFE
-            maxLife = FIGHTERLIFE
+            life = constants.FIGHTERLIFE
+            maxLife = constants.FIGHTERLIFE
             weapon = Sword()
         case .wizard:
             roleName = "Magicien"
-            life = WIZARDLIFE
-            maxLife = WIZARDLIFE
+            life = constants.WIZARDLIFE
+            maxLife = constants.WIZARDLIFE
             weapon = Stick()
         case .colossus:
             roleName = "Colosse"
-            life = COLOSSUSLIFE
-            maxLife = COLOSSUSLIFE
+            life = constants.COLOSSUSLIFE
+            maxLife = constants.COLOSSUSLIFE
             weapon = Fists()
         case .dwarf:
             roleName = "Nain"
-            life = DWARFLIFE
-            maxLife = DWARFLIFE
+            life = constants.DWARFLIFE
+            maxLife = constants.DWARFLIFE
             weapon = Axe()
         }
     }

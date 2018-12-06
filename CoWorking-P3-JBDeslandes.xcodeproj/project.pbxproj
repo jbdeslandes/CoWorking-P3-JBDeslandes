@@ -19,7 +19,7 @@
 		B3116E4B21527B6D00728516 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
+			dstPath = /usr/share/man/man1;
 			dstSubfolderSpec = 0;
 			files = (
 			);
@@ -87,7 +87,7 @@
 				B3116E4921527B6D00728516 /* Sources */,
 				B3116E4A21527B6D00728516 /* Frameworks */,
 				B3116E4B21527B6D00728516 /* CopyFiles */,
-				B3DE0364218CBA8100573032 /* SwiftLint */,
+				B3E3B7D521B9866C00FDA7E1 /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -131,7 +131,7 @@
 /* End PBXProject section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B3DE0364218CBA8100573032 /* SwiftLint */ = {
+		B3E3B7D521B9866C00FDA7E1 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

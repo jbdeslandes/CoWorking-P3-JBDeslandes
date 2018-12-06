@@ -45,9 +45,24 @@ class Character {
             weapon = Axe()
         }
     }
-}
 
-// MARK: - ROLE
-enum Role {
-    case fighter, wizard, colossus, dwarf
+    // MARK: - ROLE
+    enum Role {
+        case fighter, wizard, colossus, dwarf
+    }
+
+    // To control if a character is dead
+    var dead: Bool {
+
+        if life == constants.DEAD {
+
+            return true
+
+        } else {
+
+            return false
+
+        }
+    }
+
 }

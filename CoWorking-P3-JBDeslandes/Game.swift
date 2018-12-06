@@ -46,10 +46,10 @@ class Game {
     private var randomTreasureAppears: Bool = false
 
 //    To control if a character is playable
-    private var isCharacterDead: Bool = false
+    private var isCharacterPlayable: Bool = false
 
 //    To control when to end game
-    private var isTeamDead: Bool = false
+    private var isTeamPlayable: Bool = false
 
 //    To replay with same teams
     private var replay: Bool = false
@@ -73,8 +73,7 @@ extension Game {
             replayAll = false
 
             // To create 3 characters for 2 teams
-            print("\(team1.name) - Choisis le nom des héros qui composeront ton équipe !")
-            print()
+            print("\(team1.name) - Choisis le nom des héros qui composeront ton équipe ! \n")
 
             for add in 1...constants.CHARACTERNUMBER {
                 createHero(team: team1, num: add)
@@ -82,13 +81,11 @@ extension Game {
 
             print("\(team1.name) - Tes champions"
                 + " \(team1.characters[1]!.name), \(team1.characters[2]!.name) et \(team1.characters[3]!.name)"
-                + " atteignent l'arène et attendent leurs adversaires de pied ferme..")
-            print()
+                + " atteignent l'arène et attendent leurs adversaires de pied ferme.. \n")
 
             next()
 
-            print("\(team2.name) - A toi maintenant de choisir le nom des héros qui composeront ton équipe !")
-            print()
+            print("\(team2.name) - A toi maintenant de choisir le nom des héros qui composeront ton équipe ! \n")
 
             for add in 1...constants.CHARACTERNUMBER {
                 createHero(team: team2, num: add)
@@ -96,8 +93,7 @@ extension Game {
 
             print("\(team2.name) - Tes champions"
                 + " \(team2.characters[1]!.name), \(team2.characters[2]!.name) et \(team2.characters[3]!.name)"
-                + " rejoignent l'enceinte et font face à leurs rivaux..")
-            print()
+                + " rejoignent l'enceinte et font face à leurs rivaux.. \n")
 
             next()
 
@@ -130,8 +126,7 @@ extension Game {
 
             turn += 1
 
-            print("--- TOUR \(turn) ---")
-            print()
+            print("--- TOUR \(turn) --- \n")
 
             for _ in 1...2 {
 
@@ -145,7 +140,7 @@ extension Game {
 
                 deadTeam()
 
-                if !isTeamDead {
+                if !isTeamPlayable {
 
                     swap(&attackTeam, &defenseTeam)
 
@@ -157,12 +152,10 @@ extension Game {
 
             }
 
-        } while isTeamDead == false
+        } while isTeamPlayable == false
 
-        print("FIN DU COMBAT EN \(turn) TOURS !")
-        print()
-        print("VICTOIRES : \(team1.name): \(team1.victory) / \(team2.name): \(team2.victory)")
-        print()
+        print("FIN DU COMBAT EN \(turn) TOURS ! \n")
+        print("VICTOIRES : \(team1.name): \(team1.victory) / \(team2.name): \(team2.victory) \n")
 
     } // End of battleMode()
 
@@ -173,8 +166,7 @@ extension Game {
 
     func createPlayers() {
 
-        print("Bienvenue dans l'arène !")
-        print()
+        print("Bienvenue dans l'arène ! \n")
 
         var player1: String = ""
         var player2: String = ""
@@ -184,8 +176,7 @@ extension Game {
         player1 = readLine()!
 
         team1 = Team(name: "\(player1)")
-        print("Force & Honneur, \(player1) !")
-        print()
+        print("Force & Honneur, \(player1) ! \n")
 
         repeat {
 
@@ -195,16 +186,14 @@ extension Game {
 
             if player2.lowercased() == player1.lowercased() {
 
-                print("Ce nom est déjà pris, veuillez recommencer.")
-                print()
+                print("Ce nom est déjà pris, veuillez recommencer. \n")
 
             }
 
         } while player1.lowercased() == player2.lowercased()
 
         team2 = Team(name: "\(player2)")
-        print("Esprit & Robustesse sur toi, \(player2) !")
-        print()
+        print("Esprit & Robustesse sur toi, \(player2) ! \n")
 
         next()
 
@@ -239,8 +228,7 @@ extension Game {
         memNames.append(hero.lowercased())
 
         print()
-
-        print("Quelle sera la classe de \(hero) ?"
+        print("Quelle sera la classe de \(hero) ? \n"
             + "\n1. Combattant" + " - ATQ: \(constants.SWORDDAMAGE)"
             + " / PV: \(constants.FIGHTERLIFE)" + " - Guerrier équilibré"
             + "\n2. Magicien" + " - ATQ: \(constants.DEAD)"
@@ -301,6 +289,7 @@ extension Game {
 
                 print()
                 team.characters[num] = currentCharacter
+
             }
 
         } while inputrole == false
@@ -309,15 +298,11 @@ extension Game {
 
     func noRoleDuplicate(team: Team, num: Int) -> Bool {
 
-        for double in 0..<team.memRoles.count {
+        for double in 0..<team.memRoles.count where team.characters[num]!.role == team.memRoles[double].role {
 
-            if team.characters[num]!.role == team.memRoles[double].role {
-
-                print("Vous possèdez déjà un champion de cette classe !")
+            print("ATTENTION: Vous possèdez déjà un champion de cette classe. Veuillez en choisir une autre !")
 
                 return true
-
-            }
 
         }
 
@@ -346,10 +331,8 @@ extension Game {
 
         }
 
-        print("Le peuple a parlé ! L'équipe de \(attackTeam.name) donnera le premier assaut !")
-        print()
-        print("QUE LE COMBAT COMMENCE !")
-        print()
+        print("Le peuple a parlé ! L'équipe de \(attackTeam.name) donnera le premier assaut ! \n")
+        print("QUE LE COMBAT COMMENCE ! \n")
 
         next()
 
@@ -366,8 +349,7 @@ extension Game {
 
             randomTreasureAppears = true
 
-            print("UN COFFRE MAGIQUE APPARAIT !")
-            print()
+            print("UN COFFRE MAGIQUE APPARAIT ! \n")
 
             next()
 
@@ -388,17 +370,13 @@ extension Game {
 
     func characterChoice(currentTeam: Team) -> Character {
 
-        print("\n1. \(currentTeam.characters[1]!.name)"
-            + " - \(currentTeam.characters[1]!.roleName)"
-            + " - Vie: \(currentTeam.characters[1]!.life)"
+        for idk in 1...constants.CHARACTERNUMBER {
 
-            + "\n2. \(currentTeam.characters[2]!.name)"
-            + " - \(currentTeam.characters[2]!.roleName)"
-            + " - Vie: \(currentTeam.characters[2]!.life)"
+        print("\(idk). \(currentTeam.characters[idk]!.name)"
+            + " - \(currentTeam.characters[idk]!.roleName)"
+            + " - Vie: \(currentTeam.characters[idk]!.life)")
 
-            + "\n3. \(currentTeam.characters[3]!.name)"
-            + " - \(currentTeam.characters[3]!.roleName)"
-            + " - Vie: \(currentTeam.characters[3]!.life)")
+        }
 
         var inputChoice1: Bool = false
 
@@ -425,7 +403,7 @@ extension Game {
 
             }
 
-        } while inputChoice1 == false || isCharacterDead == true
+        } while inputChoice1 == false || isCharacterPlayable == true
 
         return currentCharacter
 
@@ -470,13 +448,11 @@ extension Game {
 
         if action == "attack" {
 
-            print("\(atk.name) inflige \(instantDamage) points de dégâts à \(def.name).")
-            print()
+            print("\(atk.name) inflige \(instantDamage) points de dégâts à \(def.name). \n")
 
         } else if action == "heal" {
 
-            print("\(atk.name) soigne \(instantDamage) points de vie de \(def.name).")
-            print()
+            print("\(atk.name) soigne \(instantDamage) points de vie de \(def.name). \n")
 
         } else if action == "crit" {
 
@@ -497,8 +473,7 @@ extension Game {
         if randomNumber > 0 && randomNumber <= 10 {
 
             // Dodge
-            print("\(defenseCharacter.name) esquive l'assaut !")
-            print()
+            print("\(defenseCharacter.name) esquive l'assaut ! \n")
 
         } else if randomNumber > 10 && randomNumber <= 15 {
 
@@ -521,14 +496,12 @@ extension Game {
         if defenseCharacter.life <= constants.DEAD {
 
             defenseCharacter.life = constants.DEAD
-            print("\(defenseCharacter.name) est mort !")
-            print()
+            print("\(defenseCharacter.name) est mort ! \n")
 
         } else if attackCharacter.life <= constants.DEAD {
 
             attackCharacter.life = constants.DEAD
-            print("\(attackCharacter.name) est mort !")
-            print()
+            print("\(attackCharacter.name) est mort ! \n")
 
         }
 
@@ -550,8 +523,7 @@ extension Game {
 
             if healedCharacter.life == healedCharacter.maxLife {
 
-                print("\(healedCharacter.name) possède déjà tous ses points de vie !")
-                print()
+                print("\(healedCharacter.name) possède déjà tous ses points de vie ! \n")
 
                 characterPlayed = false
 
@@ -561,8 +533,7 @@ extension Game {
 
                 if healedCharacter.life <= constants.DEAD {
 
-                    print("\(healedCharacter.name) est mort. Veuillez choisir une autre cible !")
-                    print()
+                    print("\(healedCharacter.name) est mort. Veuillez choisir une autre cible ! \n")
 
                 } else if healedCharacter.life > constants.DEAD
                     && healedCharacter.life != healedCharacter.maxLife {
@@ -587,8 +558,7 @@ extension Game {
 
                     }
 
-                    print("Il possède maintenant \(healedCharacter.life) points de vie !")
-                    print()
+                    print("Il possède maintenant \(healedCharacter.life) points de vie ! \n")
 
                 }
 
@@ -645,7 +615,7 @@ extension Game {
 
         } while inputweapon == false
 
-    } // End of chooseWeapon()
+    } // End of changeWeapon()
 
     func next() {
 
@@ -661,14 +631,14 @@ extension Game {
 
     func deadCharacter() {
 
-        if currentCharacter.life == constants.DEAD {
+        if currentCharacter.dead == true {
 
-            isCharacterDead = true
+            isCharacterPlayable = true
             print("\(currentCharacter.name) est mort. Veuillez sélectionner un autre champion !")
 
         } else {
 
-            isCharacterDead = false
+            isCharacterPlayable = false
 
         }
 
@@ -678,26 +648,24 @@ extension Game {
 
         if defenseTeam.alive == false {
 
-            print("\(attackTeam.name) REMPORTE LA VICTOIRE !!")
-            print()
+            print("\(attackTeam.name) REMPORTE LA VICTOIRE !! \n")
 
             attackTeam.victory += 1
 
-            isTeamDead = true
+            isTeamPlayable = true
 
         } else if attackTeam.alive == false {
 
-            print("\(defenseTeam.name) REMPORTE LA VICTOIRE !!")
-            print()
+            print("\(defenseTeam.name) REMPORTE LA VICTOIRE !! \n")
 
             defenseTeam.victory += 1
 
-            isTeamDead = true
+            isTeamPlayable = true
 
         } else {
 
             // Begin of another turn
-            isTeamDead = false
+            isTeamPlayable = false
 
         }
 

@@ -54,8 +54,9 @@ class Character {
     // To control if a character is dead
     var dead: Bool {
 
-        if life == constants.DEAD {
+        if life <= constants.DEAD {
 
+            life = constants.DEAD
             return true
 
         } else {

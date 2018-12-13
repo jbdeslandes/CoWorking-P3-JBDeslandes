@@ -140,7 +140,7 @@ extension Game {
 
                 deadTeam()
 
-                if !isTeamPlayable {
+                if isTeamPlayable {
 
                     swap(&attackTeam, &defenseTeam)
 
@@ -152,7 +152,7 @@ extension Game {
 
             }
 
-        } while isTeamPlayable == false
+        } while isTeamPlayable == true
 
         print("FIN DU COMBAT EN \(turn) TOURS ! \n")
         print("VICTOIRES : \(team1.name): \(team1.victory) / \(team2.name): \(team2.victory) \n")
@@ -403,7 +403,7 @@ extension Game {
 
             }
 
-        } while inputChoice1 == false || isCharacterPlayable == true
+        } while inputChoice1 == false || isCharacterPlayable == false
 
         return currentCharacter
 
@@ -457,7 +457,7 @@ extension Game {
         } else if action == "crit" {
 
             print("\(atk.name) trouve une faille dans la défense de"
-                + " \(def.name) et assène un coup critique de \(instantDamage * 2) points de dégâts !")
+                + " \(def.name) et assène un coup critique de \(instantDamage * 2) points de dégâts ! \n")
 
         }
 
@@ -493,14 +493,12 @@ extension Game {
 
         }
 
-        if defenseCharacter.life <= constants.DEAD {
+        if defenseCharacter.dead {
 
-            defenseCharacter.life = constants.DEAD
             print("\(defenseCharacter.name) est mort ! \n")
 
-        } else if attackCharacter.life <= constants.DEAD {
+        } else if attackCharacter.dead {
 
-            attackCharacter.life = constants.DEAD
             print("\(attackCharacter.name) est mort ! \n")
 
         }
@@ -633,12 +631,12 @@ extension Game {
 
         if currentCharacter.dead == true {
 
-            isCharacterPlayable = true
+            isCharacterPlayable = false
             print("\(currentCharacter.name) est mort. Veuillez sélectionner un autre champion !")
 
         } else {
 
-            isCharacterPlayable = false
+            isCharacterPlayable = true
 
         }
 
@@ -652,7 +650,7 @@ extension Game {
 
             attackTeam.victory += 1
 
-            isTeamPlayable = true
+            isTeamPlayable = false
 
         } else if attackTeam.alive == false {
 
@@ -660,12 +658,12 @@ extension Game {
 
             defenseTeam.victory += 1
 
-            isTeamPlayable = true
+            isTeamPlayable = false
 
         } else {
 
             // Begin of another turn
-            isTeamPlayable = false
+            isTeamPlayable = true
 
         }
 

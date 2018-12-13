@@ -40,8 +40,7 @@ class Team {
 
             if isWizardAlive == 1 {
 
-                print("Voyant qu'il est le dernier survivant, le magicien de \(name) abandonne !")
-                print()
+                print("Voyant qu'il est le dernier survivant, le magicien de \(name) abandonne ! \n")
 
                 // The only survivor is a wizard and can't attack
                 return false
@@ -50,8 +49,7 @@ class Team {
 
         } else if numberOfTeamCharactersAlive == 0 {
 
-            print("Tous les héros de \(name) sont morts !")
-            print()
+            print("Tous les héros de \(name) sont morts ! \n")
 
             // There are no survivors
             return false
@@ -75,16 +73,14 @@ class Team {
         if numberOfCharactersMaxLife == 3 {
 
             // Cannot heal - All team is full life
-            print("Tous tes champions possèdent déjà leur santé au maximum !")
-            print()
+            print("Tous tes champions possèdent déjà leur santé au maximum ! \n")
 
             return false
 
         } else if numberOfCharactersMaxLife == 2 && numberofCharactersDead == 1 {
 
             // Cannot heal - All characters are full life or dead
-            print("Tes différents champions sont soit morts, soit possèdent déjà leur santé au maximum !")
-            print()
+            print("Tes différents champions sont soit morts, soit possèdent déjà leur santé au maximum ! \n")
 
             return false
 

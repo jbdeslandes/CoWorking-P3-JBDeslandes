@@ -71,40 +71,27 @@ extension Game {
 
             // Reset value
             replayAll = false
-
             // To create 3 characters for 2 teams
-            print("\(team1.name) - Choisis le nom des héros qui composeront ton équipe ! \n")
-
+            Message.nameChampions(team1)
             for add in 1...constants.CHARACTERNUMBER {
                 createHero(team: team1, num: add)
             }
-
-            print("\(team1.name) - Tes champions"
-                + " \(team1.characters[1]!.name), \(team1.characters[2]!.name) et \(team1.characters[3]!.name)"
-                + " atteignent l'arène et attendent leurs adversaires de pied ferme.. \n")
-
+            Message.team1Created(team1)
             next()
 
-            print("\(team2.name) - A toi maintenant de choisir le nom des héros qui composeront ton équipe ! \n")
-
+            Message.nameChampions(team2)
             for add in 1...constants.CHARACTERNUMBER {
                 createHero(team: team2, num: add)
             }
-
-            print("\(team2.name) - Tes champions"
-                + " \(team2.characters[1]!.name), \(team2.characters[2]!.name) et \(team2.characters[3]!.name)"
-                + " rejoignent l'enceinte et font face à leurs rivaux.. \n")
-
+            Message.team2Created(team2)
             next()
 
             repeat {
 
                 // reset value
                 replay = false
-
                 // Engage teams in battle
                 battleMode()
-
                 reset()
 
             } while replay == true
@@ -116,46 +103,34 @@ extension Game {
     func battleMode() {
 
         randomTeamStart()
-
         var turn: Int = 0
-
         // Reset value
         characterPlayed = false
 
         repeat {
 
             turn += 1
-
-            print("--- TOUR \(turn) --- \n")
+            Message.turn(turn)
 
             for _ in 1...2 {
 
                 repeat {
-
                     makeDecision()
-
                     next()
-
                 } while characterPlayed == false
 
                 deadTeam()
 
                 if isTeamPlayable {
-
                     swap(&attackTeam, &defenseTeam)
-
                 } else {
-
                     break
-
                 }
-
             }
 
         } while isTeamPlayable == true
 
-        print("FIN DU COMBAT EN \(turn) TOURS ! \n")
-        print("VICTOIRES : \(team1.name): \(team1.victory) / \(team2.name): \(team2.victory) \n")
+        Message.victory(turn, team1, team2)
 
     } // End of battleMode()
 
@@ -166,35 +141,26 @@ extension Game {
 
     func createPlayers() {
 
-        print("Bienvenue dans l'arène ! \n")
-
         var player1: String = ""
         var player2: String = ""
-
-        print("Joueur 1 - Quel est ton nom ?", terminator: " ")
-
+        Message.arena()
+        Message.playerName(_: "Joueur 1")
         player1 = readLine()!
-
         team1 = Team(name: "\(player1)")
-        print("Force & Honneur, \(player1) ! \n")
+        Message.welcome1(_: player1)
 
         repeat {
-
-            print("Joueur 2 - Quel est ton nom ?", terminator: " ")
-
+            Message.playerName(_:"Joueur 2")
             player2 = readLine()!
 
             if player2.lowercased() == player1.lowercased() {
-
-                print("Ce nom est déjà pris, veuillez recommencer. \n")
-
+                Message.usedName()
             }
 
         } while player1.lowercased() == player2.lowercased()
 
         team2 = Team(name: "\(player2)")
-        print("Esprit & Robustesse sur toi, \(player2) ! \n")
-
+        Message.welcome2(_: player2)
         next()
 
     } // End of createPlayer()
@@ -202,13 +168,10 @@ extension Game {
     func createHero(team: Team, num: Int) {
 
         var duplicate: Bool = false
-
-        print("Quel est le nom de ton champion numéro \(num) ?")
+        Message.name(num)
 
         repeat {
-
             hero = readLine()!
-
             duplicate = false
 
                 for double in 0..<memNames.count {
@@ -218,30 +181,17 @@ extension Game {
                 }
 
                 if duplicate == true {
-
-                    print("Ce nom est déjà pris, veuillez recommencer.")
+                    Message.usedName()
                 }
 
         } while duplicate == true
 
         //        Hero's name added to memory
         memNames.append(hero.lowercased())
-
-        print()
-        print("Quelle sera la classe de \(hero) ? \n"
-            + "\n1. Combattant" + " - ATQ: \(constants.SWORDDAMAGE)"
-            + " / PV: \(constants.FIGHTERLIFE)" + " - Guerrier équilibré"
-            + "\n2. Magicien" + " - ATQ: \(constants.DEAD)"
-            + " / PV: \(constants.WIZARDLIFE)" + " - Ne combat pas / Soigneur efficace"
-            + "\n3. Colosse" + " - ATQ: \(constants.FISTSDAMAGE)"
-            + " / PV: \(constants.COLOSSUSLIFE)" + " - Faible puissance / Très résistant"
-            + "\n4. Nain" + " - ATQ: \(constants.AXEDAMAGE)"
-            + " / PV: \(constants.DWARFLIFE)" + " - Grande puissance / Peu résistant")
+        Message.choseRole(hero)
 
         repeat {
-
             selectRole(team: team, num: num)
-
         } while noRoleDuplicate(team: team, num: num) == true
 
         // Hero's role added to memory
@@ -261,35 +211,27 @@ extension Game {
                     inputrole = true
                     currentCharacter = Character(name: "\(hero)", role: .fighter)
                     currentCharacter.weapon = Sword()
-                    print("\(currentCharacter.name) le \(currentCharacter.roleName)"
-                        + " attrape une épée tranchante dans le râtelier d'arme le plus proche !")
+                    Message.roleChoiced(currentCharacter, role)
                 case "2":
                     inputrole = true
                     currentCharacter = Character(name: "\(hero)", role: .wizard)
                     currentCharacter.weapon = Stick()
-                    print("\(currentCharacter.name) le \(currentCharacter.roleName)"
-                        + " invoque son septre magique !")
+                    Message.roleChoiced(currentCharacter, role)
                 case "3":
                     inputrole = true
                     currentCharacter = Character(name: "\(hero)", role: .colossus)
                     currentCharacter.weapon = Fists()
-                    print("\(currentCharacter.name) le \(currentCharacter.roleName)"
-                        + " n'a besoin d'aucune arme pour écraser ses adversaires !")
+                    Message.roleChoiced(currentCharacter, role)
                 case "4":
                     inputrole = true
                     currentCharacter = Character(name: "\(hero)", role: .dwarf)
                     currentCharacter.weapon = Axe()
-                    print("\(currentCharacter.name) le \(currentCharacter.roleName)"
-                        + " se saisit de sa hache préférée !")
+                    Message.roleChoiced(currentCharacter, role)
                 default:
                     inputrole = false
-                    print("Je n'ai pas compris votre choix."
-                        + " Veuillez rentrer un numéro pour choisir la classe correspondante.")
+                    Message.roleChoiced(currentCharacter, role)
                 }
-
-                print()
                 team.characters[num] = currentCharacter
-
             }
 
         } while inputrole == false
@@ -299,11 +241,8 @@ extension Game {
     func noRoleDuplicate(team: Team, num: Int) -> Bool {
 
         for double in 0..<team.memRoles.count where team.characters[num]!.role == team.memRoles[double].role {
-
-            print("ATTENTION: Vous possèdez déjà un champion de cette classe. Veuillez en choisir une autre !")
-
-                return true
-
+            Message.noRoleDuplicate()
+            return true
         }
 
         return false
@@ -320,20 +259,14 @@ extension Game {
         let choice = Bool.random()
 
         if choice == true {
-
             attackTeam = team1
             defenseTeam = team2
-
         } else {
-
             attackTeam = team2
             defenseTeam = team1
-
         }
 
-        print("Le peuple a parlé ! L'équipe de \(attackTeam.name) donnera le premier assaut ! \n")
-        print("QUE LE COMBAT COMMENCE ! \n")
-
+        Message.randomStart(attackTeam)
         next()
 
     } // End of randomTeamChoice()
@@ -346,19 +279,12 @@ extension Game {
         let randomNumber = Int.random(in: 1...100)
 
         if randomNumber > 0 && randomNumber <= 10 {
-
             randomTreasureAppears = true
-
-            print("UN COFFRE MAGIQUE APPARAIT ! \n")
-
+            Message.randomTreasureAppears()
             next()
-
             changeWeapon()
-
         } else {
-
             randomTreasureAppears = false
-
         }
 
     } // End of randomTreasure()
@@ -371,11 +297,9 @@ extension Game {
     func characterChoice(currentTeam: Team) -> Character {
 
         for idk in 1...constants.CHARACTERNUMBER {
-
         print("\(idk). \(currentTeam.characters[idk]!.name)"
             + " - \(currentTeam.characters[idk]!.roleName)"
             + " - Vie: \(currentTeam.characters[idk]!.life)")
-
         }
 
         var inputChoice1: Bool = false
@@ -395,12 +319,9 @@ extension Game {
                     currentCharacter = currentTeam.characters[3]!
                 default:
                     inputChoice1 = false
-                    print("Je n'ai pas compris votre choix."
-                        + " Veuillez rentrer un numéro pour choisir la classe correspondante.")
+                    Message.errorChoice()
                 }
-
                 deadCharacter()
-
             }
 
         } while inputChoice1 == false || isCharacterPlayable == false
@@ -416,25 +337,17 @@ extension Game {
 
         repeat {
 
-            print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
-
+            Message.attack1(attackTeam)
             attackCharacter = characterChoice(currentTeam: attackTeam)
 
             if attackCharacter.role == .wizard {
-
                 heal()
-
             } else {
-
                 randomTreasure()
-
-                print("\(attackTeam.name) - Quel adversaire souhaites-tu attaquer ?")
+                Message.attack2(attackTeam)
                 defenseCharacter = characterChoice(currentTeam: defenseTeam)
-
                 attack()
-
                 characterPlayed = true
-
             }
 
         } while characterPlayed == false
@@ -445,22 +358,7 @@ extension Game {
 
         // Generator of a number in damage range
         let instantDamage = Int.random(in: atk.weapon.minDamage...atk.weapon.maxDamage)
-
-        if action == "attack" {
-
-            print("\(atk.name) inflige \(instantDamage) points de dégâts à \(def.name). \n")
-
-        } else if action == "heal" {
-
-            print("\(atk.name) soigne \(instantDamage) points de vie de \(def.name). \n")
-
-        } else if action == "crit" {
-
-            print("\(atk.name) trouve une faille dans la défense de"
-                + " \(def.name) et assène un coup critique de \(instantDamage * 2) points de dégâts ! \n")
-
-        }
-
+        Message.instantDamage(instantDamage, atk, def, action)
         return instantDamage
 
     } // End of func damageDone()
@@ -471,36 +369,20 @@ extension Game {
         let randomNumber = Int.random(in: 1...100)
 
         if randomNumber > 0 && randomNumber <= 10 {
-
-            // Dodge
-            print("\(defenseCharacter.name) esquive l'assaut ! \n")
-
+            Message.dodge(defenseCharacter)
         } else if randomNumber > 10 && randomNumber <= 15 {
-
-            // Counterattack
-            print("\(defenseCharacter.name) effectue une parade et contre-attaque !")
+            Message.counterAttack(defenseCharacter)
             attackCharacter.life -= damageDone(atk: defenseCharacter, def: attackCharacter, action: "attack")
-
         } else if randomNumber > 15 && randomNumber <= 20 {
-
-            // Critical strike
             defenseCharacter.life -= damageDone(atk: attackCharacter, def: defenseCharacter, action: "crit")*2
-
         } else if randomNumber > 20 && randomNumber <= 100 {
-
-            // Attack
             defenseCharacter.life -= damageDone(atk: attackCharacter, def: defenseCharacter, action: "attack")
-
         }
 
         if defenseCharacter.dead {
-
-            print("\(defenseCharacter.name) est mort ! \n")
-
+            Message.deadCharacter(defenseCharacter)
         } else if attackCharacter.dead {
-
-            print("\(attackCharacter.name) est mort ! \n")
-
+            Message.deadCharacter(attackCharacter)
         }
 
     } // End of attack()
@@ -508,74 +390,46 @@ extension Game {
     func heal() {
 
         if !attackTeam.canHeal {
-
             characterPlayed = false
-
             next()
-
         } else if attackTeam.canHeal {
-
-            print("\(attackTeam.name) - Quel compagnon souhaites-tu soigner ?")
-
+            Message.heal1(attackTeam)
             healedCharacter = characterChoice(currentTeam: attackTeam)
 
             if healedCharacter.life == healedCharacter.maxLife {
-
-                print("\(healedCharacter.name) possède déjà tous ses points de vie ! \n")
-
+                Message.noHeal(healedCharacter)
                 characterPlayed = false
-
                 next()
 
             } else {
 
                 if healedCharacter.life <= constants.DEAD {
-
-                    print("\(healedCharacter.name) est mort. Veuillez choisir une autre cible ! \n")
-
+                    Message.deadCharacter(healedCharacter)
                 } else if healedCharacter.life > constants.DEAD
                     && healedCharacter.life != healedCharacter.maxLife {
-
                     let randomNumber = Int.random(in: 1...100)
-
                     if randomNumber > 0 && randomNumber <= 20 {
-
                         // Critical heal
                         healedCharacter.life += damageDone(atk: attackCharacter, def: healedCharacter, action: "heal")*2
-
                     } else {
-
                         // Normal heal
                         healedCharacter.life += damageDone(atk: attackCharacter, def: healedCharacter, action: "heal")
-
                     }
 
                     if healedCharacter.life >= healedCharacter.maxLife {
-
                         healedCharacter.life = healedCharacter.maxLife
-
                     }
-
-                    print("Il possède maintenant \(healedCharacter.life) points de vie ! \n")
-
+                    Message.heal2(healedCharacter)
                 }
-
                 characterPlayed = true
-
             }
-
         }
 
     } // End of heal()
 
     func changeWeapon() {
 
-        print("Quelle nouvelle arme choisira \(attackCharacter.name) le \(attackCharacter.roleName) ?"
-            + "\n1. Masse - ATQ: \(constants.MACEDAMAGEMIN) à \(constants.MACEDAMAGEMAX) de dégâts"
-            + "\n2. Dague - ATQ: \(constants.DAGGERDAMAGEMIN) à \(constants.DAGGERDAMAGEMAX) dégâts"
-            + "\n3. Lance - ATQ: \(constants.SPEARDAMAGEMIN) à \(constants.SPEARDAMAGEMAX) dégâts"
-            + "\n4. Refuser de changer d'arme")
-
+        Message.changeWeapon(attackCharacter)
         var inputweapon: Bool = false
 
         repeat {
@@ -585,30 +439,22 @@ extension Game {
                 case "1":
                     inputweapon = true
                     attackCharacter.weapon = Mace()
-                    print("\(attackCharacter.name) le \(attackCharacter.roleName)"
-                        + " se saisit d'une imposante masse !")
+                    Message.weaponChoiced(attackCharacter, weapon)
                 case "2":
                     inputweapon = true
                     attackCharacter.weapon = Dagger()
-                    print("\(attackCharacter.name) le \(attackCharacter.roleName)"
-                        + " se saisit d'une dague mortelle !")
+                    Message.weaponChoiced(attackCharacter, weapon)
                 case "3":
                     inputweapon = true
                     attackCharacter.weapon = Spear()
-                    print("\(attackCharacter.name) le \(attackCharacter.roleName)"
-                        + " se saisit de la lance maniable et rapide !")
+                    Message.weaponChoiced(attackCharacter, weapon)
                 case "4":
                     inputweapon = true
-                    print("\(attackCharacter.name) le \(attackCharacter.roleName)"
-                        + " refuse de changer d'arme et poursuit le combat !")
+                    Message.weaponChoiced(attackCharacter, weapon)
                 default:
                     inputweapon = false
-                    print("Je n'ai pas compris votre choix."
-                        + " Veuillez rentrer un numéro pour choisir l'arme correspondante.")
+                    Message.weaponChoiced(attackCharacter, weapon)
                 }
-
-                print()
-
             }
 
         } while inputweapon == false
@@ -630,14 +476,10 @@ extension Game {
     func deadCharacter() {
 
         if currentCharacter.dead == true {
-
             isCharacterPlayable = false
-            print("\(currentCharacter.name) est mort. Veuillez sélectionner un autre champion !")
-
+            Message.deadCharacter(currentCharacter)
         } else {
-
             isCharacterPlayable = true
-
         }
 
     } // End of deadCharacter()
@@ -645,26 +487,16 @@ extension Game {
     func deadTeam() {
 
         if defenseTeam.alive == false {
-
-            print("\(attackTeam.name) REMPORTE LA VICTOIRE !! \n")
-
+            Message.teamWins(attackTeam)
             attackTeam.victory += 1
-
             isTeamPlayable = false
-
         } else if attackTeam.alive == false {
-
-            print("\(defenseTeam.name) REMPORTE LA VICTOIRE !! \n")
-
+            Message.teamWins(defenseTeam)
             defenseTeam.victory += 1
-
             isTeamPlayable = false
-
         } else {
-
             // Begin of another turn
             isTeamPlayable = true
-
         }
 
     } // End of deadTeam
@@ -690,10 +522,7 @@ extension Game {
 
         }
 
-        print("Que souhaitez-vous faire ?"
-            + "\n1. Rejouer avec les mêmes équipes"
-            + "\n2. Rejouer avec des équipes différentes"
-            + "\n3. Quitter le jeu")
+       Message.resetOptions()
 
         if let choice = readLine() {
             switch choice {
@@ -736,7 +565,6 @@ extension Game {
             case .dwarf:
                 team.characters[idk]!.weapon = Axe()
             }
-
         }
 
     } // End of resetWeapons()

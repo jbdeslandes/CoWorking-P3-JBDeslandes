@@ -11,51 +11,23 @@ import Foundation
 // MARK: - GAME PROPERTIES
 class Game {
 
-//    To choose a character
-    var currentCharacter: Character!
-
-//    To define which character must attack
-    var attackCharacter: Character!
-
-//    To define which character is the target
-    var defenseCharacter: Character!
-
-//    To define which character must be healed
-    var healedCharacter: Character!
-
-//    To control which team attacks
-    var attackTeam: Team!
-
-//    To control which team defends
-    var defenseTeam: Team!
-
-//    Team creation
-    var team1 = Team(name: "")
-    var team2 = Team(name: "")
-
-//    To name Characters
-    private var hero: String = ""
-
-//    To not duplicate champion's names
-    private var memNames: [String] = []
-
 //    To control if a character played
-    private var characterPlayed: Bool = false
+    var characterPlayed: Bool = false
 
 //    To control if a random chest have to appear
-    private var randomTreasureAppears: Bool = false
+    var randomTreasureAppears: Bool = false
 
 //    To control if a character is playable
-    private var isCharacterPlayable: Bool = false
+    var isCharacterPlayable: Bool = false
 
 //    To control when to end game
-    private var isTeamPlayable: Bool = false
+    var isTeamPlayable: Bool = false
 
 //    To replay with same teams
-    private var replay: Bool = false
+    var replay: Bool = false
 
 //    To replay from the beginning
-    private var replayAll: Bool = false
+    var replayAll: Bool = false
 
 } // End of Game class
 
@@ -74,17 +46,17 @@ extension Game {
             // To create 3 characters for 2 teams
             Message.nameChampions(team1)
             for add in 1...constants.CHARACTERNUMBER {
-                createHero(team: team1, num: add)
+                team1.createHero(team: team1, num: add)
             }
             Message.team1Created(team1)
-            next()
+            Message.next()
 
             Message.nameChampions(team2)
             for add in 1...constants.CHARACTERNUMBER {
-                createHero(team: team2, num: add)
+                team2.createHero(team: team2, num: add)
             }
             Message.team2Created(team2)
-            next()
+            Message.next()
 
             repeat {
 
@@ -115,8 +87,8 @@ extension Game {
             for _ in 1...2 {
 
                 repeat {
-                    makeDecision()
-                    next()
+                    currentCharacter.makeDecision()
+                    Message.next()
                 } while characterPlayed == false
 
                 deadTeam()
@@ -136,7 +108,7 @@ extension Game {
 
 } // End of GAME
 
-// MARK: - Teams creation
+// MARK: - Players creation
 extension Game {
 
     func createPlayers() {
@@ -161,95 +133,11 @@ extension Game {
 
         team2 = Team(name: "\(player2)")
         Message.welcome2(_: player2)
-        next()
+        Message.next()
 
     } // End of createPlayer()
 
-    func createHero(team: Team, num: Int) {
-
-        var duplicate: Bool = false
-        Message.name(num)
-
-        repeat {
-            hero = readLine()!
-            duplicate = false
-
-                for double in 0..<memNames.count {
-                    if hero.lowercased() == memNames[double] {
-                        duplicate = true
-                    }
-                }
-
-                if duplicate == true {
-                    Message.usedName()
-                }
-
-        } while duplicate == true
-
-        //        Hero's name added to memory
-        memNames.append(hero.lowercased())
-        Message.choseRole(hero)
-
-        repeat {
-            selectRole(team: team, num: num)
-        } while noRoleDuplicate(team: team, num: num) == true
-
-        // Hero's role added to memory
-        team.memRoles.append(team.characters[num]!)
-
-    } // End of createHero()
-
-    func selectRole(team: Team, num: Int) {
-
-        var inputrole: Bool = false
-
-        repeat {
-
-            if let role = readLine() {
-                switch role {
-                case "1":
-                    inputrole = true
-                    currentCharacter = Character(name: "\(hero)", role: .fighter)
-                    currentCharacter.weapon = Sword()
-                    Message.roleChoiced(currentCharacter, role)
-                case "2":
-                    inputrole = true
-                    currentCharacter = Character(name: "\(hero)", role: .wizard)
-                    currentCharacter.weapon = Stick()
-                    Message.roleChoiced(currentCharacter, role)
-                case "3":
-                    inputrole = true
-                    currentCharacter = Character(name: "\(hero)", role: .colossus)
-                    currentCharacter.weapon = Fists()
-                    Message.roleChoiced(currentCharacter, role)
-                case "4":
-                    inputrole = true
-                    currentCharacter = Character(name: "\(hero)", role: .dwarf)
-                    currentCharacter.weapon = Axe()
-                    Message.roleChoiced(currentCharacter, role)
-                default:
-                    inputrole = false
-                    Message.roleChoiced(currentCharacter, role)
-                }
-                team.characters[num] = currentCharacter
-            }
-
-        } while inputrole == false
-
-    } // End of selectRole()
-
-    func noRoleDuplicate(team: Team, num: Int) -> Bool {
-
-        for double in 0..<team.memRoles.count where team.characters[num]!.role == team.memRoles[double].role {
-            Message.noRoleDuplicate()
-            return true
-        }
-
-        return false
-
-    } // End of func noRoleDuplicate()
-
-} // End of Teams creation
+} // End of Players creation
 
 // MARK: - Random features
 extension Game {
@@ -267,7 +155,7 @@ extension Game {
         }
 
         Message.randomStart(attackTeam)
-        next()
+        Message.next()
 
     } // End of randomTeamChoice()
 
@@ -281,8 +169,8 @@ extension Game {
         if randomNumber > 0 && randomNumber <= 10 {
             randomTreasureAppears = true
             Message.randomTreasureAppears()
-            next()
-            changeWeapon()
+            Message.next()
+            attackCharacter.changeWeapon()
         } else {
             randomTreasureAppears = false
         }
@@ -290,185 +178,6 @@ extension Game {
     } // End of randomTreasure()
 
 } // End of Random features
-
-// MARK: - Interractions
-extension Game {
-
-    func characterChoice(currentTeam: Team) -> Character {
-
-        for idk in 1...constants.CHARACTERNUMBER {
-        print("\(idk). \(currentTeam.characters[idk]!.name)"
-            + " - \(currentTeam.characters[idk]!.roleName)"
-            + " - Vie: \(currentTeam.characters[idk]!.life)")
-        }
-
-        var inputChoice1: Bool = false
-
-        repeat {
-
-            if let choice = readLine() {
-                switch choice {
-                case "1":
-                    inputChoice1 = true
-                    currentCharacter = currentTeam.characters[1]!
-                case "2":
-                    inputChoice1 = true
-                    currentCharacter = currentTeam.characters[2]!
-                case "3":
-                    inputChoice1 = true
-                    currentCharacter = currentTeam.characters[3]!
-                default:
-                    inputChoice1 = false
-                    Message.errorChoice()
-                }
-                deadCharacter()
-            }
-
-        } while inputChoice1 == false || isCharacterPlayable == false
-
-        return currentCharacter
-
-    } // End of characterChoice()
-
-    func makeDecision() {
-
-        // Reset value
-        characterPlayed = false
-
-        repeat {
-
-            Message.attack1(attackTeam)
-            attackCharacter = characterChoice(currentTeam: attackTeam)
-
-            if attackCharacter.role == .wizard {
-                heal()
-            } else {
-                randomTreasure()
-                Message.attack2(attackTeam)
-                defenseCharacter = characterChoice(currentTeam: defenseTeam)
-                attack()
-                characterPlayed = true
-            }
-
-        } while characterPlayed == false
-
-    } // End of makeDecision()
-
-    func damageDone(atk: Character, def: Character, action: String) -> Int {
-
-        // Generator of a number in damage range
-        let instantDamage = Int.random(in: atk.weapon.minDamage...atk.weapon.maxDamage)
-        Message.instantDamage(instantDamage, atk, def, action)
-        return instantDamage
-
-    } // End of func damageDone()
-
-    func attack() {
-
-        // Generating random number
-        let randomNumber = Int.random(in: 1...100)
-
-        if randomNumber > 0 && randomNumber <= 10 {
-            Message.dodge(defenseCharacter)
-        } else if randomNumber > 10 && randomNumber <= 15 {
-            Message.counterAttack(defenseCharacter)
-            attackCharacter.life -= damageDone(atk: defenseCharacter, def: attackCharacter, action: "attack")
-        } else if randomNumber > 15 && randomNumber <= 20 {
-            defenseCharacter.life -= damageDone(atk: attackCharacter, def: defenseCharacter, action: "crit")*2
-        } else if randomNumber > 20 && randomNumber <= 100 {
-            defenseCharacter.life -= damageDone(atk: attackCharacter, def: defenseCharacter, action: "attack")
-        }
-
-        if defenseCharacter.dead {
-            Message.deadCharacter(defenseCharacter)
-        } else if attackCharacter.dead {
-            Message.deadCharacter(attackCharacter)
-        }
-
-    } // End of attack()
-
-    func heal() {
-
-        if !attackTeam.canHeal {
-            characterPlayed = false
-            next()
-        } else if attackTeam.canHeal {
-            Message.heal1(attackTeam)
-            healedCharacter = characterChoice(currentTeam: attackTeam)
-
-            if healedCharacter.life == healedCharacter.maxLife {
-                Message.noHeal(healedCharacter)
-                characterPlayed = false
-                next()
-
-            } else {
-
-                if healedCharacter.life <= constants.DEAD {
-                    Message.deadCharacter(healedCharacter)
-                } else if healedCharacter.life > constants.DEAD
-                    && healedCharacter.life != healedCharacter.maxLife {
-                    let randomNumber = Int.random(in: 1...100)
-                    if randomNumber > 0 && randomNumber <= 20 {
-                        // Critical heal
-                        healedCharacter.life += damageDone(atk: attackCharacter, def: healedCharacter, action: "heal")*2
-                    } else {
-                        // Normal heal
-                        healedCharacter.life += damageDone(atk: attackCharacter, def: healedCharacter, action: "heal")
-                    }
-
-                    if healedCharacter.life >= healedCharacter.maxLife {
-                        healedCharacter.life = healedCharacter.maxLife
-                    }
-                    Message.heal2(healedCharacter)
-                }
-                characterPlayed = true
-            }
-        }
-
-    } // End of heal()
-
-    func changeWeapon() {
-
-        Message.changeWeapon(attackCharacter)
-        var inputweapon: Bool = false
-
-        repeat {
-
-            if let weapon = readLine() {
-                switch weapon {
-                case "1":
-                    inputweapon = true
-                    attackCharacter.weapon = Mace()
-                    Message.weaponChoiced(attackCharacter, weapon)
-                case "2":
-                    inputweapon = true
-                    attackCharacter.weapon = Dagger()
-                    Message.weaponChoiced(attackCharacter, weapon)
-                case "3":
-                    inputweapon = true
-                    attackCharacter.weapon = Spear()
-                    Message.weaponChoiced(attackCharacter, weapon)
-                case "4":
-                    inputweapon = true
-                    Message.weaponChoiced(attackCharacter, weapon)
-                default:
-                    inputweapon = false
-                    Message.weaponChoiced(attackCharacter, weapon)
-                }
-            }
-
-        } while inputweapon == false
-
-    } // End of changeWeapon()
-
-    func next() {
-
-        print("Appuyer sur Entrer pour continuer..")
-        _ = readLine()
-
-    } // End of next()
-
-} // End of Interractions
 
 // MARK: - End game control
 extension Game {

@@ -1,5 +1,6 @@
 class Message {
 
+    // MARK: - Introduction
     static func arena() {
         print("Bienvenue dans l'arène ! \n")
     } // End of arena()
@@ -16,6 +17,7 @@ class Message {
         print("Esprit & Robustesse sur toi, \(player) ! \n")
     } // End of welcome2()
 
+    // MARK: - Champions creation
     static func usedName() {
         print("Ce nom est déjà pris, veuillez recommencer. \n")
     } // End of usedName()
@@ -23,10 +25,6 @@ class Message {
     static func nameChampions(_ team: Team) {
         print("\(team.name) - Choisis le nom des héros qui composeront ton équipe ! \n")
     } // End of nameChampions()
-
-    static func turn(_ turn: Int) {
-        print("--- TOUR \(turn) --- \n")
-    } // End of turn()
 
     static func name(_ num: Int) {
         print("Quel est le nom de ton champion numéro \(num) ?")
@@ -89,10 +87,20 @@ class Message {
         print("ATTENTION: Vous possèdez déjà un champion de cette classe. Veuillez en choisir une autre !")
     } // End of noRoleDuplicate()
 
+    // MARK: - Random Options
     static func randomStart(_ attackTeam: Team) {
         print("Le peuple a parlé ! L'équipe de \(attackTeam.name) donnera le premier assaut ! \n")
         print("QUE LE COMBAT COMMENCE ! \n")
     } // End of randomStart()
+    
+    static func randomTreasureAppears() {
+        print("UN COFFRE MAGIQUE APPARAIT ! \n")
+    } // End of randomTreasureAppears()
+    
+    // MARK: - Battle mode
+    static func turn(_ turn: Int) {
+        print("--- TOUR \(turn) --- \n")
+    } // End of turn()
 
     static func attack1(_ attackTeam: Team) {
         print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
@@ -176,10 +184,7 @@ class Message {
         print("VICTOIRES : \(team1.name): \(team1.victory) / \(team2.name): \(team2.victory) \n")
     } // End of victory()
 
-    static func randomTreasureAppears() {
-        print("UN COFFRE MAGIQUE APPARAIT ! \n")
-    } // End of randomTreasureAppears()
-
+     // MARK: - Reset Option
     static func resetOptions() {
         print("Que souhaitez-vous faire ?"
             + "\n1. Rejouer avec les mêmes équipes"
@@ -187,6 +192,7 @@ class Message {
             + "\n3. Quitter le jeu")
     } // End of resetOptions()
 
+    // MARK: - Flow controller
     static func next() {
 
         print("Appuyer sur Entrer pour continuer..")

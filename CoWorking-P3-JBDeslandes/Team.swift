@@ -102,7 +102,7 @@ class Team {
 // MARK: - Team creation
 extension Team {
 
-    func createHero(team: Team, num: Int) {
+    func createHero(num: Int) {
 
         var duplicate: Bool = false
         Message.name(num)
@@ -128,15 +128,15 @@ extension Team {
         Message.choseRole(hero)
 
         repeat {
-            selectRole(team: team, num: num)
-        } while noRoleDuplicate(team: team, num: num) == true
+            selectRole(num: num)
+        } while noRoleDuplicate(num: num) == true
 
         // Hero's role added to memory
-        team.memRoles.append(team.characters[num]!)
+        memRoles.append(characters[num]!)
 
     } // End of createHero()
 
-    func selectRole(team: Team, num: Int) {
+    func selectRole(num: Int) {
 
         var inputrole: Bool = false
 
@@ -168,16 +168,16 @@ extension Team {
                     inputrole = false
                     Message.roleChoiced(currentCharacter, role)
                 }
-                team.characters[num] = currentCharacter
+                characters[num] = currentCharacter
             }
 
         } while inputrole == false
 
     } // End of selectRole()
 
-    func noRoleDuplicate(team: Team, num: Int) -> Bool {
+    func noRoleDuplicate(num: Int) -> Bool {
 
-        for double in 0..<team.memRoles.count where team.characters[num]!.role == team.memRoles[double].role {
+        for double in 0..<memRoles.count where characters[num]!.role == memRoles[double].role {
             Message.noRoleDuplicate()
             return true
         }
@@ -185,5 +185,38 @@ extension Team {
         return false
 
     } // End of func noRoleDuplicate()
+
+}
+
+// MARK: - Team reset
+extension Team {
+
+    func resetLife() {
+
+        // Reset life and weapons
+        for idk in 1...constants.CHARACTERNUMBER {
+            characters[idk]!.life = characters[idk]!.maxLife
+        }
+
+    } // End of resetLife()
+
+    func resetWeapons() {
+
+        // Give default weapons to champions
+        for idk in 1...constants.CHARACTERNUMBER {
+
+            switch characters[idk]!.role {
+            case .fighter:
+                characters[idk]!.weapon = Sword()
+            case .wizard:
+                characters[idk]!.weapon = Stick()
+            case .colossus:
+                characters[idk]!.weapon = Fists()
+            case .dwarf:
+                characters[idk]!.weapon = Axe()
+            }
+        }
+
+    } // End of resetWeapons()
 
 }

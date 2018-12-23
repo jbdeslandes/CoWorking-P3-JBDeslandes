@@ -46,14 +46,14 @@ extension Game {
             // To create 3 characters for 2 teams
             Message.nameChampions(team1)
             for add in 1...constants.CHARACTERNUMBER {
-                team1.createHero(team: team1, num: add)
+                team1.createHero(num: add)
             }
             Message.team1Created(team1)
             Message.next()
 
             Message.nameChampions(team2)
             for add in 1...constants.CHARACTERNUMBER {
-                team2.createHero(team: team2, num: add)
+                team2.createHero(num: add)
             }
             Message.team2Created(team2)
             Message.next()
@@ -210,28 +210,23 @@ extension Game {
 
     } // End of deadTeam
 
-} // End of End game control
-
-// MARK: - Reset options
-extension Game {
-
     func reset() {
 
         for idk in 1...constants.TEAMNUMBER {
             switch idk {
             case 1:
-                resetLife(team: team1)
-                resetWeapons(team: team1)
+                team1.resetLife()
+                team1.resetWeapons()
             case 2:
-                resetLife(team: team2)
-                resetWeapons(team: team2)
+                team2.resetLife()
+                team2.resetWeapons()
             default:
                 print("Error : func reset1()")
             }
 
         }
 
-       Message.resetOptions()
+        Message.resetOptions()
 
         if let choice = readLine() {
             switch choice {
@@ -250,32 +245,4 @@ extension Game {
         }
     }
 
-    func resetLife(team: Team) {
-
-        // Reset life and weapons
-        for idk in 1...constants.CHARACTERNUMBER {
-            team.characters[idk]!.life = team.characters[idk]!.maxLife
-        }
-
-    } // End of resetLife()
-
-    func resetWeapons(team: Team) {
-
-        // Give default weapons to champions
-        for idk in 1...constants.CHARACTERNUMBER {
-
-            switch team.characters[idk]!.role {
-            case .fighter:
-                team.characters[idk]!.weapon = Sword()
-            case .wizard:
-                team.characters[idk]!.weapon = Stick()
-            case .colossus:
-                team.characters[idk]!.weapon = Fists()
-            case .dwarf:
-                team.characters[idk]!.weapon = Axe()
-            }
-        }
-
-    } // End of resetWeapons()
-
-} // End of Reset options
+} // End of End game control

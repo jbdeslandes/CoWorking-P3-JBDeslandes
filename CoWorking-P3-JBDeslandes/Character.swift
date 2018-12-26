@@ -61,11 +61,6 @@ class Character {
         }
     }
 
-    // MARK: - ROLE
-    enum Role {
-        case fighter, wizard, colossus, dwarf
-    }
-
     // To control if a character is dead
     var dead: Bool {
 
@@ -75,6 +70,11 @@ class Character {
         } else {
             return false
         }
+    }
+
+    // MARK: - ROLE
+    enum Role {
+        case fighter, wizard, colossus, dwarf
     }
 
 }

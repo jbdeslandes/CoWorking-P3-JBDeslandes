@@ -92,11 +92,11 @@ class Message {
         print("Le peuple a parlé ! L'équipe de \(attackTeam.name) donnera le premier assaut ! \n")
         print("QUE LE COMBAT COMMENCE ! \n")
     } // End of randomStart()
-    
+
     static func randomTreasureAppears() {
         print("UN COFFRE MAGIQUE APPARAIT ! \n")
     } // End of randomTreasureAppears()
-    
+
     // MARK: - Battle mode
     static func turn(_ turn: Int) {
         print("--- TOUR \(turn) --- \n")

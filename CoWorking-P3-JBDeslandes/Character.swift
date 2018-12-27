@@ -8,20 +8,6 @@
 
 import Foundation
 
-// MARK: - CHARACTER PROPERTIES
-
-//    To choose a character
-var currentCharacter: Character!
-
-//    To define which character is the target
-var defenseCharacter: Character!
-
-//    To define which character must attack
-var attackCharacter: Character!
-
-//    To define which character must be healed
-var healedCharacter: Character!
-
 // MARK: - CHARACTER
 class Character {
 
@@ -82,42 +68,6 @@ class Character {
 // MARK: - Interractions
 extension Character {
 
-    func characterChoice(currentTeam: Team) -> Character {
-
-        for idk in 1...constants.CHARACTERNUMBER {
-            print("\(idk). \(currentTeam.characters[idk]!.name)"
-                + " - \(currentTeam.characters[idk]!.roleName)"
-                + " - Vie: \(currentTeam.characters[idk]!.life)")
-        }
-
-        var inputChoice1: Bool = false
-
-        repeat {
-
-            if let choice = readLine() {
-                switch choice {
-                case "1":
-                    inputChoice1 = true
-                    currentCharacter = currentTeam.characters[1]!
-                case "2":
-                    inputChoice1 = true
-                    currentCharacter = currentTeam.characters[2]!
-                case "3":
-                    inputChoice1 = true
-                    currentCharacter = currentTeam.characters[3]!
-                default:
-                    inputChoice1 = false
-                    Message.errorChoice()
-                }
-                game.deadCharacter()
-            }
-
-        } while inputChoice1 == false || game.isCharacterPlayable == false
-
-        return currentCharacter
-
-    } // End of characterChoice()
-
     func makeDecision() {
 
         // Reset value
@@ -125,15 +75,15 @@ extension Character {
 
         repeat {
 
-            Message.attack1(attackTeam)
-            attackCharacter = characterChoice(currentTeam: attackTeam)
+            Message.attack1(game.atkTeam)
+            game.atkTeam.atkCharacter = game.atkTeam.characterChoice()
 
-            if attackCharacter.role == .wizard {
+            if game.atkTeam.atkCharacter.role == .wizard {
                 heal()
             } else {
                 game.randomTreasure()
-                Message.attack2(attackTeam)
-                defenseCharacter = characterChoice(currentTeam: defenseTeam)
+                Message.attack2(game.atkTeam)
+                game.defTeam.defCharacter = game.defTeam.characterChoice()
                 attack()
                 game.characterPlayed = true
             }
@@ -142,7 +92,7 @@ extension Character {
 
     } // End of makeDecision()
 
-    func damageDone(atk: Character, def: Character, action: String) -> Int {
+    func damage(_ atk: Character, _ def: Character, _ action: Int) -> Int {
 
         // Generator of a number in damage range
         let instantDamage = Int.random(in: atk.weapon.minDamage...atk.weapon.maxDamage)
@@ -157,57 +107,57 @@ extension Character {
         let randomNumber = Int.random(in: 1...100)
 
         if randomNumber > 0 && randomNumber <= 10 {
-            Message.dodge(defenseCharacter)
+            Message.dodge(game.defTeam.defCharacter)
         } else if randomNumber > 10 && randomNumber <= 15 {
-            Message.counterAttack(defenseCharacter)
-            attackCharacter.life -= damageDone(atk: defenseCharacter, def: attackCharacter, action: "attack")
+            Message.counterAttack(game.defTeam.defCharacter)
+            game.atkTeam.atkCharacter.life -= damage(game.defTeam.defCharacter, game.atkTeam.atkCharacter, 1)
         } else if randomNumber > 15 && randomNumber <= 20 {
-            defenseCharacter.life -= damageDone(atk: attackCharacter, def: defenseCharacter, action: "crit")*2
+            game.defTeam.defCharacter.life -= damage(game.atkTeam.atkCharacter, game.defTeam.defCharacter, 2)*2
         } else if randomNumber > 20 && randomNumber <= 100 {
-            defenseCharacter.life -= damageDone(atk: attackCharacter, def: defenseCharacter, action: "attack")
+            game.defTeam.defCharacter.life -= damage(game.atkTeam.atkCharacter, game.defTeam.defCharacter, 1)
         }
 
-        if defenseCharacter.dead {
-            Message.deadCharacter(defenseCharacter)
-        } else if attackCharacter.dead {
-            Message.deadCharacter(attackCharacter)
+        if game.defTeam.defCharacter.dead {
+            Message.deadCharacter(game.defTeam.defCharacter)
+        } else if game.atkTeam.atkCharacter.dead {
+            Message.deadCharacter(game.atkTeam.atkCharacter)
         }
 
     } // End of attack()
 
     func heal() {
 
-        if !attackTeam.canHeal {
+        if !game.atkTeam.canHeal {
             game.characterPlayed = false
             Message.next()
-        } else if attackTeam.canHeal {
-            Message.heal1(attackTeam)
-            healedCharacter = characterChoice(currentTeam: attackTeam)
+        } else if game.atkTeam.canHeal {
+            Message.heal1(game.atkTeam)
+            game.atkTeam.healCharacter = game.atkTeam.characterChoice()
 
-            if healedCharacter.life == healedCharacter.maxLife {
-                Message.noHeal(healedCharacter)
+            if game.atkTeam.healCharacter.life == game.atkTeam.healCharacter.maxLife {
+                Message.noHeal(game.atkTeam.healCharacter)
                 game.characterPlayed = false
                 Message.next()
 
             } else {
 
-                if healedCharacter.life <= constants.DEAD {
-                    Message.deadCharacter(healedCharacter)
-                } else if healedCharacter.life > constants.DEAD
-                    && healedCharacter.life != healedCharacter.maxLife {
-                    let randomNumber = Int.random(in: 1...100)
-                    if randomNumber > 0 && randomNumber <= 20 {
-                        // Critical heal
-                        healedCharacter.life += damageDone(atk: attackCharacter, def: healedCharacter, action: "heal")*2
-                    } else {
-                        // Normal heal
-                        healedCharacter.life += damageDone(atk: attackCharacter, def: healedCharacter, action: "heal")
-                    }
+              if game.atkTeam.healCharacter.life <= constants.DEAD {
+                  Message.deadCharacter(game.atkTeam.healCharacter)
+              } else if game.atkTeam.healCharacter.life > constants.DEAD
+                  && game.atkTeam.healCharacter.life != game.atkTeam.healCharacter.maxLife {
+                  let randomNumber = Int.random(in: 1...100)
+                  if randomNumber > 0 && randomNumber <= 20 {
+                   // Critical heal
+                   game.atkTeam.healCharacter.life += damage(game.atkTeam.atkCharacter, game.atkTeam.healCharacter, 3)*2
+                  } else {
+                   // Normal heal
+                   game.atkTeam.healCharacter.life += damage(game.atkTeam.atkCharacter, game.atkTeam.healCharacter, 3)
+                  }
 
-                    if healedCharacter.life >= healedCharacter.maxLife {
-                        healedCharacter.life = healedCharacter.maxLife
+                  if game.atkTeam.healCharacter.life >= game.atkTeam.healCharacter.maxLife {
+                    game.atkTeam.healCharacter.life = game.atkTeam.healCharacter.maxLife
                     }
-                    Message.heal2(healedCharacter)
+                    Message.heal2(game.atkTeam.healCharacter)
                 }
                 game.characterPlayed = true
             }
@@ -217,7 +167,7 @@ extension Character {
 
     func changeWeapon() {
 
-        Message.changeWeapon(attackCharacter)
+        Message.changeWeapon(game.atkTeam.atkCharacter)
         var inputweapon: Bool = false
 
         repeat {
@@ -226,22 +176,22 @@ extension Character {
                 switch weapon {
                 case "1":
                     inputweapon = true
-                    attackCharacter.weapon = Mace()
-                    Message.weaponChoiced(attackCharacter, weapon)
+                    game.atkTeam.atkCharacter.weapon = Mace()
+                    Message.weaponChoiced(game.atkTeam.atkCharacter, weapon)
                 case "2":
                     inputweapon = true
-                    attackCharacter.weapon = Dagger()
-                    Message.weaponChoiced(attackCharacter, weapon)
+                    game.atkTeam.atkCharacter.weapon = Dagger()
+                    Message.weaponChoiced(game.atkTeam.atkCharacter, weapon)
                 case "3":
                     inputweapon = true
-                    attackCharacter.weapon = Spear()
-                    Message.weaponChoiced(attackCharacter, weapon)
+                    game.atkTeam.atkCharacter.weapon = Spear()
+                    Message.weaponChoiced(game.atkTeam.atkCharacter, weapon)
                 case "4":
                     inputweapon = true
-                    Message.weaponChoiced(attackCharacter, weapon)
+                    Message.weaponChoiced(game.atkTeam.atkCharacter, weapon)
                 default:
                     inputweapon = false
-                    Message.weaponChoiced(attackCharacter, weapon)
+                    Message.weaponChoiced(game.atkTeam.atkCharacter, weapon)
                 }
             }
 

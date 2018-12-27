@@ -11,6 +11,19 @@ import Foundation
 // MARK: - GAME PROPERTIES
 class Game {
 
+//    To control which team attacks
+    var atkTeam: Team!
+
+//    To control which team defends
+    var defTeam: Team!
+
+//    Team creation
+    var team1 = Team(name: "")
+    var team2 = Team(name: "")
+
+//    To not duplicate champion's names
+    var memNames: [String] = []
+
 //    To control if a character played
     var characterPlayed: Bool = false
 
@@ -87,14 +100,14 @@ extension Game {
             for _ in 1...2 {
 
                 repeat {
-                    currentCharacter.makeDecision()
+                    atkTeam.currentCharacter.makeDecision()
                     Message.next()
                 } while characterPlayed == false
 
                 deadTeam()
 
                 if isTeamPlayable {
-                    swap(&attackTeam, &defenseTeam)
+                    swap(&atkTeam, &defTeam)
                 } else {
                     break
                 }
@@ -147,14 +160,14 @@ extension Game {
         let choice = Bool.random()
 
         if choice == true {
-            attackTeam = team1
-            defenseTeam = team2
+            atkTeam = team1
+            defTeam = team2
         } else {
-            attackTeam = team2
-            defenseTeam = team1
+            atkTeam = team2
+            defTeam = team1
         }
 
-        Message.randomStart(attackTeam)
+        Message.randomStart(atkTeam)
         Message.next()
 
     } // End of randomTeamChoice()
@@ -170,7 +183,7 @@ extension Game {
             randomTreasureAppears = true
             Message.randomTreasureAppears()
             Message.next()
-            attackCharacter.changeWeapon()
+            atkTeam.atkCharacter.changeWeapon()
         } else {
             randomTreasureAppears = false
         }
@@ -184,9 +197,9 @@ extension Game {
 
     func deadCharacter() {
 
-        if currentCharacter.dead == true {
+        if atkTeam.currentCharacter.dead == true {
             isCharacterPlayable = false
-            Message.deadCharacter(currentCharacter)
+            Message.deadCharacter(atkTeam.currentCharacter)
         } else {
             isCharacterPlayable = true
         }
@@ -195,13 +208,13 @@ extension Game {
 
     func deadTeam() {
 
-        if defenseTeam.alive == false {
-            Message.teamWins(attackTeam)
-            attackTeam.victory += 1
+        if defTeam.alive == false {
+            Message.teamWins(atkTeam)
+            atkTeam.victory += 1
             isTeamPlayable = false
-        } else if attackTeam.alive == false {
-            Message.teamWins(defenseTeam)
-            defenseTeam.victory += 1
+        } else if atkTeam.alive == false {
+            Message.teamWins(defTeam)
+            defTeam.victory += 1
             isTeamPlayable = false
         } else {
             // Begin of another turn

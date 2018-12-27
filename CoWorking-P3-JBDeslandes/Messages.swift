@@ -110,12 +110,12 @@ class Message {
         print("\(attackTeam.name) - Quel adversaire souhaites-tu attaquer ?")
     } // End of attack2()
 
-    static func instantDamage(_ instantDamage: Int, _ atk: Character, _ def: Character, _ action: String) {
-        if action == "attack" {
+    static func instantDamage(_ instantDamage: Int, _ atk: Character, _ def: Character, _ action: Int) {
+        if action == 1 {
             print("\(atk.name) inflige \(instantDamage) points de dégâts à \(def.name). \n")
-        } else if action == "heal" {
+        } else if action == 3 {
             print("\(atk.name) soigne \(instantDamage) points de vie de \(def.name). \n")
-        } else if action == "crit" {
+        } else if action == 2 {
             print("\(atk.name) trouve une faille dans la défense de"
                 + " \(def.name) et assène un coup critique de \(instantDamage * 2) points de dégâts ! \n")
         }

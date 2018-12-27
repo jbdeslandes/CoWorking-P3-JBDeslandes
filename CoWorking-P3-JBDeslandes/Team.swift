@@ -8,24 +8,6 @@
 
 import Foundation
 
-// MARK: - TEAM PROPERTIES
-
-//    To name Characters
-var hero: String = ""
-
-//    To not duplicate champion's names
-var memNames: [String] = []
-
-//    To control which team attacks
-var attackTeam: Team!
-
-//    To control which team defends
-var defenseTeam: Team!
-
-//    Team creation
-var team1 = Team(name: "")
-var team2 = Team(name: "")
-
 // MARK: - TEAM
 class Team {
 
@@ -37,6 +19,18 @@ class Team {
 
     // To store characters informations
     var characters = [Int: Character]()
+
+    //    To choose a character
+    var currentCharacter: Character!
+
+    //    To define which character is the target
+    var defCharacter: Character!
+
+    //    To define which character must attack
+    var atkCharacter: Character!
+
+    //    To define which character must be healed
+    var healCharacter: Character!
 
     // To not duplicate champion's roles
     var memRoles = [Character]()
@@ -99,7 +93,7 @@ class Team {
 
 }
 
-// MARK: - Team creation
+// MARK: - Team actions
 extension Team {
 
     func createHero(num: Int) {
@@ -108,11 +102,11 @@ extension Team {
         Message.name(num)
 
         repeat {
-            hero = readLine()!
+            name = readLine()!
             duplicate = false
 
-            for double in 0..<memNames.count {
-                if hero.lowercased() == memNames[double] {
+            for double in 0..<game.memNames.count {
+                if name.lowercased() == game.memNames[double] {
                     duplicate = true
                 }
             }
@@ -124,8 +118,8 @@ extension Team {
         } while duplicate == true
 
         //        Hero's name added to memory
-        memNames.append(hero.lowercased())
-        Message.choseRole(hero)
+        game.memNames.append(name.lowercased())
+        Message.choseRole(name)
 
         repeat {
             selectRole(num: num)
@@ -146,22 +140,22 @@ extension Team {
                 switch role {
                 case "1":
                     inputrole = true
-                    currentCharacter = Character(name: "\(hero)", role: .fighter)
+                    currentCharacter = Character(name: "\(name)", role: .fighter)
                     currentCharacter.weapon = Sword()
                     Message.roleChoiced(currentCharacter, role)
                 case "2":
                     inputrole = true
-                    currentCharacter = Character(name: "\(hero)", role: .wizard)
+                    currentCharacter = Character(name: "\(name)", role: .wizard)
                     currentCharacter.weapon = Stick()
                     Message.roleChoiced(currentCharacter, role)
                 case "3":
                     inputrole = true
-                    currentCharacter = Character(name: "\(hero)", role: .colossus)
+                    currentCharacter = Character(name: "\(name)", role: .colossus)
                     currentCharacter.weapon = Fists()
                     Message.roleChoiced(currentCharacter, role)
                 case "4":
                     inputrole = true
-                    currentCharacter = Character(name: "\(hero)", role: .dwarf)
+                    currentCharacter = Character(name: "\(name)", role: .dwarf)
                     currentCharacter.weapon = Axe()
                     Message.roleChoiced(currentCharacter, role)
                 default:
@@ -185,6 +179,42 @@ extension Team {
         return false
 
     } // End of func noRoleDuplicate()
+
+    func characterChoice() -> Character {
+
+        for idk in 1...constants.CHARACTERNUMBER {
+            print("\(idk). \(characters[idk]!.name)"
+                + " - \(characters[idk]!.roleName)"
+                + " - Vie: \(characters[idk]!.life)")
+        }
+
+        var inputChoice1: Bool = false
+
+        repeat {
+
+            if let choice = readLine() {
+                switch choice {
+                case "1":
+                    inputChoice1 = true
+                    currentCharacter = characters[1]!
+                case "2":
+                    inputChoice1 = true
+                    currentCharacter = characters[2]!
+                case "3":
+                    inputChoice1 = true
+                    currentCharacter = characters[3]!
+                default:
+                    inputChoice1 = false
+                    Message.errorChoice()
+                }
+                game.deadCharacter()
+            }
+
+        } while inputChoice1 == false || game.isCharacterPlayable == false
+
+        return currentCharacter
+
+    } // End of characterChoice()
 
 }
 

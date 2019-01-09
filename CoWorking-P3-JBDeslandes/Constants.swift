@@ -6,23 +6,23 @@ struct Constants {
 
     //let TEAMNUMBER = 2
 
-    let TEAMNUMBER = 2
+    static let TEAMNUMBER = 2
 
     //let CHARACTERNUMBER = 3
 
-    let CHARACTERNUMBER = 3
+    static let CHARACTERNUMBER = 3
 
     //let FIGHTERLIFE = 100
     //let WIZARDLIFE = 100
     //let COLOSSUSLIFE = 120
     //let DWARFLIFE = 80
 
-    let FIGHTERLIFE = 100
-    let WIZARDLIFE = 100
-    let COLOSSUSLIFE = 120
-    let DWARFLIFE = 80
+    static let FIGHTERLIFE = 100
+    static let WIZARDLIFE = 100
+    static let COLOSSUSLIFE = 120
+    static let DWARFLIFE = 80
 
-    let DEAD = 0
+    static let DEAD = 0
 
     //=================
     // MARK: - Weapons
@@ -42,16 +42,16 @@ struct Constants {
     //let SPEARDAMAGEMIN = 5
     //let SPEARDAMAGEMAX = 15
 
-    let SWORDDAMAGE = 20
-    let STICKDAMAGEMIN = 10
-    let STICKDAMAGEMAX = 30
-    let FISTSDAMAGE = 16
-    let AXEDAMAGE = 24
-    let MACEDAMAGEMIN = 16
-    let MACEDAMAGEMAX = 24
-    let DAGGERDAMAGEMIN = 2
-    let DAGGERDAMAGEMAX = 50
-    let SPEARDAMAGEMIN = 10
-    let SPEARDAMAGEMAX = 30
+    static let SWORDDAMAGE = 20
+    static let STICKDAMAGEMIN = 10
+    static let STICKDAMAGEMAX = 30
+    static let FISTSDAMAGE = 16
+    static let AXEDAMAGE = 24
+    static let MACEDAMAGEMIN = 16
+    static let MACEDAMAGEMAX = 24
+    static let DAGGERDAMAGEMIN = 2
+    static let DAGGERDAMAGEMAX = 50
+    static let SPEARDAMAGEMIN = 10
+    static let SPEARDAMAGEMAX = 30
 
 }

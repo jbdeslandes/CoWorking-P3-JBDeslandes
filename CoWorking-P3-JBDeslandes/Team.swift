@@ -11,8 +11,11 @@ import Foundation
 // MARK: - TEAM
 class Team {
 
+    // To name Team
+    var player: String
+
     // To name champions
-    var name: String
+    private var name: String = ""
 
     // Victory counter
     var victory: Int = 0
@@ -35,29 +38,29 @@ class Team {
     // To not duplicate champion's roles
     var memRoles = [Character]()
 
-    init(name: String) {
-        self.name = name
+    init(player: String) {
+        self.player = player
     }
 
     // To control number of survivors in Team
     var alive: Bool {
 
         // Filter count by .life
-        let numberOfTeamCharactersAlive = self.characters.filter {$1.life != constants.DEAD}.count
+        let numberOfTeamCharactersAlive = self.characters.filter {$1.life != Constants.DEAD}.count
 
         // To control if the last survivor is a wizard
         if numberOfTeamCharactersAlive == 1 {
 
-            let isWizardAlive = self.characters.filter {$1.role == .wizard && $1.life != constants.DEAD}.count
+            let isWizardAlive = self.characters.filter {$1.role == .wizard && $1.life != Constants.DEAD}.count
 
             if isWizardAlive == 1 {
-                print("Voyant qu'il est le dernier survivant, le magicien de \(name) abandonne ! \n")
+                print("Voyant qu'il est le dernier survivant, le magicien de \(player) abandonne ! \n")
                 // The only survivor is a wizard and can't attack
                 return false
             }
 
         } else if numberOfTeamCharactersAlive == 0 {
-            print("Tous les héros de \(name) sont morts ! \n")
+            print("Tous les héros de \(player) sont morts ! \n")
             // There are no survivors
             return false
         }
@@ -74,7 +77,7 @@ class Team {
         let numberOfCharactersMaxLife = self.characters.filter {$1.life == $1.maxLife}.count
 
         // Filter count by dead characters
-        let numberofCharactersDead = self.characters.filter {$1.life == constants.DEAD}.count
+        let numberofCharactersDead = self.characters.filter {$1.life == Constants.DEAD}.count
 
         if numberOfCharactersMaxLife == 3 {
             // Cannot heal - All team is full life
@@ -117,7 +120,7 @@ extension Team {
 
         } while duplicate == true
 
-        //        Hero's name added to memory
+        // Hero's name added to memory
         game.memNames.append(name.lowercased())
         Message.choseRole(name)
 
@@ -182,7 +185,7 @@ extension Team {
 
     func characterChoice() -> Character {
 
-        for idk in 1...constants.CHARACTERNUMBER {
+        for idk in 1...Constants.CHARACTERNUMBER {
             print("\(idk). \(characters[idk]!.name)"
                 + " - \(characters[idk]!.roleName)"
                 + " - Vie: \(characters[idk]!.life)")
@@ -224,7 +227,7 @@ extension Team {
     func resetLife() {
 
         // Reset life and weapons
-        for idk in 1...constants.CHARACTERNUMBER {
+        for idk in 1...Constants.CHARACTERNUMBER {
             characters[idk]!.life = characters[idk]!.maxLife
         }
 
@@ -233,7 +236,7 @@ extension Team {
     func resetWeapons() {
 
         // Give default weapons to champions
-        for idk in 1...constants.CHARACTERNUMBER {
+        for idk in 1...Constants.CHARACTERNUMBER {
 
             switch characters[idk]!.role {
             case .fighter:

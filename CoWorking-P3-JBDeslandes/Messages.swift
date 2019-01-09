@@ -23,7 +23,7 @@ class Message {
     } // End of usedName()
 
     static func nameChampions(_ team: Team) {
-        print("\(team.name) - Choisis le nom des héros qui composeront ton équipe ! \n")
+        print("\(team.player) - Choisis le nom des héros qui composeront ton équipe ! \n")
     } // End of nameChampions()
 
     static func name(_ num: Int) {
@@ -33,14 +33,14 @@ class Message {
     static func choseRole(_ hero: String) {
         print()
         print("Quelle sera la classe de \(hero) ? \n"
-            + "\n1. Combattant" + " - ATQ: \(constants.SWORDDAMAGE)"
-            + " / PV: \(constants.FIGHTERLIFE)" + " - Guerrier équilibré"
-            + "\n2. Magicien" + " - ATQ: \(constants.DEAD)"
-            + " / PV: \(constants.WIZARDLIFE)" + " - Ne combat pas / Soigneur efficace"
-            + "\n3. Colosse" + " - ATQ: \(constants.FISTSDAMAGE)"
-            + " / PV: \(constants.COLOSSUSLIFE)" + " - Faible puissance / Très résistant"
-            + "\n4. Nain" + " - ATQ: \(constants.AXEDAMAGE)"
-            + " / PV: \(constants.DWARFLIFE)" + " - Grande puissance / Peu résistant")
+            + "\n1. Combattant" + " - ATQ: \(Constants.SWORDDAMAGE)"
+            + " / PV: \(Constants.FIGHTERLIFE)" + " - Guerrier équilibré"
+            + "\n2. Magicien" + " - ATQ: \(Constants.DEAD)"
+            + " / PV: \(Constants.WIZARDLIFE)" + " - Ne combat pas / Soigneur efficace"
+            + "\n3. Colosse" + " - ATQ: \(Constants.FISTSDAMAGE)"
+            + " / PV: \(Constants.COLOSSUSLIFE)" + " - Faible puissance / Très résistant"
+            + "\n4. Nain" + " - ATQ: \(Constants.AXEDAMAGE)"
+            + " / PV: \(Constants.DWARFLIFE)" + " - Grande puissance / Peu résistant")
     } // End of choseRole()
 
     static func roleChoiced(_ currentCharacter: Character, _ role: String) {
@@ -66,13 +66,13 @@ class Message {
     } // End of roleChoiced()
 
     static func team1Created(_ team1: Team) {
-        print("\(team1.name) - Tes champions"
+        print("\(team1.player) - Tes champions"
             + " \(team1.characters[1]!.name), \(team1.characters[2]!.name) et \(team1.characters[3]!.name)"
             + " atteignent l'arène et attendent leurs adversaires de pied ferme.. \n")
     } // End of team1created()
 
     static func team2Created(_ team2: Team) {
-        print("\(team2.name) - Tes champions"
+        print("\(team2.player) - Tes champions"
             + " \(team2.characters[1]!.name), \(team2.characters[2]!.name) et \(team2.characters[3]!.name)"
             + " rejoignent l'enceinte et font face à leurs rivaux.. \n")
     } // End of team2Created()
@@ -88,8 +88,8 @@ class Message {
     } // End of noRoleDuplicate()
 
     // MARK: - Random Options
-    static func randomStart(_ attackTeam: Team) {
-        print("Le peuple a parlé ! L'équipe de \(attackTeam.name) donnera le premier assaut ! \n")
+    static func randomStart(_ atkTeam: Team) {
+        print("Le peuple a parlé ! L'équipe de \(atkTeam.player) donnera le premier assaut ! \n")
         print("QUE LE COMBAT COMMENCE ! \n")
     } // End of randomStart()
 
@@ -102,12 +102,12 @@ class Message {
         print("--- TOUR \(turn) --- \n")
     } // End of turn()
 
-    static func attack1(_ attackTeam: Team) {
-        print("\(attackTeam.name) - Quel champion souhaites-tu jouer ?")
+    static func attack1(_ atkTeam: Team) {
+        print("\(atkTeam.player) - Quel champion souhaites-tu jouer ?")
     } // End of attack1()
 
-    static func attack2(_ attackTeam: Team) {
-        print("\(attackTeam.name) - Quel adversaire souhaites-tu attaquer ?")
+    static func attack2(_ atkTeam: Team) {
+        print("\(atkTeam.player) - Quel adversaire souhaites-tu attaquer ?")
     } // End of attack2()
 
     static func instantDamage(_ instantDamage: Int, _ atk: Character, _ def: Character, _ action: Int) {
@@ -121,12 +121,12 @@ class Message {
         }
     } // End of instantDamage()
 
-    static func dodge(_ defenseCharacter: Character) {
-        print("\(defenseCharacter.name) esquive l'assaut ! \n")
+    static func dodge(_ defCharacter: Character) {
+        print("\(defCharacter.name) esquive l'assaut ! \n")
     } // End of dodge()
 
-    static func counterAttack(_ defenseCharacter: Character) {
-        print("\(defenseCharacter.name) effectue une parade et contre-attaque !")
+    static func counterAttack(_ defCharacter: Character) {
+        print("\(defCharacter.name) effectue une parade et contre-attaque !")
     } // End of counterAttack()
 
     static func deadCharacter(_ deadCharacter: Character) {
@@ -134,39 +134,39 @@ class Message {
     } // End of deadCharacter()
 
     static func heal1(_ team: Team) {
-        print("\(team.name) - Quel compagnon souhaites-tu soigner ?")
+        print("\(team.player) - Quel compagnon souhaites-tu soigner ?")
     } // End of heal1()
 
-    static func heal2(_ healedCharacter: Character) {
-        print("Il possède maintenant \(healedCharacter.life) points de vie ! \n")
+    static func heal2(_ healCharacter: Character) {
+        print("Il possède maintenant \(healCharacter.life) points de vie ! \n")
     } // End of heal2()
 
-    static func noHeal(_ healedCharacter: Character) {
-        print("\(healedCharacter.name) possède tous ses points de vie ! \n")
+    static func noHeal(_ healCharacter: Character) {
+        print("\(healCharacter.name) possède tous ses points de vie ! \n")
     } // End of noHeal()
 
-    static func changeWeapon(_ attackCharacter: Character) {
-        print("Quelle nouvelle arme choisira \(attackCharacter.name) le \(attackCharacter.roleName) ?"
-            + "\n1. Masse - ATQ: \(constants.MACEDAMAGEMIN) à \(constants.MACEDAMAGEMAX) de dégâts"
-            + "\n2. Dague - ATQ: \(constants.DAGGERDAMAGEMIN) à \(constants.DAGGERDAMAGEMAX) dégâts"
-            + "\n3. Lance - ATQ: \(constants.SPEARDAMAGEMIN) à \(constants.SPEARDAMAGEMAX) dégâts"
+    static func changeWeapon(_ atkCharacter: Character) {
+        print("Quelle nouvelle arme choisira \(atkCharacter.name) le \(atkCharacter.roleName) ?"
+            + "\n1. Masse - ATQ: \(Constants.MACEDAMAGEMIN) à \(Constants.MACEDAMAGEMAX) de dégâts"
+            + "\n2. Dague - ATQ: \(Constants.DAGGERDAMAGEMIN) à \(Constants.DAGGERDAMAGEMAX) dégâts"
+            + "\n3. Lance - ATQ: \(Constants.SPEARDAMAGEMIN) à \(Constants.SPEARDAMAGEMAX) dégâts"
             + "\n4. Refuser de changer d'arme")
     } // End of changeWeapon()
 
-    static func weaponChoiced(_ attackCharacter: Character, _ weapon: String) {
+    static func weaponChoiced(_ atkCharacter: Character, _ weapon: String) {
 
         switch weapon {
         case "1":
-            print("\(attackCharacter.name) le \(attackCharacter.roleName)"
+            print("\(atkCharacter.name) le \(atkCharacter.roleName)"
                 + " se saisit d'une imposante masse !")
         case "2":
-            print("\(attackCharacter.name) le \(attackCharacter.roleName)"
+            print("\(atkCharacter.name) le \(atkCharacter.roleName)"
                 + " se saisit d'une dague mortelle !")
         case "3":
-            print("\(attackCharacter.name) le \(attackCharacter.roleName)"
+            print("\(atkCharacter.name) le \(atkCharacter.roleName)"
                 + " se saisit de la lance maniable et rapide !")
         case "4":
-            print("\(attackCharacter.name) le \(attackCharacter.roleName)"
+            print("\(atkCharacter.name) le \(atkCharacter.roleName)"
                 + " refuse de changer d'arme et poursuit le combat !")
         default:
             print("Je n'ai pas compris votre choix."
@@ -176,12 +176,12 @@ class Message {
     } // End of weaponChoiced()
 
     static func teamWins(_ team: Team) {
-        print("\(team.name) REMPORTE LA VICTOIRE !! \n")
+        print("\(team.player) REMPORTE LA VICTOIRE !! \n")
     } // End of teamWins()
 
     static func victory(_ turn: Int, _ team1: Team, _ team2: Team) {
         print("FIN DU COMBAT EN \(turn) TOURS ! \n")
-        print("VICTOIRES : \(team1.name): \(team1.victory) / \(team2.name): \(team2.victory) \n")
+        print("VICTOIRES : \(team1.player): \(team1.victory) / \(team2.player): \(team2.victory) \n")
     } // End of victory()
 
      // MARK: - Reset Option

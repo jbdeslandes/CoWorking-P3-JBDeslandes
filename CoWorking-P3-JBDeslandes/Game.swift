@@ -18,8 +18,8 @@ class Game {
     var defTeam: Team!
 
 //    Team creation
-    var team1 = Team(name: "")
-    var team2 = Team(name: "")
+    var team1 = Team(player: "")
+    var team2 = Team(player: "")
 
 //    To not duplicate champion's names
     var memNames: [String] = []
@@ -49,7 +49,7 @@ extension Game {
 
     func mainGame() {
 
-        // To create 2 teams
+        // CREATE TEAMS
         createPlayers()
 
         repeat {
@@ -58,19 +58,22 @@ extension Game {
             replayAll = false
             // To create 3 characters for 2 teams
             Message.nameChampions(team1)
-            for add in 1...constants.CHARACTERNUMBER {
+            for add in 1...Constants.CHARACTERNUMBER {
                 team1.createHero(num: add)
             }
+
             Message.team1Created(team1)
             Message.next()
 
             Message.nameChampions(team2)
-            for add in 1...constants.CHARACTERNUMBER {
+            for add in 1...Constants.CHARACTERNUMBER {
                 team2.createHero(num: add)
             }
+
             Message.team2Created(team2)
             Message.next()
 
+            // BATTLE MODE
             repeat {
 
                 // reset value
@@ -126,26 +129,22 @@ extension Game {
 
     func createPlayers() {
 
-        var player1: String = ""
-        var player2: String = ""
         Message.arena()
         Message.playerName(_: "Joueur 1")
-        player1 = readLine()!
-        team1 = Team(name: "\(player1)")
-        Message.welcome1(_: player1)
+        team1 = Team(player: readLine()!)
+        Message.welcome1(_: team1.player)
 
         repeat {
             Message.playerName(_:"Joueur 2")
-            player2 = readLine()!
+            team2 = Team(player: readLine()!)
 
-            if player2.lowercased() == player1.lowercased() {
+            if team2.player.lowercased() == team1.player.lowercased() {
                 Message.usedName()
             }
 
-        } while player1.lowercased() == player2.lowercased()
+        } while team1.player.lowercased() == team2.player.lowercased()
 
-        team2 = Team(name: "\(player2)")
-        Message.welcome2(_: player2)
+        Message.welcome2(_: team2.player)
         Message.next()
 
     } // End of createPlayer()
@@ -225,7 +224,7 @@ extension Game {
 
     func reset() {
 
-        for idk in 1...constants.TEAMNUMBER {
+        for idk in 1...Constants.TEAMNUMBER {
             switch idk {
             case 1:
                 team1.resetLife()

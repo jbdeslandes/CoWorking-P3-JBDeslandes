@@ -26,23 +26,23 @@ class Character {
         switch role {
         case .fighter:
             roleName = "Combattant"
-            life = constants.FIGHTERLIFE
-            maxLife = constants.FIGHTERLIFE
+            life = Constants.FIGHTERLIFE
+            maxLife = Constants.FIGHTERLIFE
             weapon = Sword()
         case .wizard:
             roleName = "Magicien"
-            life = constants.WIZARDLIFE
-            maxLife = constants.WIZARDLIFE
+            life = Constants.WIZARDLIFE
+            maxLife = Constants.WIZARDLIFE
             weapon = Stick()
         case .colossus:
             roleName = "Colosse"
-            life = constants.COLOSSUSLIFE
-            maxLife = constants.COLOSSUSLIFE
+            life = Constants.COLOSSUSLIFE
+            maxLife = Constants.COLOSSUSLIFE
             weapon = Fists()
         case .dwarf:
             roleName = "Nain"
-            life = constants.DWARFLIFE
-            maxLife = constants.DWARFLIFE
+            life = Constants.DWARFLIFE
+            maxLife = Constants.DWARFLIFE
             weapon = Axe()
         }
     }
@@ -50,8 +50,8 @@ class Character {
     // To control if a character is dead
     var dead: Bool {
 
-        if life <= constants.DEAD {
-            life = constants.DEAD
+        if life <= Constants.DEAD {
+            life = Constants.DEAD
             return true
         } else {
             return false
@@ -141,9 +141,9 @@ extension Character {
 
             } else {
 
-              if game.atkTeam.healCharacter.life <= constants.DEAD {
-                  Message.deadCharacter(game.atkTeam.healCharacter)
-              } else if game.atkTeam.healCharacter.life > constants.DEAD
+              if game.atkTeam.healCharacter.life <= Constants.DEAD {
+                Message.deadCharacter(game.atkTeam.healCharacter)
+              } else if game.atkTeam.healCharacter.life > Constants.DEAD
                   && game.atkTeam.healCharacter.life != game.atkTeam.healCharacter.maxLife {
                   let randomNumber = Int.random(in: 1...100)
                   if randomNumber > 0 && randomNumber <= 20 {
@@ -156,9 +156,9 @@ extension Character {
 
                   if game.atkTeam.healCharacter.life >= game.atkTeam.healCharacter.maxLife {
                     game.atkTeam.healCharacter.life = game.atkTeam.healCharacter.maxLife
-                    }
-                    Message.heal2(game.atkTeam.healCharacter)
-                }
+                  }
+                  Message.heal2(game.atkTeam.healCharacter)
+              }
                 game.characterPlayed = true
             }
         }
